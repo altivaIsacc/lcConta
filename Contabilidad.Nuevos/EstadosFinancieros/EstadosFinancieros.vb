@@ -340,13 +340,13 @@ Public Class EstadosFinancieros
         End If
 
         If cantPeriodos = 3 Then
-            Return "Select CuentaContable, Descripcion, '' AS Notas, " & saldo & "(CuentaContable.CuentaContable,@fp1) as SaldoAcumulado1, " & saldo & "(CuentaContable,@fp2) As SaldoAcumulado2, " & saldo & "(CuentaContable,@fp3) as SaldoAcumulado3, Nivel, Movimiento As Movimientos, PARENTID, id, Tipo, GastoNoDeducible From CuentaContable WHERE Inactivo = 0"
+            Return "Select CuentaContable, Descripcion, '' AS Notas, " & saldo & "(CuentaContable.CuentaContable,@fp1) as SaldoAcumulado1, " & saldo & "(CuentaContable,@fp2) As SaldoAcumulado2, " & saldo & "(CuentaContable,@fp3) as SaldoAcumulado3, Nivel, Movimiento As Movimientos, PARENTID, id, Tipo, GastoNoDeducible, 0 AS SaldoAcumulado4, 0 AS SaldoAcumulado5, 0 AS SaldoAcumulado6, 0 AS SaldoAcumulado7, 0 AS SaldoAcumulado8, 0 AS SaldoAcumulado9, 0 AS SaldoAcumulado10, 0 AS SaldoAcumulado11, 0 AS SaldoAcumulado12, 0 AS Acumulado From CuentaContable WHERE Inactivo = 0"
         End If
         If cantPeriodos = 2 Then
-            Return "Select CuentaContable, Descripcion, '' AS Notas,  " & saldo & "(CuentaContable.CuentaContable,@fp1) as SaldoAcumulado1, " & saldo & "(CuentaContable,@fp2) As SaldoAcumulado2, 0 as SaldoAcumulado3, Nivel, Movimiento As Movimientos, PARENTID, id, Tipo, GastoNoDeducible From CuentaContable WHERE Inactivo = 0"
+            Return "Select CuentaContable, Descripcion, '' AS Notas,  " & saldo & "(CuentaContable.CuentaContable,@fp1) as SaldoAcumulado1, " & saldo & "(CuentaContable,@fp2) As SaldoAcumulado2, 0 as SaldoAcumulado3, Nivel, Movimiento As Movimientos, PARENTID, id, Tipo, GastoNoDeducible, 0 AS SaldoAcumulado4, 0 AS SaldoAcumulado5, 0 AS SaldoAcumulado6, 0 AS SaldoAcumulado7, 0 AS SaldoAcumulado8, 0 AS SaldoAcumulado9, 0 AS SaldoAcumulado10, 0 AS SaldoAcumulado11, 0 AS SaldoAcumulado12, 0 AS Acumulado  From CuentaContable WHERE Inactivo = 0"
         End If
         If cantPeriodos = 1 Then
-            Return "Select CuentaContable, Descripcion, '' AS Notas,  " & saldo & "(CuentaContable.CuentaContable,@fp1) as SaldoAcumulado1, 0 As SaldoAcumulado2, 0 as SaldoAcumulado3, Nivel, Movimiento As Movimientos, PARENTID, id, Tipo, GastoNoDeducible From CuentaContable WHERE Inactivo = 0"
+            Return "Select CuentaContable, Descripcion, '' AS Notas,  " & saldo & "(CuentaContable.CuentaContable,@fp1) as SaldoAcumulado1, 0 As SaldoAcumulado2, 0 as SaldoAcumulado3, Nivel, Movimiento As Movimientos, PARENTID, id, Tipo, GastoNoDeducible,0 AS SaldoAcumulado4, 0 AS SaldoAcumulado5, 0 AS SaldoAcumulado6, 0 AS SaldoAcumulado7, 0 AS SaldoAcumulado8, 0 AS SaldoAcumulado9, 0 AS SaldoAcumulado10, 0 AS SaldoAcumulado11, 0 AS SaldoAcumulado12, 0 AS Acumulado  From CuentaContable WHERE Inactivo = 0"
         End If
         Return ""
     End Function

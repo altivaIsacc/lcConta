@@ -1433,7 +1433,7 @@ Public Class MainForm
                 End If
             Case Else
                 'versiones generales y la de felipe(comunidad,bramadero,la parada).
-                Dim frm As New frmAsientosIndividualesFelipe
+                Dim frm As New frmAsientosIndividuales
                 If VerificandoAcceso_a_Modulos(frm.Name, frm.Text, Usuario.Cedula, "Contabilidad") Then
                     frm.MdiParent = Me
                     frm.Show()

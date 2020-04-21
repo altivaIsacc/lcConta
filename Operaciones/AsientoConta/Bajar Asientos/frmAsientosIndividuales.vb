@@ -1850,10 +1850,18 @@ Public Class frmAsientosIndividuales
                 End If
 
 
+                Dim cInv As String = ""
+                Dim cDInv As String = ""
+
+                cFunciones.Llenar_Tabla_Generico("SELECT CuentaContable.CuentaContable, CuentaContable.Descripcion FROM SettingCuentaContable INNER JOIN  CuentaContable ON SettingCuentaContable.IdCompraGrabado = CuentaContable.id", stt, Configuracion.Claves.Conexion("Contabilidad"))
+                If stt.Rows.Count > 0 Then
+                    cInv = stt.Rows(0).Item("CuentaContable")
+                    cDInv = stt.Rows(0).Item("Descripcion")
+                End If
+
                 Dim _dt As New DataTable
-                'cmd.CommandText = "SELECT     b.Nombre, b.CuentaContable, b.DescripcionCuentaContable, a.Gravado, a.Exento, a.Descripcion FROM compras AS c INNER JOIN Proveedores AS p ON c.CodigoProv = p.CodigoProv INNER JOIN articulos_comprados AS a ON c.Id_Compra = a.IdCompra INNER JOIN    Bodega AS b ON a.bodega_id = b.IdBodega WHERE (c.Id_Compra = " & dt.Rows(ic).Item("ID") & ") AND (c.Gasto = 0) AND (c.TotalFactura > 0) AND (c.Contabilizado = 0)"
-                cmd.CommandText = "SELECT '1-01-07-00-00' AS CuentaContable, 'INVENTARIOS' AS DescripcionCuentaContable, a.Gravado, a.Exento, a.Descripcion FROM compras AS c INNER JOIN  Proveedores AS p ON c.CodigoProv = p.CodigoProv INNER JOIN  articulos_comprados AS a ON c.Id_Compra = a.IdCompra WHERE (c.Id_Compra = " & dt.Rows(ic).Item("ID") & ") AND (c.Gasto = 0) AND (c.TotalFactura > 0) AND (c.Contabilizado = 0)"
-                cFunciones.Llenar_Tabla_Generico(cmd, _dt, Configuracion.Claves.Conexion(conexion))
+                cmd.CommandText = "SELECT '" & cInv & "' AS CuentaContable, '" & cDInv & "' AS DescripcionCuentaContable, a.Gravado, a.Exento, a.Descripcion FROM compras AS c INNER JOIN  Proveedores AS p ON c.CodigoProv = p.CodigoProv INNER JOIN  articulos_comprados AS a ON c.Id_Compra = a.IdCompra WHERE (c.Id_Compra = " & dt.Rows(ic).Item("ID") & ") AND (c.Gasto = 0) AND (c.TotalFactura > 0) AND (c.Contabilizado = 0)"
+                cFunciones.Llenar_Tabla_Generico(cmd, _dt, Configuracion.Claves.Conexion("SeePos"))
 
                 Dim cComprasGravadas As String
                 Dim dComprasGravadas As String
