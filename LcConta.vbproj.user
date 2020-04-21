@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PublishUrlHistory>Y:\General\LcPymes\lcConta\|\\servidor-pc\Respaldo Central-Pc\Aqui\</PublishUrlHistory>
+    <InstallUrlHistory>http://www.altivasoluciones.com/descargar/General/LcPymes/lcConta/|\\servidor-pc\Respaldo Central-Pc\Aqui\</InstallUrlHistory>
+    <SupportUrlHistory />
+    <UpdateUrlHistory>\\servidor-pc\Respaldo Central-Pc\Aqui\|http://www.altivasoluciones.com/descargar/General/LcPymes/lcConta/</UpdateUrlHistory>
+    <BootstrapperUrlHistory />
+    <ErrorReportUrlHistory />
+    <FallbackCulture>en-US</FallbackCulture>
+    <VerifyUploadedFiles>false</VerifyUploadedFiles>
+  </PropertyGroup>
+  <PropertyGroup>
+    <EnableSecurityDebugging>false</EnableSecurityDebugging>
+  </PropertyGroup>
+</Project>

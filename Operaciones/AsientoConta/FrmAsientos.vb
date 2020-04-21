@@ -2428,8 +2428,8 @@ Public Class FrmAsientos
                 TipoCambio = CDbl(txtTipoCambio.Text)
             End If
 
-            sql.CommandText = "EXEC [dbo].[SpVentasXFechas2] " & CBMoneda.SelectedValue & ",N'" & DPTrans.Value.Date & "', N'" & DPTrans.Value.Date & "', " & Configuracion.Claves.Conexion("SeePos") & "," & TipoCambio
-            cFunciones.Llenar_Tabla_Generico(sql, dt, Configuracion.Claves.Conexion("SEEPOS"))
+			sql.CommandText = "EXEC [dbo].[SpVentasXFechas2] " & CBMoneda.SelectedValue & ",N'" & DPTrans.Value.Date & "', N'" & DPTrans.Value.Date & "', " & Configuracion.Claves.Configuracion("Sucursal", "1") & "," & TipoCambio
+			cFunciones.Llenar_Tabla_Generico(sql, dt, Configuracion.Claves.Conexion("SEEPOS"))
 
             For i As Integer = 0 To dt.Rows.Count - 1
                 SubTotalExcento += CDbl(dt.Rows(i).Item("SubTotalExcento"))
@@ -3679,12 +3679,12 @@ Public Class FrmAsientos
         Next
         For Each line As DataSetAsientos.DetallesAsientosContableRow In DataSetAsientos1.DetallesAsientosContable
             If Not line.RowState = DataRowState.Deleted Then
-                If Not line.NoDocumentoDetalle Is DBNull.Value Then
-                    line.NoDocumentoDetalle = ""
+				If line.NoDocumentoDetalle Is DBNull.Value Then
+					line.NoDocumentoDetalle = ""
 
-                End If
+				End If
 
-            End If
+			End If
 
         Next
     End Sub
