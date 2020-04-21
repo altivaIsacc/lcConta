@@ -67,7 +67,7 @@ Public Class EstadosFinancieros
             Filtro &= " en " & periodo1 & "" & IIf(periodo2.Equals(""), "", ", " & periodo2) & "" & IIf(periodo2.Equals(""), "", ", " & periodo3)
 
 
-        ElseIf EsExtendido And Not EsMensual Then
+        ElseIf EsExtendido And EsMensual Then
             Filtro = "Periodo: " & Año
             cmd.CommandText = consulta12M(Moneda)
             Dim cd As New SqlClient.SqlCommand
@@ -142,7 +142,7 @@ Public Class EstadosFinancieros
         Dim rpt As CrystalDecisions.CrystalReports.Engine.ReportDocument
 
         If EsExtendido Then
-            If EsMensual Then
+            If Not EsMensual Then
                 rpt = New rptEstadoResultadoMensual
                 rpt.SetDataSource(dts)
                 rpt.SetParameterValue("Periodo1", Format(fp1, "MMM") & "/" & fp1.Year)
@@ -188,39 +188,41 @@ Public Class EstadosFinancieros
         lista.Add(New CalculoRenta) : lista.Add(New CalculoRenta) : lista.Add(New CalculoRenta) : lista.Add(New CalculoRenta) : lista.Add(New CalculoRenta)
         lista.Add(New CalculoRenta) : lista.Add(New CalculoRenta) : lista.Add(New CalculoRenta) : lista.Add(New CalculoRenta) : lista.Add(New CalculoRenta)
         For Each line As dtsEstadosFinancieros.ResultadosRow In dts.Resultados
+            If line.Movimientos Then
+                If line.Tipo.Equals("INGRESOS") Then
+                    For i As Integer = 0 To 12 - 1
+                        If Not line.GastoNoDeducible Then
+                            lista(i).Ingresos += IIf(line.Item("SaldoAcumulado" & i + 1) Is DBNull.Value, 0, line.Item("SaldoAcumulado" & i + 1))
+                        End If
+                        lista(i).IngresosCompletos += IIf(line.Item("SaldoAcumulado" & i + 1) Is DBNull.Value, 0, line.Item("SaldoAcumulado" & i + 1))
+                    Next
+                End If
+                If line.Tipo.Equals("COSTO VENTA") Then
+                    For i As Integer = 0 To 12 - 1
+                        If Not line.GastoNoDeducible Then
+                            lista(i).Costos += IIf(line.Item("SaldoAcumulado" & i + 1) Is DBNull.Value, 0, line.Item("SaldoAcumulado" & i + 1))
+                        End If
+                        lista(i).CostosCompletos += IIf(line.Item("SaldoAcumulado" & i + 1) Is DBNull.Value, 0, line.Item("SaldoAcumulado" & i + 1))
+                    Next
 
-            If line.Tipo.Equals("INGRESOS") Then
-                For i As Integer = 0 To 12 - 1
-                    If Not line.GastoNoDeducible Then
-                        lista(i).Ingresos = IIf(line.Item("SaldoAcumulado" & i + 1) Is DBNull.Value, 0, line.Item("SaldoAcumulado" & i + 1))
-                    End If
-                    lista(i).IngresosCompletos = IIf(line.Item("SaldoAcumulado" & i + 1) Is DBNull.Value, 0, line.Item("SaldoAcumulado" & i + 1))
-                Next
-            End If
-            If line.Tipo.Equals("COSTO VENTA") Then
-                For i As Integer = 0 To 12 - 1
-                    If Not line.GastoNoDeducible Then
-                        lista(i).Costos = IIf(line.Item("SaldoAcumulado" & i + 1) Is DBNull.Value, 0, line.Item("SaldoAcumulado" & i + 1))
-                    End If
-                    lista(i).CostosCompletos = IIf(line.Item("SaldoAcumulado" & i + 1) Is DBNull.Value, 0, line.Item("SaldoAcumulado" & i + 1))
-                Next
+                End If
+                If line.Tipo.Equals("GASTOS") Then
+                    For i As Integer = 0 To 12 - 1
+                        If Not line.GastoNoDeducible Then
+                            lista(i).Gastos += IIf(line.Item("SaldoAcumulado" & i + 1) Is DBNull.Value, 0, line.Item("SaldoAcumulado" & i + 1))
+                        End If
+                        lista(i).GastosCompletos += IIf(line.Item("SaldoAcumulado" & i + 1) Is DBNull.Value, 0, line.Item("SaldoAcumulado" & i + 1))
+                    Next
 
+                End If
             End If
-            If line.Tipo.Equals("GASTOS") Then
-                For i As Integer = 0 To 12 - 1
-                    If Not line.GastoNoDeducible Then
-                        lista(i).Gastos = IIf(line.Item("SaldoAcumulado" & i + 1) Is DBNull.Value, 0, line.Item("SaldoAcumulado" & i + 1))
-                    End If
-                    lista(i).GastosCompletos = IIf(line.Item("SaldoAcumulado" & i + 1) Is DBNull.Value, 0, line.Item("SaldoAcumulado" & i + 1))
-                Next
 
-            End If
         Next
 
-        addItemTotal(dts, "5zzz", "UTILIDAD BRUTA COMPLETA", lista)
-        addItemTotal(dts, "5zzz", "UTILIDAD BRUTA RENTA", lista)
-        addItemTotal(dts, "6zzz", "UTILIDAD NETA COMPLETA", lista)
+        addItemTotal(dts, "5zzz", "UTILIDAD BRUTA", lista)
+        '  addItemTotal(dts, "5zzz", "UTILIDAD BRUTA RENTA", lista)
         addItemTotal(dts, "6zzz", "UTILIDAD NETA ANTES RENTA", lista)
+        ' addItemTotal(dts, "6zzz", "UTILIDAD NETA ANTES RENTA", lista)
         addItemTotal(dts, "6zzz", "RENTA", lista)
         addItemTotal(dts, "6zzz", "UTILIDAD NETA DESPUÉS RENTA", lista)
     End Sub
@@ -230,11 +232,11 @@ Public Class EstadosFinancieros
         With linea
             .CuentaContable = CuentaContable
             .Descripcion = Descripcion
-            .Tipo = "TOTAL"
+            .Tipo = "SUBTOTAL"
             .Nivel = -10
             .Movimientos = 0
             For i As Integer = 0 To 12 - 1
-                If Descripcion.Equals("UTILIDAD BRUTA COMPLETA") Then
+                If Descripcion.Equals("UTILIDAD BRUTA") Then
                     .Item("SaldoAcumulado" & (i + 1)) = saldos(i).UtilidadBrutaCompleta
                 End If
                 If Descripcion.Equals("UTILIDAD BRUTA RENTA") Then
@@ -244,7 +246,7 @@ Public Class EstadosFinancieros
                     .Item("SaldoAcumulado" & (i + 1)) = saldos(i).UtilidadNetaCompleta
                 End If
                 If Descripcion.Equals("UTILIDAD NETA ANTES RENTA") Then
-                    .Item("SaldoAcumulado" & (i + 1)) = saldos(i).UtilidadNeta
+                    .Item("SaldoAcumulado" & (i + 1)) = saldos(i).UtilidadNetaCompleta
                 End If
                 If Descripcion.Equals("RENTA") Then
                     .Item("SaldoAcumulado" & (i + 1)) = saldos(i).Renta
@@ -302,7 +304,23 @@ Public Class EstadosFinancieros
                         End If
                     End If
                 Next
-                addItemSubTotal(dts, cuenta & "z", "TOTAL " & line.Descripcion, line.Nivel,
+                addItemSubTotal(dts, cuenta & "zA", "TOTAL " & line.Descripcion, line.Nivel,
+                                line.SaldoAcumulado1, line.SaldoAcumulado2, line.SaldoAcumulado3,
+                                line.SaldoAcumulado4, line.SaldoAcumulado5, line.SaldoAcumulado6,
+                                line.SaldoAcumulado7, line.SaldoAcumulado8, line.SaldoAcumulado9,
+                                line.SaldoAcumulado10, line.SaldoAcumulado11, line.SaldoAcumulado12)
+            End If
+            If Not line.Movimientos And line.Nivel = 0 Then
+                Dim cuenta As String = ""
+                For Each hija As dtsEstadosFinancieros.ResultadosRow In rdts.Resultados
+                    If line.id = hija.PARENTID Then
+                        If cuenta < hija.CuentaContable Then
+                            cuenta = hija.CuentaContable
+                        End If
+                    End If
+                Next
+                cuenta = cuenta.Replace("00", "zB")
+                addItemSubTotal(dts, cuenta, "TOTAL " & line.Descripcion, line.Nivel,
                                 line.SaldoAcumulado1, line.SaldoAcumulado2, line.SaldoAcumulado3,
                                 line.SaldoAcumulado4, line.SaldoAcumulado5, line.SaldoAcumulado6,
                                 line.SaldoAcumulado7, line.SaldoAcumulado8, line.SaldoAcumulado9,
@@ -451,6 +469,24 @@ Public Class EstadosFinancieros
         Dim frm As New frmResultado(dts)
         frm.MdiParent = Mdi
         frm.WindowState = Windows.Forms.FormWindowState.Normal
+        frm.Show()
+    End Sub
+    Public Shared Sub TestAbrir(Mdi As System.Windows.Forms.Form, _usuario As String)
+        Dim dts As New dtsEstadosFinancieros
+        usuario = _usuario
+        Dim cmd As New SqlClient.SqlCommand
+
+        cmd.CommandText = "Select *  From Moneda Where CodMoneda = 1 Or CodMoneda = 2"
+        bdAcceso.Cargar(cmd, dts.Moneda)
+
+
+        Dim frm As New frmResultado(dts)
+        frm.MdiParent = Mdi
+        frm.rbEstadoResultadoMensual.Checked = True
+        frm.cbMoneda.SelectedValue = 2
+        frm.nuAño.Value = 2019
+        frm.WindowState = Windows.Forms.FormWindowState.Normal
+        frm.WindowState = Windows.Forms.FormWindowState.Maximized
         frm.Show()
     End Sub
 
