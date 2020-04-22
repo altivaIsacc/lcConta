@@ -570,27 +570,19 @@ Public Class frmAsientosIndividuales
         sp_GENERAR()
     End Sub
 
-    Dim conexion As String
 
-    Sub sp_GENERAR()
+
+	Sub sp_GENERAR()
 
         Me.btnGenerar.Text = "Espere..."
         Me.btnGenerar.Enabled = False
         Me.btnGenerar.Refresh()
 
 
-        If Not Me.chbUnirServidor.Checked Then
-            Me.conexion = "Conexion"
-        Else
-            If Me.cboServidor.Text.Equals("SUPER LA PARADA") Then
-                Me.conexion = "Empresa1"
-            ElseIf Me.cboServidor.Text.Equals("SUPER COMUNIDAD") Then
-                Me.conexion = "Empresa2"
-            End If
-        End If
-      
 
-        Try
+
+
+		Try
             Me.dsAs.DetallesAsientosContable.Clear()
             Me.dsAs.AsientosContables.Clear()
 
@@ -758,9 +750,9 @@ Public Class frmAsientosIndividuales
                  " FROM         OpcionesDePago AS op INNER JOIN abonoccobrar AS a ON op.Documento = a.Num_Recibo WHERE (op.Fecha >= @F1) AND (op.TipoDocumento = 'ABO') AND (op.Fecha <= @F2) AND (a.Contabilizado = 0) AND (a.Anula = 0 )"
         cmd.Parameters.AddWithValue("@F1", _pF1.Date)
         cmd.Parameters.AddWithValue("@F2", _pF2.Date)
-        cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion(conexion))
+		cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion("Seepos"))
 
-        If dt.Rows.Count = 0 Then
+		If dt.Rows.Count = 0 Then
             MsgBox("No existen " & Me.cboTipos.Text & " pendientes para este rango de fechas", MsgBoxStyle.OkOnly)
             Exit Sub
 
@@ -1009,10 +1001,10 @@ Public Class frmAsientosIndividuales
         cmd.CommandText = "SELECT Id_Cheque AS Id, Num_Cheque AS Documento,Tipo, Cheques.Fecha, Portador, Monto, Conciliado, Anulado, Observaciones, Ced_Usuario, Contabilizado, Asiento,  Num_Conciliacion, MontoLetras, CodigoMoneda, TipoCambio,Id_PlanDePago, Id_abonocpagar, Cuentas_bancarias.NombreCuentaContable, Cuentas_bancarias.CuentaContable FROM Cheques INNER JOIN Cuentas_bancarias ON Cheques.Id_CuentaBancaria = Cuentas_bancarias.Id_CuentaBancaria WHERE (dbo.DateOnly(Cheques.Fecha) >= @F1 AND dbo.DateOnly(Cheques.Fecha) <= @F2) AND Num_Cheque > 0 AND Anulado = 0 AND Contabilizado = 0 AND Id_abonocpagar = 0 "
         cmd.Parameters.AddWithValue("@F1", _pF1.Date)
         cmd.Parameters.AddWithValue("@F2", _pF2.Date)
-        cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion(Me.conexion))
+		cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion("Bancos"))
 
 
-        If dt.Rows.Count = 0 Then
+		If dt.Rows.Count = 0 Then
             MsgBox("No existen cheques pendientes para este rango de fechas", MsgBoxStyle.OkOnly)
             Exit Sub
 
@@ -1062,14 +1054,14 @@ Public Class frmAsientosIndividuales
              "                      Bancos.dbo.Cuentas_bancarias AS ct ON ch.Id_CuentaBancaria = ct.Id_CuentaBancaria AND a.CuentaBancaria = ct.Cuenta INNER JOIN " &
              "                      Proveedores AS p ON a.Cod_Proveedor = p.CodigoProv where ch.Id_Cheque = " & dt.Rows(ic).Item("ID")
             Dim cuentaBuena As New DataTable
-            cFunciones.Llenar_Tabla_Generico(str, cuentaBuena, Configuracion.Claves.Conexion(conexion))
+			cFunciones.Llenar_Tabla_Generico(str, cuentaBuena, Configuracion.Claves.Conexion("Seepos"))
 
-            'DETALLE DEL CHEQUE
-            Dim _dt As New DataTable
+			'DETALLE DEL CHEQUE
+			Dim _dt As New DataTable
             cmd.CommandText = "SELECT Cheques.Fecha, Cheques_Detalle.Descripcion_Mov, Cheques_Detalle.Cuenta_Contable, Cheques_Detalle.Monto,Cheques_Detalle.Nombre_Cuenta, Cheques_Detalle.Debe, Cheques_Detalle.Haber, Cheques_Detalle.Principal, Cheques_Detalle.Id_ChequeDet FROM Cheques INNER JOIN Cuentas_bancarias ON Cheques.Id_CuentaBancaria = Cuentas_bancarias.Id_CuentaBancaria INNER JOIN Cheques_Detalle ON Cheques.Id_Cheque = Cheques_Detalle.Id_Cheque WHERE   Cheques_Detalle.Id_Cheque  = " & dt.Rows(ic).Item("ID") & " AND  (Cheques_Detalle.Principal = 0) "
 
-            cFunciones.Llenar_Tabla_Generico(cmd, _dt, Configuracion.Claves.Conexion(conexion))
-            For id As Integer = 0 To _dt.Rows.Count - 1
+			cFunciones.Llenar_Tabla_Generico(cmd, _dt, Configuracion.Claves.Conexion("Bancos"))
+			For id As Integer = 0 To _dt.Rows.Count - 1
                 'LINEAS DETALLE
                 If CUENTAbANCO <> _dt.Rows(id).Item("Cuenta_Contable") And dt.Rows(ic).Item("CuentaContable") <> _dt.Rows(id).Item("Cuenta_Contable") And cuentaBuena.Rows.Count > 0 Then
 
@@ -1101,10 +1093,10 @@ Public Class frmAsientosIndividuales
         cmd.CommandText = "SELECT dbo.Deposito.Id_Deposito AS ID, dbo.Deposito.NumeroDocumento AS Documento, dbo.Deposito.Id_CuentaBancaria, dbo.Deposito.Fecha,dbo.Deposito.Monto, dbo.Deposito.Concepto, dbo.Deposito.Anulado, dbo.Deposito.Conciliado, dbo.Deposito.Contabilizado, dbo.Deposito.Ced_Usuario, dbo.Deposito.Asiento, dbo.Deposito.Num_Conciliacion, dbo.Deposito.CodigoMoneda, dbo.Deposito.TipoCambio, dbo.Cuentas_bancarias.CuentaContable, dbo.Cuentas_bancarias.NombreCuentaContable  FROM  dbo.Deposito INNER JOIN dbo.Cuentas_bancarias ON dbo.Deposito.Id_CuentaBancaria = dbo.Cuentas_bancarias.Id_CuentaBancaria WHERE     (dbo.DateOnly(dbo.Deposito.Fecha) >= @F1) AND (dbo.DateOnly(dbo.Deposito.Fecha) <= @F2) AND (dbo.Deposito.NumeroDocumento > 0) AND  (dbo.Deposito.Anulado = 0) AND (dbo.Deposito.Contabilizado = 0)"
         cmd.Parameters.AddWithValue("@F1", _pF1.Date)
         cmd.Parameters.AddWithValue("@F2", _pF2.Date)
-        cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion(conexion))
+		cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion("Bancos"))
 
 
-        If dt.Rows.Count = 0 Then
+		If dt.Rows.Count = 0 Then
             MsgBox("No existen " & Me.cboTipos.Text & " pendientes para este rango de fechas", MsgBoxStyle.OkOnly)
             Exit Sub
 
@@ -1152,8 +1144,8 @@ Public Class frmAsientosIndividuales
                 Dim _dt As New DataTable
                 '*********DEPOSITOS DE BANCOS ***********
                 cmd.CommandText = "SELECT     dbo.Deposito_Detalle.CuentaContable, dbo.Deposito_Detalle.DescripcionMov, dbo.Deposito_Detalle.Monto, dbo.Deposito_Detalle.NombreCuenta, dbo.Deposito_Detalle.TipoCambio, dbo.Deposito_Detalle.MontoOtro FROM dbo.Deposito INNER JOIN dbo.Cuentas_bancarias ON dbo.Deposito.Id_CuentaBancaria = dbo.Cuentas_bancarias.Id_CuentaBancaria INNER JOIN dbo.Deposito_Detalle ON dbo.Deposito.Id_Deposito = dbo.Deposito_Detalle.Id_Deposito WHERE     (dbo.Deposito.NumeroDocumento > 0) AND (dbo.Deposito.Anulado = 0) AND (dbo.Deposito.Contabilizado = 0) AND (dbo.Deposito.Id_Deposito = " & dt.Rows(ic).Item("ID") & ")"
-                cFunciones.Llenar_Tabla_Generico(cmd, _dt, Configuracion.Claves.Conexion(conexion))
-                If _dt.Rows.Count = 0 Then
+				cFunciones.Llenar_Tabla_Generico(cmd, _dt, Configuracion.Claves.Conexion("Bancos"))
+				If _dt.Rows.Count = 0 Then
 
                     '****************  NO TIENE DETALLE DEL ASIENTO EN EL DEPOSITO
                     Dim stt As New DataTable
@@ -1225,10 +1217,10 @@ Public Class frmAsientosIndividuales
 
         cmd.Parameters.AddWithValue("@F1", _pF1.Date)
         cmd.Parameters.AddWithValue("@F2", _pF2.Date)
-        cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion(conexion))
+		cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion("Bancos"))
 
 
-        If dt.Rows.Count = 0 Then
+		If dt.Rows.Count = 0 Then
             MsgBox("No existen " & Me.cboTipos.Text & " pendientes para este rango de fechas", MsgBoxStyle.OkOnly)
             Exit Sub
 
@@ -1288,9 +1280,9 @@ Public Class frmAsientosIndividuales
                 cmd.CommandText = "Select AjusteBancario_Detalle.CuentaContable, AjusteBancario_Detalle.NombreCuenta, AjusteBancario_Detalle.Monto, AjusteBancario_Detalle.Descripcion_Mov, AjusteBancario_Detalle.Id_AjusteDet FROM AjusteBancario INNER JOIN Cuentas_bancarias ON AjusteBancario.Id_CuentaBancaria = Cuentas_bancarias.Id_CuentaBancaria INNER JOIN AjusteBancario_Detalle ON AjusteBancario.Id_Ajuste = AjusteBancario_Detalle.Id_Ajuste " &
                                       " WHERE AjusteBancario.Id_Ajuste = " & dt.Rows(ic).Item("ID") & " AND Anula = 0 AND Contabilizado = 0 "
 
-                cFunciones.Llenar_Tabla_Generico(cmd, _dt, Configuracion.Claves.Conexion(conexion))
+				cFunciones.Llenar_Tabla_Generico(cmd, _dt, Configuracion.Claves.Conexion("Bancos"))
 
-                For id As Integer = 0 To _dt.Rows.Count - 1
+				For id As Integer = 0 To _dt.Rows.Count - 1
 
                     'LINEAS DETALLE DEL AJUSTE
 
@@ -1318,10 +1310,10 @@ Public Class frmAsientosIndividuales
 
         cmd.Parameters.AddWithValue("@F1", _pF1.Date)
         cmd.Parameters.AddWithValue("@F2", _pF2.Date)
-        cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion(conexion))
+		cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion("Bancos"))
 
 
-        If dt.Rows.Count = 0 Then
+		If dt.Rows.Count = 0 Then
             MsgBox("No existen " & Me.cboTipos.Text & " pendientes para este rango de fechas", MsgBoxStyle.OkOnly)
             Exit Sub
 
@@ -1383,10 +1375,10 @@ Public Class frmAsientosIndividuales
 
         cmd.Parameters.AddWithValue("@F1", _pF1.Date)
         cmd.Parameters.AddWithValue("@F2", _pF2.Date)
-        cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion(conexion))
+		cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion("Seepos"))
 
 
-        If dt.Rows.Count = 0 Then
+		If dt.Rows.Count = 0 Then
             MsgBox("No existen " & Me.cboTipos.Text & " pendientes para este rango de fechas", MsgBoxStyle.OkOnly)
             Exit Sub
 
@@ -1451,8 +1443,8 @@ Public Class frmAsientosIndividuales
 
                 Dim _dt As New DataTable
                 cmd.CommandText = "SELECT     a.Descripcion, a.Base, a.Monto_Flete, a.OtrosCargos, a.Costo, a.Cantidad, a.Gravado, a.Exento, a.Descuento_P, a.Descuento, a.Impuesto_P, a.Impuesto, a.Total, a.Devoluciones, a.CuentaContable,a.MontoGasto, a.ImpuestoAplicable, ccm.Descripcion AS DesCC FROM  compras AS c INNER JOIN  Proveedores AS p ON c.CodigoProv = p.CodigoProv INNER JOIN  Articulos_Gastos AS a ON c.Id_Compra = a.IdCompra INNER JOIN  CuentasContableMovimimiento AS ccm ON a.CuentaContable = ccm.CuentaContable COLLATE Modern_Spanish_CI_AS WHERE    (c.Id_Compra = " & dt.Rows(ic).Item("ID") & ") AND  (c.Gasto = 1) AND (c.TotalFactura > 0) AND (c.Contabilizado = 0)"
-                cFunciones.Llenar_Tabla_Generico(cmd, _dt, Configuracion.Claves.Conexion(conexion))
-                If _dt.Rows.Count = 0 Then
+				cFunciones.Llenar_Tabla_Generico(cmd, _dt, Configuracion.Claves.Conexion("Seepos"))
+				If _dt.Rows.Count = 0 Then
                     MsgBox("Linea no valida en Factura # " & dt.Rows(ic).Item("Factura"), MsgBoxStyle.OkOnly)
                     Exit Sub
                 End If
@@ -1483,9 +1475,9 @@ Public Class frmAsientosIndividuales
 
         cmd.Parameters.AddWithValue("@F1", _pF1.Date)
         cmd.Parameters.AddWithValue("@F2", _pF2.Date)
-        cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion(conexion))
+		cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion("Seepos"))
 
-        If dt.Rows.Count = 0 Then
+		If dt.Rows.Count = 0 Then
             MsgBox("No existen " & Me.cboTipos.Text & " pendientes para este rango de fechas", MsgBoxStyle.OkOnly)
             Exit Sub
 
@@ -1505,8 +1497,8 @@ Public Class frmAsientosIndividuales
         cmd1.CommandText = cn
         cmd1.Parameters.AddWithValue("@F1", _pF1.Date)
         cmd1.Parameters.AddWithValue("@F2", _pF2.Date)
-        cFunciones.Llenar_Tabla_Generico(cmd1, _dt, Configuracion.Claves.Conexion(conexion))
-        Dim pos As Integer = 0
+		cFunciones.Llenar_Tabla_Generico(cmd1, _dt, Configuracion.Claves.Conexion("Seepos"))
+		Dim pos As Integer = 0
 
         'Buscar Información de Impuesto de Ventas
         Dim cIngGra As String = ""
@@ -1689,8 +1681,8 @@ Public Class frmAsientosIndividuales
 
         cmd.Parameters.AddWithValue("@F1", _pF1.Date)
         cmd.Parameters.AddWithValue("@F2", _pF2.Date)
-        cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion(conexion))
-        Dim f As Date = _pF1.Date
+		cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion("Seepos"))
+		Dim f As Date = _pF1.Date
 
         If dt.Rows.Count = 0 Then
             MsgBox("No existen " & Me.cboTipos.Text & " pendientes para este rango de fechas", MsgBoxStyle.OkOnly)
@@ -1784,10 +1776,10 @@ Public Class frmAsientosIndividuales
 
         cmd.Parameters.AddWithValue("@F1", _pF1.Date)
         cmd.Parameters.AddWithValue("@F2", _pF2.Date)
-        cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion(conexion))
+		cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion("Seepos"))
 
 
-        If dt.Rows.Count = 0 Then
+		If dt.Rows.Count = 0 Then
             MsgBox("No existen " & Me.cboTipos.Text & " pendientes para este rango de fechas", MsgBoxStyle.OkOnly)
             Exit Sub
 
@@ -1923,10 +1915,10 @@ Public Class frmAsientosIndividuales
                           a.TipoCambio  FROM Ajustescpagar AS a INNER JOIN  Proveedores AS p ON a.Cod_Proveedor = p.CodigoProv  WHERE (dbo.DateOnly(a.Fecha) >= @F1) AND (dbo.DateOnly(a.Fecha) <= @F2)  AND (a.Contabilizado = 0) AND (a.Anula = 0) "
         cmd.Parameters.AddWithValue("@F1", _pF1.Date)
         cmd.Parameters.AddWithValue("@F2", _pF2.Date)
-        cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion(conexion))
+		cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion("Seepos"))
 
 
-        If dt.Rows.Count = 0 Then
+		If dt.Rows.Count = 0 Then
             MsgBox("No existen " & Me.cboTipos.Text & " pendientes para este rango de fechas", MsgBoxStyle.OkOnly)
             Exit Sub
 
@@ -2036,9 +2028,9 @@ Public Class frmAsientosIndividuales
         cmd.CommandText = "SELECT [ID_Ajuste]  ,[AjusteNo]  ,[Tipo]  ,[Cod_Cliente]  ,[Nombre_Cliente]  ,[Fecha]  ,[Saldo_Prev]  ,[Monto]  ,[Saldo_Act]  ,[Observaciones]  ,[Anula]  ,[Cod_Usuario]  ,[Contabilizado]  ,[Cod_Moneda]  ,[Asiento]  FROM [SEEPOS].[dbo].[ajustesccobrar] Where anula = 0 and Contabilizado = 0 and dbo.DateOnly(FECHA) >= @F1 AND dbo.DateOnly(FECHA) <= @F2"
         cmd.Parameters.AddWithValue("@F1", _pF1.Date)
         cmd.Parameters.AddWithValue("@F2", _pF2.Date)
-        cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion(conexion))
+		cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion("Seepos"))
 
-        If dt.Rows.Count = 0 Then
+		If dt.Rows.Count = 0 Then
             MsgBox("No existen " & Me.cboTipos.Text & " pendientes para este rango de fechas", MsgBoxStyle.OkOnly)
             Exit Sub
 
@@ -2106,8 +2098,8 @@ Public Class frmAsientosIndividuales
                 Dim _dt As New DataTable
                 cmd.CommandText = "SELECT dj.Id_DetalleAjustecCobrar, dj.Id_AjustecCobrar, dj.Factura, dj.Tipo, dj.Monto, dj.Saldo_Ant, dj.Ajuste, dj.Ajuste_SuMoneda, dj.Saldo_Ajustado, dj.Observaciones,  dj.TipoNota, dj.CuentaContable, dj.IdCuentaC FROM dbo.detalle_ajustesccobrar AS dj " &
                 "WHERE   (dj.Id_AjustecCobrar = " & dt.Rows(ic).Item("ID_Ajuste") & ") "
-                cFunciones.Llenar_Tabla_Generico(cmd, _dt, Configuracion.Claves.Conexion(conexion))
-                If _dt.Rows.Count = 0 Then
+				cFunciones.Llenar_Tabla_Generico(cmd, _dt, Configuracion.Claves.Conexion("Seepos"))
+				If _dt.Rows.Count = 0 Then
                     MsgBox("Registro Incompleto " & dt.Rows(ic).Item("AjusteNo"), MsgBoxStyle.OkOnly)
                     Exit For
                 End If
@@ -2139,8 +2131,8 @@ Public Class frmAsientosIndividuales
 
         cmd.Parameters.AddWithValue("@F1", _pF1.Date)
         cmd.Parameters.AddWithValue("@F2", _pF2.Date)
-        cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion(conexion))
-        Dim cuentaInv As String = ""
+		cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion("Seepos"))
+		Dim cuentaInv As String = ""
         Dim cuentaInvNom As String = ""
 
         If dt.Rows.Count = 0 Then
@@ -2261,11 +2253,11 @@ Public Class frmAsientosIndividuales
 
         cmd.Parameters.AddWithValue("@F1", _pF1.Date)
         cmd.Parameters.AddWithValue("@F2", _pF2.Date)
-        cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion(conexion))
-        'Dim cuentaInv As String = ""
-        'Dim cuentaInvNom As String = ""
+		cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion("Seepos"))
+		'Dim cuentaInv As String = ""
+		'Dim cuentaInvNom As String = ""
 
-        If dt.Rows.Count = 0 Then
+		If dt.Rows.Count = 0 Then
             MsgBox("No existen " & Me.cboTipos.Text & " pendientes para este rango de fechas", MsgBoxStyle.OkOnly)
             Exit Sub
 
@@ -2359,10 +2351,10 @@ Public Class frmAsientosIndividuales
 
                 Dim _dt As New DataTable
                 cmd.CommandText = "SELECT Cuenta_Contable, Nombre_Cuenta, TotalEntrada + TotalSalida AS Monto, Salida, observacion, iventa as Gravado FROM AjusteInventario_Detalle inner join inventario on inventario.codigo = AjusteInventario_Detalle.cod_Articulo  WHERE (Cons_Ajuste = " & dt.Rows(ic).Item("Consecutivo") & ")"
-                '"SELECT a.ID_Ajuste, a.AjusteNo, d.CuentaContable, d.DescripcionCuentaContable, d.Ajuste FROM  Ajustescpagar AS a INNER JOIN      Proveedores AS p ON a.Cod_Proveedor = p.CodigoProv INNER JOIN  Detalle_AjustescPagar AS d ON a.ID_Ajuste = d.Id_AjustecPagar " & _
-                '"WHERE   (a.ID_Ajuste = " & dt.Rows(ic).Item("Concecutivo") & ") AND  (a.Anula = 0) AND (a.ContaCre = 0) AND (a.ContaDeb = 0)"
-                cFunciones.Llenar_Tabla_Generico(cmd, _dt, Configuracion.Claves.Conexion(conexion))
-                If _dt.Rows.Count > 0 Then
+				'"SELECT a.ID_Ajuste, a.AjusteNo, d.CuentaContable, d.DescripcionCuentaContable, d.Ajuste FROM  Ajustescpagar AS a INNER JOIN      Proveedores AS p ON a.Cod_Proveedor = p.CodigoProv INNER JOIN  Detalle_AjustescPagar AS d ON a.ID_Ajuste = d.Id_AjustecPagar " & _
+				'"WHERE   (a.ID_Ajuste = " & dt.Rows(ic).Item("Concecutivo") & ") AND  (a.Anula = 0) AND (a.ContaCre = 0) AND (a.ContaDeb = 0)"
+				cFunciones.Llenar_Tabla_Generico(cmd, _dt, Configuracion.Claves.Conexion("Seepos"))
+				If _dt.Rows.Count > 0 Then
                     .Current("Observaciones") &= ". " & _dt.Rows(0).Item("observacion")
                     .EndCurrentEdit()
                 End If
@@ -2399,8 +2391,8 @@ Public Class frmAsientosIndividuales
 
         cmd.Parameters.AddWithValue("@F1", _pF1.Date)
         cmd.Parameters.AddWithValue("@F2", _pF2.Date)
-        cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion(conexion))
-        Dim cuentaInv As String = ""
+		cFunciones.Llenar_Tabla_Generico(cmd, dt, Configuracion.Claves.Conexion("Proveeduria"))
+		Dim cuentaInv As String = ""
         Dim cuentaInvNom As String = ""
 
         If dt.Rows.Count = 0 Then
@@ -2467,11 +2459,11 @@ Public Class frmAsientosIndividuales
 
                 Dim _dt As New DataTable
                 cmd.CommandText = "SELECT cantidad * PrecioBase AS Total, CuentaContable, DescripcionCuentaContable, Id_Requisicion FROM RequisicionesDetalles Where Id_Requisicion = " & dt.Rows(ic).Item("Id_Requisicion") & " GROUP BY cantidad, PrecioBase, CuentaContable, DescripcionCuentaContable, Id_Requisicion)"
-                '"SELECT a.ID_Ajuste, a.AjusteNo, d.CuentaContable, d.DescripcionCuentaContable, d.Ajuste FROM  Ajustescpagar AS a INNER JOIN      Proveedores AS p ON a.Cod_Proveedor = p.CodigoProv INNER JOIN  Detalle_AjustescPagar AS d ON a.ID_Ajuste = d.Id_AjustecPagar " & _
-                '"WHERE   (a.ID_Ajuste = " & dt.Rows(ic).Item("Concecutivo") & ") AND  (a.Anula = 0) AND (a.ContaCre = 0) AND (a.ContaDeb = 0)"
-                cFunciones.Llenar_Tabla_Generico(cmd, _dt, Configuracion.Claves.Conexion(conexion))
+				'"SELECT a.ID_Ajuste, a.AjusteNo, d.CuentaContable, d.DescripcionCuentaContable, d.Ajuste FROM  Ajustescpagar AS a INNER JOIN      Proveedores AS p ON a.Cod_Proveedor = p.CodigoProv INNER JOIN  Detalle_AjustescPagar AS d ON a.ID_Ajuste = d.Id_AjustecPagar " & _
+				'"WHERE   (a.ID_Ajuste = " & dt.Rows(ic).Item("Concecutivo") & ") AND  (a.Anula = 0) AND (a.ContaCre = 0) AND (a.ContaDeb = 0)"
+				cFunciones.Llenar_Tabla_Generico(cmd, _dt, Configuracion.Claves.Conexion("Proveeduria"))
 
-                For id As Integer = 0 To _dt.Rows.Count - 1
+				For id As Integer = 0 To _dt.Rows.Count - 1
 
                     GuardaAsientoDetalle(_dt.Rows(id).Item("Total"), True, False, _dt.Rows(id).Item("CuentaContable"), _dt.Rows(id).Item("DescripcionCuentaContable"), tc)
                     GuardaAsientoDetalle(_dt.Rows(id).Item("Total"), False, True, cuentaInv, cuentaInvNom, tc)
