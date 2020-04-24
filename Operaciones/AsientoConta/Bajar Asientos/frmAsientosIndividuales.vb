@@ -1415,12 +1415,12 @@ Public Class frmAsientosIndividuales
                 .Current("CodMoneda") = dt.Rows(ic).Item("Cod_MonedaCompra")
 
 
-                If dt.Rows(ic).Item("TipoCambio") = 1 Or dt.Rows(ic).Item("TipoCambio") = 0 Then
-                    tc = fx.TipoCambio(dt.Rows(ic).Item("Fecha"), False)
-                Else
-                    tc = dt.Rows(ic).Item("TipoCambio")
-                End If
-                .Current("TipoCambio") = tc
+                'If dt.Rows(ic).Item("TipoCambio") = 1 Or dt.Rows(ic).Item("TipoCambio") = 0 Then
+                '    tc = fx.TipoCambio(dt.Rows(ic).Item("Fecha"), False)
+                'Else
+                '    tc = dt.Rows(ic).Item("TipoCambio")
+                'End If
+                .Current("TipoCambio") = dt.Rows(ic).Item("TipoCambio")
                 .EndCurrentEdit()
 
                 ''LINEA CUENTA DEL PROVEEDOR PASIVO
@@ -1839,12 +1839,12 @@ Public Class frmAsientosIndividuales
                 .Current("CodMoneda") = dt.Rows(ic).Item("Cod_MonedaCompra")
 
 
-                If dt.Rows(ic).Item("TipoCambio") = 1 Or dt.Rows(ic).Item("TipoCambio") = 0 Then
-                    tc = fx.TipoCambio(dt.Rows(ic).Item("Fecha"), False)
-                Else
-                    tc = dt.Rows(ic).Item("TipoCambio")
-                End If
-                .Current("TipoCambio") = tc
+                'If dt.Rows(ic).Item("TipoCambio") = 1 Or dt.Rows(ic).Item("TipoCambio") = 0 Then
+                '    tc = fx.TipoCambio(dt.Rows(ic).Item("Fecha"), False)
+                'Else
+                '    tc = dt.Rows(ic).Item("TipoCambio")
+                'End If
+                .Current("TipoCambio") = dt.Rows(ic).Item("TipoCambio")
                 .EndCurrentEdit()
 
                 'LINEA CUENTA DEL PROVEEDOR PASIVO
@@ -2132,7 +2132,7 @@ Public Class frmAsientosIndividuales
     Sub sp_GenerarAsientoDEVCOMPRAS(ByVal _pF1 As Date, ByVal _pF2 As Date)
         Dim dt As New DataTable
         Dim cmd As New SqlClient.SqlCommand
-        cmd.CommandText = "SELECT d.Devolucion, p.CuentaContable AS CC, p.DescripcionCuentaContable AS DCC, p.Nombre, d.Monto, d.Fecha, d.Impuesto, d.Descuento, d.SubTotalExcento,  d.SubTotalGravado, d.Cod_Moneda,  d.Contabilizado, d.Asiento FROM dbo.devoluciones_Compras AS d INNER JOIN  dbo.Proveedores AS p ON d.CodigoProv = p.CodigoProv WHERE (d.Anulado = 0) AND (d.Contabilizado = 0) AND (dbo.DateOnly(d.Fecha) >= @F1) AND (dbo.DateOnly(d.Fecha) <= @F2)"
+        cmd.CommandText = "SELECT d.Devolucion, p.CuentaContable AS CC, p.DescripcionCuentaContable AS DCC, p.Nombre, d.Monto, d.Fecha, d.Impuesto, d.Descuento, d.SubTotalExcento,  d.SubTotalGravado, d.Cod_Moneda,  d.Contabilizado, d.Asiento, d.TipoCambio FROM dbo.devoluciones_Compras AS d INNER JOIN  dbo.Proveedores AS p ON d.CodigoProv = p.CodigoProv WHERE (d.Anulado = 0) AND (d.Contabilizado = 0) AND (dbo.DateOnly(d.Fecha) >= @F1) AND (dbo.DateOnly(d.Fecha) <= @F2)"
 
         cmd.Parameters.AddWithValue("@F1", _pF1.Date)
         cmd.Parameters.AddWithValue("@F2", _pF2.Date)
@@ -2200,8 +2200,8 @@ Public Class frmAsientosIndividuales
                 .Current("TotalDebe") = 0
                 .Current("TotalHaber") = 0
                 .Current("CodMoneda") = dt.Rows(ic).Item("Cod_Moneda")
-                tc = fx.TipoCambio(dt.Rows(ic).Item("Fecha"), False)
-                .Current("TipoCambio") = tc
+                ' tc = fx.TipoCambio(dt.Rows(ic).Item("Fecha"), False)
+                .Current("TipoCambio") = dt.Rows(ic).Item("TipoCambio")
                 .EndCurrentEdit()
 
 
