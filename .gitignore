@@ -6,3 +6,14 @@ bin/app.publish/
 *.manifest
 bin/lcConta.application
 bin/temp.xml
+bin/
+
+bin/app.publish/Application Files/lcConta_1_0_2_3/lcConta.exe.manifest
+bin/EnvDTE.xml
+bin/lcConta.application
+bin/lcConta.application
+bin/lcConta.exe.config
+bin/EnvDTE.xml
+bin/app.publish/Application Files/lcConta_1_0_2_3/lcConta.exe.manifest
+bin/EnvDTE.xml
+Contabilidad.Nuevos/bin/Debug/lcConta.Nuevos.xml

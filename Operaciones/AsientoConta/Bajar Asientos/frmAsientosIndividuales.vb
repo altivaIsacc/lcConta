@@ -1788,8 +1788,31 @@ Public Class frmAsientosIndividuales
 
         Dim stt As New DataTable
         cFunciones.Llenar_Tabla_Generico("SELECT c.CuentaContable, c.Descripcion FROM CuentaContable AS c INNER JOIN    SettingCuentaContable AS s ON c.id = s.IdImpuestoVenta ", stt, Configuracion.Claves.Conexion("Contabilidad"))
+		Dim cIva As String = ""
+		Dim cDIva As String = ""
 
-        Dim periodo As String = fx.BuscaPeriodo(_pF1)
+		If stt.Rows.Count > 0 Then
+			cIva = stt.Rows(0).Item("CuentaContable")
+			cDIva = stt.Rows(0).Item("Descripcion")
+		Else
+			MessageBox.Show("Por favor, revise la configuración de cuentas", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+			Exit Sub
+		End If
+
+		Dim cComprasGravadas As String
+		Dim dComprasGravadas As String
+		Dim cComprasExentas As String
+		Dim dComprasExentas As String
+		Dim dts As New DataTable
+		cFunciones.Llenar_Tabla_Generico("select g.CuentaContable as CGravado, g.Descripcion as DGravado, e.CuentaContable as CExento, e.Descripcion as DExento from SettingCuentaContable inner join CuentaContable as g on SettingCuentaContable.IdCompraGrabado = g.id inner join CuentaContable as e on SettingCuentaContable.IdCompraExcento = e.id", dts, Configuracion.Claves.Conexion("Contabilidad"))
+		If dts.Rows.Count > 0 Then
+			cComprasGravadas = dts.Rows(0).Item("CGravado")
+			dComprasGravadas = dts.Rows(0).Item("DGravado")
+			cComprasExentas = dts.Rows(0).Item("CExento")
+			dComprasExentas = dts.Rows(0).Item("DExento")
+		End If
+
+		Dim periodo As String = fx.BuscaPeriodo(_pF1)
         Dim tc As Double = 0
         For ic As Integer = 0 To dt.Rows.Count - 1
             Dim modulo As String = "FACTURA INV"
@@ -1829,46 +1852,28 @@ Public Class frmAsientosIndividuales
 
                 GuardaAsientoDetalle(dt.Rows(ic).Item("TotalFactura"), False, True, dt.Rows(ic).Item("CuentaContable"), dt.Rows(ic).Item("DescripcionCuentaContable"), tc)
 
-                'Else 'DOLARES 
+				'Else 'DOLARES 
 
-                '    GuardaAsientoDetalle(dt.Rows(ic).Item("TotalFactura"), False, True, dt.Rows(ic).Item("CuentaContableDolar"), dt.Rows(ic).Item("DescripcionCuentaContableDolar"), tc)
+				'    GuardaAsientoDetalle(dt.Rows(ic).Item("TotalFactura"), False, True, dt.Rows(ic).Item("CuentaContableDolar"), dt.Rows(ic).Item("DescripcionCuentaContableDolar"), tc)
 
-                'End If
-
-
-                'LINEA CUENTA IMPUESTO
-                If stt.Rows.Count > 0 And dt.Rows(ic).Item("Impuesto") > 0 Then
-                    GuardaAsientoDetalle(dt.Rows(ic).Item("Impuesto"), True, False, stt.Rows(0).Item("CuentaContable"), stt.Rows(0).Item("Descripcion"), tc)
-                End If
+				'End If
 
 
-                Dim cInv As String = ""
-                Dim cDInv As String = ""
+				'LINEA CUENTA IMPUESTO
+				If dt.Rows(ic).Item("Impuesto") > 0 Then
+					GuardaAsientoDetalle(dt.Rows(ic).Item("Impuesto"), True, False, cIva, cDIva, tc)
+				End If
 
-                cFunciones.Llenar_Tabla_Generico("SELECT CuentaContable.CuentaContable, CuentaContable.Descripcion FROM SettingCuentaContable INNER JOIN  CuentaContable ON SettingCuentaContable.IdCompraGrabado = CuentaContable.id", stt, Configuracion.Claves.Conexion("Contabilidad"))
-                If stt.Rows.Count > 0 Then
-                    cInv = stt.Rows(0).Item("CuentaContable")
-                    cDInv = stt.Rows(0).Item("Descripcion")
-                End If
 
-                Dim _dt As New DataTable
-                cmd.CommandText = "SELECT '" & cInv & "' AS CuentaContable, '" & cDInv & "' AS DescripcionCuentaContable, a.Gravado, a.Exento, a.Descripcion FROM compras AS c INNER JOIN  Proveedores AS p ON c.CodigoProv = p.CodigoProv INNER JOIN  articulos_comprados AS a ON c.Id_Compra = a.IdCompra WHERE (c.Id_Compra = " & dt.Rows(ic).Item("ID") & ") AND (c.Gasto = 0) AND (c.TotalFactura > 0) AND (c.Contabilizado = 0)"
-                cFunciones.Llenar_Tabla_Generico(cmd, _dt, Configuracion.Claves.Conexion("SeePos"))
 
-                Dim cComprasGravadas As String
-                Dim dComprasGravadas As String
-                Dim cComprasExentas As String
-                Dim dComprasExentas As String
-                Dim dts As New DataTable
-                cFunciones.Llenar_Tabla_Generico("select g.CuentaContable as CGravado, g.Descripcion as DGravado, e.CuentaContable as CExento, e.Descripcion as DExento from SettingCuentaContable inner join CuentaContable as g on SettingCuentaContable.IdCompraGrabado = g.id inner join CuentaContable as e on SettingCuentaContable.IdCompraExcento = e.id", dts, Configuracion.Claves.Conexion("Contabilidad"))
-                If dts.Rows.Count > 0 Then
-                    cComprasGravadas = dts.Rows(0).Item("CGravado")
-                    dComprasGravadas = dts.Rows(0).Item("DGravado")
-                    cComprasExentas = dts.Rows(0).Item("CExento")
-                    dComprasExentas = dts.Rows(0).Item("DExento")
-                End If
 
-                If _dt.Rows.Count = 0 Then
+				Dim _dt As New DataTable
+				cmd.CommandText = "SELECT  a.Gravado, a.Exento, a.Descripcion FROM compras AS c INNER JOIN  Proveedores AS p ON c.CodigoProv = p.CodigoProv INNER JOIN  articulos_comprados AS a ON c.Id_Compra = a.IdCompra WHERE (c.Id_Compra = " & dt.Rows(ic).Item("ID") & ") AND (c.Gasto = 0) AND (c.TotalFactura > 0) AND (c.Contabilizado = 0)"
+				cFunciones.Llenar_Tabla_Generico(cmd, _dt, Configuracion.Claves.Conexion("SeePos"))
+
+
+
+				If _dt.Rows.Count = 0 Then
                     MsgBox("Linea no valida en Factura # " & dt.Rows(ic).Item("Factura"), MsgBoxStyle.OkOnly)
                     Exit Sub
                 End If
