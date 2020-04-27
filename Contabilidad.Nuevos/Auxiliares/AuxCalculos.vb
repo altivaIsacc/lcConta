@@ -4,41 +4,47 @@
     Public Shared Function PorcentajeRenta(Ingreso As Double, Utilidad As Double) As Double
         Dim dts As New dtsCalculos
         Dim cmd As New SqlClient.SqlCommand
-        cmd.CommandText = "Select * From dbo.ParametroRentaHacienda"
-        bdAcceso.Cargar(cmd, dts.ParametroRentaHacienda)
+		cmd.CommandText = "Select * From dbo.ParametroRentaHacienda order by SinLimiteHasta"
+		bdAcceso.Cargar(cmd, dts.ParametroRentaHacienda)
 
-        Dim montoIngreso As Double = 0
-        Dim porcIngreso As Double = 0
+		'Dim montoIngreso As Double = 0
+		'Dim porcIngreso As Double = 0
 
-        For Each pa As dtsCalculos.ParametroRentaHaciendaRow In dts.ParametroRentaHacienda
+		For Each pa As dtsCalculos.ParametroRentaHaciendaRow In dts.ParametroRentaHacienda
 
-            If Not pa.SobreRentaBruta Then
-                montoIngreso = pa.SalarioDesde
-                porcIngreso = pa.Porcentaje
-            End If
+			If Not pa.SinLimiteHasta Then
 
-        Next
-        If Ingreso > montoIngreso Then
+				If Ingreso > pa.SalarioDesde And Ingreso <= pa.SalarioHasta Then
+					Return pa.Porcentaje
+				End If
+			Else
+				If Ingreso >= pa.SalarioDesde Then
+					Return pa.Porcentaje
+				End If
+			End If
 
-            Return porcIngreso
+		Next
+		'If Ingreso > montoIngreso Then
 
-        Else
-            For Each pa As dtsCalculos.ParametroRentaHaciendaRow In dts.ParametroRentaHacienda
-                If pa.SobreRentaBruta Then
-                    If Not pa.SinLimiteHasta Then
-                        If comparacion(Utilidad, pa.ComparacionDesde, pa.SalarioDesde) And comparacion(Utilidad, pa.ComparacionHasta, pa.SalarioHasta) Then
-                            Return pa.Porcentaje
-                        End If
-                    Else
-                        If comparacion(Utilidad, pa.ComparacionDesde, pa.SalarioDesde) Then
-                            Return pa.Porcentaje
-                        End If
-                    End If
-                End If
-            Next
-        End If
+		'    Return porcIngreso
 
-        Return 0
+		'Else
+		'    For Each pa As dtsCalculos.ParametroRentaHaciendaRow In dts.ParametroRentaHacienda
+		'        If pa.SobreRentaBruta Then
+		'            If Not pa.SinLimiteHasta Then
+		'                If comparacion(Utilidad, pa.ComparacionDesde, pa.SalarioDesde) And comparacion(Utilidad, pa.ComparacionHasta, pa.SalarioHasta) Then
+		'                    Return pa.Porcentaje
+		'                End If
+		'            Else
+		'                If comparacion(Utilidad, pa.ComparacionDesde, pa.SalarioDesde) Then
+		'                    Return pa.Porcentaje
+		'                End If
+		'            End If
+		'        End If
+		'    Next
+		'End If
+
+		Return 0
 
     End Function
 

@@ -41,9 +41,10 @@ Public Class frmResultado
     Private Sub frmResultado_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         nuAño.Value = Now.Year
         cbMes.SelectedIndex = Now.Month - 1
-        cbMoneda.SelectedIndex = 0
+		cbMoneda.SelectedIndex = 0
+		WindowState = Windows.Forms.FormWindowState.Maximized
 
-    End Sub
+	End Sub
 
     Private Sub bwCargar_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles bwCargar.DoWork
         cargar()
