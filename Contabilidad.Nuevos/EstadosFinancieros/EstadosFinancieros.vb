@@ -71,8 +71,8 @@ Public Class EstadosFinancieros
             Filtro = "Periodo: " & Año
 
 			Dim cd As New SqlClient.SqlCommand
-			cd.CommandText = "Select P.*, DATEPART(YEAR,PF.FechaFinal) AS Periodo From Periodo P, PeriodoFiscal PF Where  PF.Id = P.Id_PeriodoFiscal AND P.Anno = @aa and P.Mes <= @mm"
-			cd.Parameters.AddWithValue("@aa", Año)
+            cd.CommandText = "Select P.*, DATEPART(YEAR,PF.FechaFinal) AS Periodo From Periodo P, PeriodoFiscal PF Where  PF.Id = P.Id_PeriodoFiscal AND   (CAST(P.Anno AS VARCHAR(4)) + '' + CAST(P.Mes AS VARCHAR(2)) <= CAST(@aa AS VARCHAR(4)) + '' + CAST(@mm AS VARCHAR(2))) ORDER BY P.Anno ASC, P.Mes ASC"
+            cd.Parameters.AddWithValue("@aa", Año)
 			cd.Parameters.AddWithValue("@mm", Mes)
 			bdAcceso.Cargar(cd, dtPeriodoConsultar)
 			cmd.CommandText = consulta12M(Moneda, dtPeriodoConsultar.Rows.Count)
@@ -107,7 +107,7 @@ Public Class EstadosFinancieros
 
         End If
         bdAcceso.Cargar(cmd, dts.Resultados)
-
+        iniciarCeros()
         Calculos(dts)
 
         For Each linea In dts.Resultados
@@ -232,6 +232,7 @@ Public Class EstadosFinancieros
         ' addItemTotal(dts, "6zzz", "UTILIDAD NETA ANTES RENTA", lista)
         addItemTotal(dts, "6zzz", "RENTA", lista)
         addItemTotal(dts, "6zzz", "UTILIDAD NETA DESPUÉS RENTA", lista)
+        sumarGanacia(dts, lista)
     End Sub
     Private Shared Sub addItemTotal(ByRef dts As dtsEstadosFinancieros, CuentaContable As String, Descripcion As String, saldos As List(Of CalculoRenta))
         Dim linea As dtsEstadosFinancieros.ResultadosRow
@@ -449,58 +450,47 @@ Public Class EstadosFinancieros
         Return re
 
     End Function
+    Private Shared Sub iniciarCeros()
+
+        For Each linea In dts.Resultados
+            If linea.IsSaldoAcumulado1Null Then linea.SaldoAcumulado1 = 0
+            If linea.IsSaldoAcumulado2Null Then linea.SaldoAcumulado2 = 0
+            If linea.IsSaldoAcumulado3Null Then linea.SaldoAcumulado3 = 0
+            If linea.IsSaldoAcumulado4Null Then linea.SaldoAcumulado4 = 0
+            If linea.IsSaldoAcumulado5Null Then linea.SaldoAcumulado5 = 0
+            If linea.IsSaldoAcumulado6Null Then linea.SaldoAcumulado6 = 0
+            If linea.IsSaldoAcumulado7Null Then linea.SaldoAcumulado7 = 0
+            If linea.IsSaldoAcumulado8Null Then linea.SaldoAcumulado8 = 0
+            If linea.IsSaldoAcumulado9Null Then linea.SaldoAcumulado9 = 0
+            If linea.IsSaldoAcumulado10Null Then linea.SaldoAcumulado10 = 0
+            If linea.IsSaldoAcumulado11Null Then linea.SaldoAcumulado11 = 0
+            If linea.IsSaldoAcumulado12Null Then linea.SaldoAcumulado12 = 0
+            If linea.IsAcumuladoNull Then linea.Acumulado = 0
+        Next
+    End Sub
+
     Public Shared Sub SumarPadre(linea As dtsEstadosFinancieros.ResultadosRow, ByRef dts As dtsEstadosFinancieros, idPadre As Integer)
-		If idPadre = 0 Then
-			Exit Sub
-		End If
-		If linea.IsSaldoAcumulado1Null Then linea.SaldoAcumulado1 = 0
-		If linea.IsSaldoAcumulado2Null Then linea.SaldoAcumulado2 = 0
-		If linea.IsSaldoAcumulado3Null Then linea.SaldoAcumulado3 = 0
-		If linea.IsSaldoAcumulado4Null Then linea.SaldoAcumulado4 = 0
-		If linea.IsSaldoAcumulado5Null Then linea.SaldoAcumulado5 = 0
-		If linea.IsSaldoAcumulado6Null Then linea.SaldoAcumulado6 = 0
-		If linea.IsSaldoAcumulado7Null Then linea.SaldoAcumulado7 = 0
-		If linea.IsSaldoAcumulado8Null Then linea.SaldoAcumulado8 = 0
-		If linea.IsSaldoAcumulado9Null Then linea.SaldoAcumulado9 = 0
-		If linea.IsSaldoAcumulado10Null Then linea.SaldoAcumulado10 = 0
-		If linea.IsSaldoAcumulado11Null Then linea.SaldoAcumulado11 = 0
-		If linea.IsSaldoAcumulado12Null Then linea.SaldoAcumulado12 = 0
-		If linea.IsAcumuladoNull Then linea.Acumulado = 0
-
-
-		For Each padre In dts.Resultados
-			If padre.id = idPadre Then
-
-				If padre.IsSaldoAcumulado1Null Then padre.SaldoAcumulado1 = 0
-				If padre.IsSaldoAcumulado2Null Then padre.SaldoAcumulado2 = 0
-				If padre.IsSaldoAcumulado3Null Then padre.SaldoAcumulado3 = 0
-				If padre.IsSaldoAcumulado4Null Then padre.SaldoAcumulado4 = 0
-				If padre.IsSaldoAcumulado5Null Then padre.SaldoAcumulado5 = 0
-				If padre.IsSaldoAcumulado6Null Then padre.SaldoAcumulado6 = 0
-				If padre.IsSaldoAcumulado7Null Then padre.SaldoAcumulado7 = 0
-				If padre.IsSaldoAcumulado8Null Then padre.SaldoAcumulado8 = 0
-				If padre.IsSaldoAcumulado9Null Then padre.SaldoAcumulado9 = 0
-				If padre.IsSaldoAcumulado10Null Then padre.SaldoAcumulado10 = 0
-				If padre.IsSaldoAcumulado11Null Then padre.SaldoAcumulado11 = 0
-				If padre.IsSaldoAcumulado12Null Then padre.SaldoAcumulado12 = 0
-				If padre.IsAcumuladoNull Then padre.Acumulado = 0
-
-				padre.SaldoAcumulado1 += linea.SaldoAcumulado1
-				padre.SaldoAcumulado2 += linea.SaldoAcumulado2
-				padre.SaldoAcumulado3 += linea.SaldoAcumulado3
-				padre.SaldoAcumulado4 += linea.SaldoAcumulado4
-				padre.SaldoAcumulado5 += linea.SaldoAcumulado5
-				padre.SaldoAcumulado6 += linea.SaldoAcumulado6
-				padre.SaldoAcumulado7 += linea.SaldoAcumulado7
-				padre.SaldoAcumulado8 += linea.SaldoAcumulado8
-				padre.SaldoAcumulado9 += linea.SaldoAcumulado9
-				padre.SaldoAcumulado10 += linea.SaldoAcumulado10
-				padre.SaldoAcumulado11 += linea.SaldoAcumulado11
-				padre.SaldoAcumulado12 += linea.SaldoAcumulado12
-				padre.Acumulado += linea.Acumulado
-				SumarPadre(linea, dts, padre.PARENTID)
-			End If
-		Next
+        If idPadre = 0 Then
+            Exit Sub
+        End If
+        For Each padre In dts.Resultados
+            If padre.id = idPadre Then
+                padre.SaldoAcumulado1 += linea.SaldoAcumulado1
+                padre.SaldoAcumulado2 += linea.SaldoAcumulado2
+                padre.SaldoAcumulado3 += linea.SaldoAcumulado3
+                padre.SaldoAcumulado4 += linea.SaldoAcumulado4
+                padre.SaldoAcumulado5 += linea.SaldoAcumulado5
+                padre.SaldoAcumulado6 += linea.SaldoAcumulado6
+                padre.SaldoAcumulado7 += linea.SaldoAcumulado7
+                padre.SaldoAcumulado8 += linea.SaldoAcumulado8
+                padre.SaldoAcumulado9 += linea.SaldoAcumulado9
+                padre.SaldoAcumulado10 += linea.SaldoAcumulado10
+                padre.SaldoAcumulado11 += linea.SaldoAcumulado11
+                padre.SaldoAcumulado12 += linea.SaldoAcumulado12
+                padre.Acumulado += linea.Acumulado
+                SumarPadre(linea, dts, padre.PARENTID)
+            End If
+        Next
     End Sub
     Public Shared usuario As String = ""
     Public Shared Sub Abrir(Mdi As System.Windows.Forms.Form, _usuario As String)
@@ -535,6 +525,31 @@ Public Class EstadosFinancieros
         frm.WindowState = Windows.Forms.FormWindowState.Maximized
         frm.Show()
     End Sub
+    Public Shared Sub sumarGanacia(ByRef _dts As dtsEstadosFinancieros, saldos As List(Of CalculoRenta))
+        Dim dt As New DataTable
+        Dim cmd As New SqlClient.SqlCommand
+        cmd.CommandText = "SELECT  CuentaContable.CuentaContable, CuentaContable.Descripcion  FROM CuentaContable INNER JOIN   SettingCuentaContable ON CuentaContable.id = SettingCuentaContable.IdPeriodo"
+        bdAcceso.Cargar(cmd, dt)
+
+        For Each linea In _dts.Resultados
+            If dt.Rows(0).Item("CuentaContable") = linea.CuentaContable Then
+                With linea
+
+                    For i As Integer = 0 To 12 - 1
+
+                        .Item("SaldoAcumulado" & (i + 1)) = saldos(i).Ganancia30
+                        If (i = 11) Then
+                            .Item("Acumulado") += saldos(i).Ganancia30
+                        End If
+
+                    Next
+
+                End With
+            End If
+        Next
+
+    End Sub
+
 
 End Class
 Public Class CalculoRenta
@@ -550,11 +565,11 @@ Public Class CalculoRenta
 	Public AcumuladoIngresosCompletos As Double = 0
 
 	Function UtilidadBrutaCompleta() As Double
-        Return IngresosCompletos - GastosCompletos
+        Return IngresosCompletos - CostosCompletos
 
     End Function
     Function UtilidadBruta() As Double
-        Return Ingresos - Gastos
+        Return Ingresos - Costos
 
     End Function
     Function UtilidadNetaCompleta() As Double

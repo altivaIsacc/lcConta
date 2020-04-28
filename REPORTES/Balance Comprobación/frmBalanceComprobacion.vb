@@ -959,8 +959,10 @@ Public Class frmBalanceComprobacion
         Try
 
 
-            SqlConnection1.ConnectionString = Configuracion.Claves.Conexion("Contabilidad")
-            conectadobd = Cconexion.Conectar("Contabilidad")
+            SqlConnection1.ConnectionString = fnConexionConta()
+            conectadobd.ConnectionString = fnConexionConta()
+            conectadobd.Open()
+
             Estado(False)
             InitData()
             AdapterMoneda.Fill(DsBalances1, "Moneda")
@@ -1173,6 +1175,20 @@ Public Class frmBalanceComprobacion
 #End Region
 
 #Region "Cargar Asientos"
+    Function fnConexionConta() As String
+        Dim saldoCorrectos As Boolean = False
+        If Configuracion.Claves.Configuracion("saldosCorrectos", "0").Equals("1") Then
+            saldoCorrectos = True
+
+        End If
+        Dim fs As DateTime = "01/02/2020"
+        If saldoCorrectos And dtInicial.Value < fs Then
+
+            Return Configuracion.Claves.Conexion("ContabilidadBK")
+
+        End If
+        Return Configuracion.Claves.Conexion("Contabilidad")
+    End Function
     Function CargarAsientos(ByVal FechaInicio As String)
         Dim cnnv As SqlConnection = Nothing     'CARGA LOS ASIENTOS CONTABLES PARA EL CALCULO DEL SALDO ANTERIOR
         Dim cConexion As New Conexion
@@ -1181,28 +1197,27 @@ Public Class frmBalanceComprobacion
         Dim i, n, x As Integer
 
         Try
-            Dim sConn As String = Configuracion.Claves.Conexion("Contabilidad")
+            Dim sConn As String = fnConexionConta()
             cnnv = New SqlConnection(sConn)
+
             cnnv.Open()
             'Creamos el comando para la consulta
             Dim cmdv As SqlCommand = New SqlCommand
             Dim sel As String
             If Check_Cierre.Checked = False Then
-                sel = " SELECT     dbo.AsientoDC_DH.Cuenta, SUM(dbo.AsientoDC_DH.DebeDolar) AS Ddolar, SUM(dbo.AsientoDC_DH.DebeColon)AS Dcolon, " & _
-                            " SUM(dbo.AsientoDC_DH.HaberColon) AS Hcolon, SUM(dbo.AsientoDC_DH.HaberDolar) AS Hdolar, dbo.CuentaContable.Descripcion " & _
-                            " FROM         dbo.AsientoDC_DH INNER JOIN " & _
-                            " dbo.CuentaContable ON dbo.AsientoDC_DH.Cuenta = dbo.CuentaContable.CuentaContable " & _
-                            " WHERE     (Fecha < dbo.DateOnlyInicio(@Fecha)) " & _
+                sel = " SELECT     dbo.AsientoDC_DH.Cuenta, SUM(dbo.AsientoDC_DH.DebeDolar) AS Ddolar, SUM(dbo.AsientoDC_DH.DebeColon)AS Dcolon, " &
+                            " SUM(dbo.AsientoDC_DH.HaberColon) AS Hcolon, SUM(dbo.AsientoDC_DH.HaberDolar) AS Hdolar, dbo.CuentaContable.Descripcion " &
+                            " FROM         dbo.AsientoDC_DH INNER JOIN " &
+                            " dbo.CuentaContable ON dbo.AsientoDC_DH.Cuenta = dbo.CuentaContable.CuentaContable " &
+                            " WHERE     (Fecha < dbo.DateOnlyInicio(@Fecha)) " &
                             " GROUP BY dbo.AsientoDC_DH.Cuenta, dbo.CuentaContable.Descripcion "
             Else
-                sel = " SELECT     dbo.AsientoDC_DH.Cuenta, SUM(dbo.AsientoDC_DH.DebeDolar) AS Ddolar, SUM(dbo.AsientoDC_DH.DebeColon)AS Dcolon, " & _
-                                            " SUM(dbo.AsientoDC_DH.HaberColon) AS Hcolon, SUM(dbo.AsientoDC_DH.HaberDolar) AS Hdolar, dbo.CuentaContable.Descripcion " & _
-                                            " FROM         dbo.AsientoDC_DH INNER JOIN " & _
-                                            " dbo.CuentaContable ON dbo.AsientoDC_DH.Cuenta = dbo.CuentaContable.CuentaContable " & _
-                                            " WHERE     (Fecha < dbo.DateOnlyInicio(@Fecha)) AND (AsientoDC_DH.NumAsiento <> '" & CierreAnual() & "'" & _
-                                            " GROUP BY dbo.AsientoDC_DH.Cuenta, dbo.CuentaContable.Descripcion "
-                ' Si hay que excluir el asiento cierre anual
-
+                sel = " SELECT     dbo.AsientoDC_DH.Cuenta, SUM(dbo.AsientoDC_DH.DebeDolar) AS Ddolar, SUM(dbo.AsientoDC_DH.DebeColon)AS Dcolon, " &
+                            " SUM(dbo.AsientoDC_DH.HaberColon) AS Hcolon, SUM(dbo.AsientoDC_DH.HaberDolar) AS Hdolar, dbo.CuentaContable.Descripcion " &
+                            " FROM         dbo.AsientoDC_DH INNER JOIN " &
+                            " dbo.CuentaContable ON dbo.AsientoDC_DH.Cuenta = dbo.CuentaContable.CuentaContable " &
+                            " WHERE     (Fecha < dbo.DateOnlyInicio(@Fecha)) AND (AsientoDC_DH.NumAsiento <> '" & CierreAnual() & "'" &
+                            " GROUP BY dbo.AsientoDC_DH.Cuenta, dbo.CuentaContable.Descripcion "
             End If
 
 
@@ -1287,7 +1302,7 @@ Public Class frmBalanceComprobacion
         Dim i, n, x As Integer
 
         Try
-            Dim sConn As String = Configuracion.Claves.Conexion("Contabilidad")
+            Dim sConn As String = fnConexionConta()
             cnnv = New SqlConnection(sConn)
             cnnv.Open()
             'Creamos el comando para la consulta
