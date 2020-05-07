@@ -1787,7 +1787,7 @@ Public Class frmAsientosIndividuales
         Dim fx As New cFunciones
 
         Dim stt As New DataTable
-        cFunciones.Llenar_Tabla_Generico("SELECT c.CuentaContable, c.Descripcion FROM CuentaContable AS c INNER JOIN    SettingCuentaContable AS s ON c.id = s.IdImpuestoVenta ", stt, Configuracion.Claves.Conexion("Contabilidad"))
+		cFunciones.Llenar_Tabla_Generico("SELECT c.CuentaContable, c.Descripcion FROM CuentaContable AS c INNER JOIN    SettingCuentaContable AS s ON c.id = s.IdCreditoComp ", stt, Configuracion.Claves.Conexion("Contabilidad"))
 		Dim cIva As String = ""
 		Dim cDIva As String = ""
 
