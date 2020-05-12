@@ -1742,7 +1742,7 @@ Public Class FrmAsientos
         spIniciarForm()
 
     End Sub
-
+    Dim cargadoTemporal As Boolean = False
     Public Sub spIniciarForm()
         Try
             SqlConnection2.ConnectionString = Configuracion.Claves.Conexion("Contabilidad")
@@ -1962,12 +1962,21 @@ Public Class FrmAsientos
 
         Me.CrearColumnas("Tipocambio", "Tipo Cambio", 80, 7, "Tipocambio", True, False, False)
         Me.TablaAsiento.Columns.Add(New DataColumn("Tipocambio", GetType(Double)))
+        If CBMoneda.SelectedValue = 3 Then
+            Me.CrearColumnas("Debe€", "Debe€", 100, 8, "Debe€", True, False, False)
+            Me.TablaAsiento.Columns.Add(New DataColumn("Debe$", GetType(Double)))
 
-        Me.CrearColumnas("Debe$", "Debe$", 100, 8, "Debe$", True, False, False)
-        Me.TablaAsiento.Columns.Add(New DataColumn("Debe$", GetType(Double)))
+            Me.CrearColumnas("Haber€", "Haber$", 100, 9, "Haber€", True, False, False)
+            Me.TablaAsiento.Columns.Add(New DataColumn("Haber€", GetType(Double)))
 
-        Me.CrearColumnas("Haber$", "Haber$", 100, 9, "Haber$", True, False, False)
-        Me.TablaAsiento.Columns.Add(New DataColumn("Haber$", GetType(Double)))
+        Else
+            Me.CrearColumnas("Debe$", "Debe$", 100, 8, "Debe$", True, False, False)
+            Me.TablaAsiento.Columns.Add(New DataColumn("Debe$", GetType(Double)))
+
+            Me.CrearColumnas("Haber$", "Haber$", 100, 9, "Haber$", True, False, False)
+            Me.TablaAsiento.Columns.Add(New DataColumn("Haber$", GetType(Double)))
+        End If
+
 
         Me.CrearColumnas("ID_Detalle", "Cuenta", 0, 10, "ID_Detalle", False, False, False)
         Me.TablaAsiento.Columns.Add(New DataColumn("ID_Detalle", GetType(Integer)))
@@ -2779,6 +2788,8 @@ Public Class FrmAsientos
             Me.TxtDiferencia.Text = Format(Me.TxtTotalHaber.Text - Me.TxtTotalDebe.Text, "#,#0.00")
             Me.txtDif2.Text = Format(Me.TxtTotalHaber2.Text - Me.TxtTotalDebe2.Text, "#,#0.00")
             If Me.TxtDiferencia.Text = "0.00" And Me.txtDif2.Text = "0.00" Then Me.TxtEstado.Text = "BALANCEADO" Else Me.TxtEstado.Text = "NO BALANCEADO"
+            cargadoTemporal = True
+
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -3441,6 +3452,10 @@ Public Class FrmAsientos
         Dim Fx As New cFunciones
 
         Try
+            If TablaAsiento.Rows.Count = 0 Then
+                MsgBox("El Asiento necesita detalles.", MsgBoxStyle.Information, "Sistema SeeSoft")
+                Exit Sub
+            End If
             If Configuracion.Claves.Conexion("Contabilidad").Equals("") Then
                 If CheckBox2.Checked = True Then
                     MsgBox("El Asiento no se puede actualizar porque ya esta mayorizado", MsgBoxStyle.Information, "Sistema SeeSoft")
@@ -3552,8 +3567,9 @@ Public Class FrmAsientos
             Else
                 NumeroAsiento()
                 Me.DataSetAsientos1.AsientosContables.Rows(0).Item("NumAsiento") = LblConsecutivo.Text
-                'BindingContext(DataSetAsientos1, "AsientosContables").Current("NumAsiento") = LblConsecutivo.Text
-                'BindingContext(DataSetAsientos1, "AsientosContables").EndCurrentEdit()
+                BindingContext(DataSetAsientos1, "AsientosContables").Current("NumAsiento") = LblConsecutivo.Text
+                BindingContext(DataSetAsientos1, "AsientosContables").Current("Fecha") = DPTrans.Value
+                BindingContext(DataSetAsientos1, "AsientosContables").EndCurrentEdit()
                 If SqlConnection2.State <> ConnectionState.Open Then SqlConnection2.Open()
                 trans = Me.SqlConnection2.BeginTransaction
                 Me.AdapAsientos.InsertCommand.Transaction = trans
@@ -3692,6 +3708,8 @@ Public Class FrmAsientos
 
 #Region "Nuevo"
     Public Sub Nuevo()
+        cargadoTemporal = False
+
         Me.ToolBar1.Buttons(5).Text = IIf(Me.CheckBox2.Checked = True, "DesMayorizar", "Mayorizar")
         Me.btnReporteDetalle.Enabled = True
         If Me.ToolBarNuevo.Text = "Nuevo" Then
@@ -4343,5 +4361,12 @@ Public Class FrmAsientos
 
     Private Sub FrmAsientos_Closed(sender As Object, e As EventArgs) Handles Me.Closed
         DialogResult = DialogResult.OK
+    End Sub
+
+    Private Sub CBMoneda_SelectedValueChanged(sender As Object, e As EventArgs) Handles CBMoneda.SelectedValueChanged
+
+    End Sub
+    Sub cargarAsientoEuro()
+
     End Sub
 End Class

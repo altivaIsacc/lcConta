@@ -12,123 +12,123 @@ Imports DevExpress.XtraTreeList.Columns
 
 
 Public Class frmBalanceComprobacion
-    Inherits System.Windows.Forms.Form
+	Inherits System.Windows.Forms.Form
 
 #Region "Variables"
-    Dim ps As New DevExpress.XtraPrinting.PrintingSystem
-    Dim link As New DevExpress.XtraPrinting.PrintableComponentLink(ps)
-    Dim usua As Object
-    Dim conectadobd As New SqlClient.SqlConnection
-    Dim Cconexion As New Conexion
-    Dim Reporte_ID As Integer
-    Friend WithEvents btnContraerTodas As System.Windows.Forms.Button
-    Friend WithEvents btnExpandirTodas As System.Windows.Forms.Button
-    Dim Tipo As Integer
+	Dim ps As New DevExpress.XtraPrinting.PrintingSystem
+	Dim link As New DevExpress.XtraPrinting.PrintableComponentLink(ps)
+	Dim usua As Object
+	Dim conectadobd As New SqlClient.SqlConnection
+	Dim Cconexion As New Conexion
+	Dim Reporte_ID As Integer
+	Friend WithEvents btnContraerTodas As System.Windows.Forms.Button
+	Friend WithEvents btnExpandirTodas As System.Windows.Forms.Button
+	Dim Tipo As Integer
 #End Region
 
 #Region " Código generado por el Diseñador de Windows Forms "
 
-    Public Sub New(ByVal Usuario_Parametro As Object, ByVal tip As Integer)
-        MyBase.New()
+	Public Sub New(ByVal Usuario_Parametro As Object, ByVal tip As Integer)
+		MyBase.New()
 
-        'El Diseñador de Windows Forms requiere esta llamada.
-        InitializeComponent()
-        usua = Usuario_Parametro
-        Tipo = tip
-        'Agregar cualquier inicialización después de la llamada a InitializeComponent()
+		'El Diseñador de Windows Forms requiere esta llamada.
+		InitializeComponent()
+		usua = Usuario_Parametro
+		Tipo = tip
+		'Agregar cualquier inicialización después de la llamada a InitializeComponent()
 
-    End Sub
+	End Sub
 
-    'Form reemplaza a Dispose para limpiar la lista de componentes.
-    Protected Overloads Overrides Sub Dispose(ByVal disposing As Boolean)
-        If disposing Then
-            If Not (components Is Nothing) Then
-                components.Dispose()
-            End If
-        End If
-        MyBase.Dispose(disposing)
-    End Sub
+	'Form reemplaza a Dispose para limpiar la lista de componentes.
+	Protected Overloads Overrides Sub Dispose(ByVal disposing As Boolean)
+		If disposing Then
+			If Not (components Is Nothing) Then
+				components.Dispose()
+			End If
+		End If
+		MyBase.Dispose(disposing)
+	End Sub
 
-    'Requerido por el Diseñador de Windows Forms
-    Private components As System.ComponentModel.IContainer
+	'Requerido por el Diseñador de Windows Forms
+	Private components As System.ComponentModel.IContainer
 
-    'NOTA: el Diseñador de Windows Forms requiere el siguiente procedimiento
-    'Puede modificarse utilizando el Diseñador de Windows Forms. 
-    'No lo modifique con el editor de código.
-    Protected Friend WithEvents TituloModulo As System.Windows.Forms.Label
-    Friend WithEvents Panel1 As System.Windows.Forms.Panel
-    Friend WithEvents dtFinal As System.Windows.Forms.DateTimePicker
-    Friend WithEvents dtInicial As System.Windows.Forms.DateTimePicker
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents SqlConnection1 As System.Data.SqlClient.SqlConnection
-    Friend WithEvents AdCuentas As System.Data.SqlClient.SqlDataAdapter
-    Friend WithEvents DsBalances1 As Contabilidad.DsBalances
-    Friend WithEvents SqlSelectCommand1 As System.Data.SqlClient.SqlCommand
-    Friend WithEvents SqlInsertCommand1 As System.Data.SqlClient.SqlCommand
-    Friend WithEvents SqlUpdateCommand1 As System.Data.SqlClient.SqlCommand
-    Friend WithEvents SqlDeleteCommand1 As System.Data.SqlClient.SqlCommand
-    Friend WithEvents AdAsientos As System.Data.SqlClient.SqlDataAdapter
-    Friend WithEvents AdDetalleAsiento As System.Data.SqlClient.SqlDataAdapter
-    Public WithEvents ImageList As System.Windows.Forms.ImageList
-    Public WithEvents ToolBar1 As System.Windows.Forms.ToolBar
-    Protected Friend WithEvents ToolBarExportar As System.Windows.Forms.ToolBarButton
-    Protected Friend WithEvents ToolBarImprimir As System.Windows.Forms.ToolBarButton
-    Protected Friend WithEvents ToolBarCerrar As System.Windows.Forms.ToolBarButton
-    Friend WithEvents PrintingSystem1 As DevExpress.XtraPrinting.PrintingSystem
-    Friend WithEvents PrintableComponentLink1 As DevExpress.XtraPrinting.PrintableComponentLink
-    Friend WithEvents Link1 As DevExpress.XtraPrinting.Link
-    Friend WithEvents ToolBarNuevo As System.Windows.Forms.ToolBarButton
-    Friend WithEvents BandedGridView1 As DevExpress.XtraGrid.Views.BandedGrid.BandedGridView
-    Friend WithEvents GridColumn1 As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
-    Friend WithEvents GridColumn2 As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
-    Friend WithEvents GridColumn3 As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
-    Friend WithEvents GridColumn4 As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
-    Friend WithEvents GridColumn5 As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
-    Friend WithEvents GridColumn6 As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
+	'NOTA: el Diseñador de Windows Forms requiere el siguiente procedimiento
+	'Puede modificarse utilizando el Diseñador de Windows Forms. 
+	'No lo modifique con el editor de código.
+	Protected Friend WithEvents TituloModulo As System.Windows.Forms.Label
+	Friend WithEvents Panel1 As System.Windows.Forms.Panel
+	Friend WithEvents dtFinal As System.Windows.Forms.DateTimePicker
+	Friend WithEvents dtInicial As System.Windows.Forms.DateTimePicker
+	Friend WithEvents Label1 As System.Windows.Forms.Label
+	Friend WithEvents Label2 As System.Windows.Forms.Label
+	Friend WithEvents SqlConnection1 As System.Data.SqlClient.SqlConnection
+	Friend WithEvents AdCuentas As System.Data.SqlClient.SqlDataAdapter
+	Friend WithEvents DsBalances1 As Contabilidad.DsBalances
+	Friend WithEvents SqlSelectCommand1 As System.Data.SqlClient.SqlCommand
+	Friend WithEvents SqlInsertCommand1 As System.Data.SqlClient.SqlCommand
+	Friend WithEvents SqlUpdateCommand1 As System.Data.SqlClient.SqlCommand
+	Friend WithEvents SqlDeleteCommand1 As System.Data.SqlClient.SqlCommand
+	Friend WithEvents AdAsientos As System.Data.SqlClient.SqlDataAdapter
+	Friend WithEvents AdDetalleAsiento As System.Data.SqlClient.SqlDataAdapter
+	Public WithEvents ImageList As System.Windows.Forms.ImageList
+	Public WithEvents ToolBar1 As System.Windows.Forms.ToolBar
+	Protected Friend WithEvents ToolBarExportar As System.Windows.Forms.ToolBarButton
+	Protected Friend WithEvents ToolBarImprimir As System.Windows.Forms.ToolBarButton
+	Protected Friend WithEvents ToolBarCerrar As System.Windows.Forms.ToolBarButton
+	Friend WithEvents PrintingSystem1 As DevExpress.XtraPrinting.PrintingSystem
+	Friend WithEvents PrintableComponentLink1 As DevExpress.XtraPrinting.PrintableComponentLink
+	Friend WithEvents Link1 As DevExpress.XtraPrinting.Link
+	Friend WithEvents ToolBarNuevo As System.Windows.Forms.ToolBarButton
+	Friend WithEvents BandedGridView1 As DevExpress.XtraGrid.Views.BandedGrid.BandedGridView
+	Friend WithEvents GridColumn1 As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
+	Friend WithEvents GridColumn2 As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
+	Friend WithEvents GridColumn3 As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
+	Friend WithEvents GridColumn4 As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
+	Friend WithEvents GridColumn5 As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
+	Friend WithEvents GridColumn6 As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
 	Private WithEvents TreeList2 As TreeList
 	Friend WithEvents Label7 As System.Windows.Forms.Label
 	Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents Label5 As System.Windows.Forms.Label
-    Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents txtSaldoAnterior As System.Windows.Forms.TextBox
-    Friend WithEvents txtCreditos As System.Windows.Forms.TextBox
-    Friend WithEvents txtDebitos As System.Windows.Forms.TextBox
-    Friend WithEvents txtSaldoMes As System.Windows.Forms.TextBox
-    Friend WithEvents txtSaldoActual As System.Windows.Forms.TextBox
-    Friend WithEvents AdTemporal2 As System.Data.SqlClient.SqlDataAdapter
-    Friend WithEvents smbGenerar As DevExpress.XtraEditors.SimpleButton
-    Friend WithEvents SqlSelectCommand2 As System.Data.SqlClient.SqlCommand
-    Friend WithEvents SqlInsertCommand2 As System.Data.SqlClient.SqlCommand
-    Friend WithEvents SqlUpdateCommand2 As System.Data.SqlClient.SqlCommand
-    Friend WithEvents SqlDeleteCommand2 As System.Data.SqlClient.SqlCommand
-    Friend WithEvents Label8 As System.Windows.Forms.Label
-    Friend WithEvents AdapterMoneda As System.Data.SqlClient.SqlDataAdapter
-    Friend WithEvents Moneda As System.Windows.Forms.ComboBox
-    Friend WithEvents SqlSelectCommand5 As System.Data.SqlClient.SqlCommand
-    Friend WithEvents SqlInsertCommand5 As System.Data.SqlClient.SqlCommand
-    Friend WithEvents Check_Cierre As System.Windows.Forms.CheckBox
-    Friend WithEvents SqlSelectCommand3 As System.Data.SqlClient.SqlCommand
-    Friend WithEvents SqlInsertCommand3 As System.Data.SqlClient.SqlCommand
-    Friend WithEvents SqlUpdateCommand3 As System.Data.SqlClient.SqlCommand
-    Friend WithEvents SqlDeleteCommand3 As System.Data.SqlClient.SqlCommand
-    Friend WithEvents SqlSelectCommand4 As System.Data.SqlClient.SqlCommand
-    Friend WithEvents SqlInsertCommand4 As System.Data.SqlClient.SqlCommand
-    Friend WithEvents SqlUpdateCommand4 As System.Data.SqlClient.SqlCommand
-    Friend WithEvents SqlDeleteCommand4 As System.Data.SqlClient.SqlCommand
-    Friend WithEvents SqlConnection2 As System.Data.SqlClient.SqlConnection
-    Friend WithEvents Label9 As System.Windows.Forms.Label
-    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
-    Friend WithEvents TextBox2 As System.Windows.Forms.TextBox
-    Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
-    Friend WithEvents TextBox4 As System.Windows.Forms.TextBox
-    Friend WithEvents TextBox5 As System.Windows.Forms.TextBox
-    Friend WithEvents Label10 As System.Windows.Forms.Label
-    Friend WithEvents Label11 As System.Windows.Forms.Label
-    Friend WithEvents Label12 As System.Windows.Forms.Label
-    Friend WithEvents Label13 As System.Windows.Forms.Label
-    <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
+	Friend WithEvents Label4 As System.Windows.Forms.Label
+	Friend WithEvents Label5 As System.Windows.Forms.Label
+	Friend WithEvents Label6 As System.Windows.Forms.Label
+	Friend WithEvents txtSaldoAnterior As System.Windows.Forms.TextBox
+	Friend WithEvents txtCreditos As System.Windows.Forms.TextBox
+	Friend WithEvents txtDebitos As System.Windows.Forms.TextBox
+	Friend WithEvents txtSaldoMes As System.Windows.Forms.TextBox
+	Friend WithEvents txtSaldoActual As System.Windows.Forms.TextBox
+	Friend WithEvents AdTemporal2 As System.Data.SqlClient.SqlDataAdapter
+	Friend WithEvents smbGenerar As DevExpress.XtraEditors.SimpleButton
+	Friend WithEvents SqlSelectCommand2 As System.Data.SqlClient.SqlCommand
+	Friend WithEvents SqlInsertCommand2 As System.Data.SqlClient.SqlCommand
+	Friend WithEvents SqlUpdateCommand2 As System.Data.SqlClient.SqlCommand
+	Friend WithEvents SqlDeleteCommand2 As System.Data.SqlClient.SqlCommand
+	Friend WithEvents Label8 As System.Windows.Forms.Label
+	Friend WithEvents AdapterMoneda As System.Data.SqlClient.SqlDataAdapter
+	Friend WithEvents Moneda As System.Windows.Forms.ComboBox
+	Friend WithEvents SqlSelectCommand5 As System.Data.SqlClient.SqlCommand
+	Friend WithEvents SqlInsertCommand5 As System.Data.SqlClient.SqlCommand
+	Friend WithEvents Check_Cierre As System.Windows.Forms.CheckBox
+	Friend WithEvents SqlSelectCommand3 As System.Data.SqlClient.SqlCommand
+	Friend WithEvents SqlInsertCommand3 As System.Data.SqlClient.SqlCommand
+	Friend WithEvents SqlUpdateCommand3 As System.Data.SqlClient.SqlCommand
+	Friend WithEvents SqlDeleteCommand3 As System.Data.SqlClient.SqlCommand
+	Friend WithEvents SqlSelectCommand4 As System.Data.SqlClient.SqlCommand
+	Friend WithEvents SqlInsertCommand4 As System.Data.SqlClient.SqlCommand
+	Friend WithEvents SqlUpdateCommand4 As System.Data.SqlClient.SqlCommand
+	Friend WithEvents SqlDeleteCommand4 As System.Data.SqlClient.SqlCommand
+	Friend WithEvents SqlConnection2 As System.Data.SqlClient.SqlConnection
+	Friend WithEvents Label9 As System.Windows.Forms.Label
+	Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+	Friend WithEvents TextBox2 As System.Windows.Forms.TextBox
+	Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
+	Friend WithEvents TextBox4 As System.Windows.Forms.TextBox
+	Friend WithEvents TextBox5 As System.Windows.Forms.TextBox
+	Friend WithEvents Label10 As System.Windows.Forms.Label
+	Friend WithEvents Label11 As System.Windows.Forms.Label
+	Friend WithEvents Label12 As System.Windows.Forms.Label
+	Friend WithEvents Label13 As System.Windows.Forms.Label
+	<System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
 		Me.components = New System.ComponentModel.Container()
 		Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmBalanceComprobacion))
 		Dim ColumnFilterInfo7 As DevExpress.XtraGrid.Columns.ColumnFilterInfo = New DevExpress.XtraGrid.Columns.ColumnFilterInfo()
@@ -956,882 +956,888 @@ Public Class frmBalanceComprobacion
 
 #Region "Load"
 	Private Sub frmBalanceComprobacion_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        Try
+		Try
 
 
-            SqlConnection1.ConnectionString = fnConexionConta()
-            conectadobd.ConnectionString = fnConexionConta()
-            conectadobd.Open()
+			SqlConnection1.ConnectionString = fnConexionConta()
+			conectadobd.ConnectionString = fnConexionConta()
+			conectadobd.Open()
 
-            Estado(False)
-            InitData()
-            AdapterMoneda.Fill(DsBalances1, "Moneda")
+			Estado(False)
+			InitData()
+			AdapterMoneda.Fill(DsBalances1, "Moneda")
 			If Tipo = 1 Then
 				Me.Moneda.Visible = False
 				Me.Label8.Visible = False
 			End If
 			WindowState = FormWindowState.Maximized
 		Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-    End Sub
+			MsgBox(ex.Message)
+		End Try
+	End Sub
 
 
-    Private Sub InitData()
-        If Tipo = 1 Then
-            CreateColumn(TreeList2, "Cuenta Contable", "CuentaContable", 0, DevExpress.Utils.FormatType.None, "")
-            CreateColumn(TreeList2, "Descripción", "Descripcion", 1, DevExpress.Utils.FormatType.None, "")
-            CreateColumn(TreeList2, "Saldo Anterior ¢", "SaldoAnterior", 2, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
-            CreateColumn(TreeList2, "Débitos ¢", "Debitos", 3, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
-            CreateColumn(TreeList2, "Créditos ¢", "Creditos", 4, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
-            CreateColumn(TreeList2, "Saldo Mes ¢", "SaldoMes", 5, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
-            CreateColumn(TreeList2, "Saldo Actual ¢", "SaldoActual", 6, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
+	Private Sub InitData()
+		If Tipo = 1 Then
+			CreateColumn(TreeList2, "Cuenta Contable", "CuentaContable", 0, DevExpress.Utils.FormatType.None, "")
+			CreateColumn(TreeList2, "Descripción", "Descripcion", 1, DevExpress.Utils.FormatType.None, "")
+			CreateColumn(TreeList2, "Saldo Anterior ¢", "SaldoAnterior", 2, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
+			CreateColumn(TreeList2, "Débitos ¢", "Debitos", 3, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
+			CreateColumn(TreeList2, "Créditos ¢", "Creditos", 4, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
+			CreateColumn(TreeList2, "Saldo Mes ¢", "SaldoMes", 5, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
+			CreateColumn(TreeList2, "Saldo Actual ¢", "SaldoActual", 6, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
 
-            CreateColumn(TreeList2, "Saldo Anterior $", "SaldoAnteriorD", 7, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
-            CreateColumn(TreeList2, "Débitos $", "DebitosD", 8, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
-            CreateColumn(TreeList2, "Créditos $", "CreditosD", 9, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
-            CreateColumn(TreeList2, "Saldo Mes $", "SaldoMesD", 10, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
-            CreateColumn(TreeList2, "Saldo Actual $", "SaldoActualD", 11, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
+			CreateColumn(TreeList2, "Saldo Anterior $", "SaldoAnteriorD", 7, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
+			CreateColumn(TreeList2, "Débitos $", "DebitosD", 8, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
+			CreateColumn(TreeList2, "Créditos $", "CreditosD", 9, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
+			CreateColumn(TreeList2, "Saldo Mes $", "SaldoMesD", 10, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
+			CreateColumn(TreeList2, "Saldo Actual $", "SaldoActualD", 11, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
 
-            CreateColumn(TreeList2, "Nivel", "Nivel", -1, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
-        Else
-            CreateColumn(TreeList2, "Cuenta Contable", "CuentaContable", 0, DevExpress.Utils.FormatType.None, "")
-            CreateColumn(TreeList2, "Descripción", "Descripcion", 1, DevExpress.Utils.FormatType.None, "")
-            CreateColumn(TreeList2, "Saldo Anterior", "SaldoAnterior", 2, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
-            CreateColumn(TreeList2, "Débitos", "Debitos", 3, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
-            CreateColumn(TreeList2, "Créditos", "Creditos", 4, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
-            CreateColumn(TreeList2, "Saldo Mes", "SaldoMes", 5, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
-            CreateColumn(TreeList2, "Saldo Actual", "SaldoActual", 6, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
+			CreateColumn(TreeList2, "Nivel", "Nivel", -1, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
+		Else
+			CreateColumn(TreeList2, "Cuenta Contable", "CuentaContable", 0, DevExpress.Utils.FormatType.None, "")
+			CreateColumn(TreeList2, "Descripción", "Descripcion", 1, DevExpress.Utils.FormatType.None, "")
+			CreateColumn(TreeList2, "Saldo Anterior", "SaldoAnterior", 2, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
+			CreateColumn(TreeList2, "Débitos", "Debitos", 3, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
+			CreateColumn(TreeList2, "Créditos", "Creditos", 4, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
+			CreateColumn(TreeList2, "Saldo Mes", "SaldoMes", 5, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
+			CreateColumn(TreeList2, "Saldo Actual", "SaldoActual", 6, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
 
-            CreateColumn(TreeList2, "Nivel", "Nivel", -1, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
-        End If
+			CreateColumn(TreeList2, "Nivel", "Nivel", -1, DevExpress.Utils.FormatType.Numeric, "#,##0.00")
+		End If
 
-        TreeList2.BestFitColumns()
-    End Sub
+		TreeList2.BestFitColumns()
+	End Sub
 
 
-    Private Sub CreateColumn(ByVal tl As TreeList, ByVal caption As String, ByVal field As String, ByVal visibleindex As Integer, ByVal formatType As DevExpress.Utils.FormatType, ByVal formatString As String)
-        Dim col As DevExpress.XtraTreeList.Columns.TreeListColumn = tl.Columns.Add()
-        col.Caption = caption
-        col.FieldName = field
-        col.VisibleIndex = visibleindex
-        col.Format.FormatType = formatType
-        If formatType = DevExpress.Utils.FormatType.Custom Then
-            col.Format.Format = New BaseFormatter
-        End If
-        col.Format.FormatString = formatString
-    End Sub
+	Private Sub CreateColumn(ByVal tl As TreeList, ByVal caption As String, ByVal field As String, ByVal visibleindex As Integer, ByVal formatType As DevExpress.Utils.FormatType, ByVal formatString As String)
+		Dim col As DevExpress.XtraTreeList.Columns.TreeListColumn = tl.Columns.Add()
+		col.Caption = caption
+		col.FieldName = field
+		col.VisibleIndex = visibleindex
+		col.Format.FormatType = formatType
+		If formatType = DevExpress.Utils.FormatType.Custom Then
+			col.Format.Format = New BaseFormatter
+		End If
+		col.Format.FormatString = formatString
+	End Sub
 #End Region
 
 #Region "Controles"
-    Private Sub LLenarCeros()
-        Dim n As Integer
-        For n = 0 To Me.DsBalances1.CuentaContable.Rows.Count - 1
-            If Tipo = 1 Then
-                DsBalances1.CuentaContable.Rows(n).Item("SaldoAnterior") = 0
-                DsBalances1.CuentaContable.Rows(n).Item("Debitos") = 0
-                DsBalances1.CuentaContable.Rows(n).Item("Creditos") = 0
-                DsBalances1.CuentaContable.Rows(n).Item("SaldoMes") = 0
-                DsBalances1.CuentaContable.Rows(n).Item("SaldoActual") = 0
+	Private Sub LLenarCeros()
+		Dim n As Integer
+		For n = 0 To Me.DsBalances1.CuentaContable.Rows.Count - 1
+			If Tipo = 1 Then
+				DsBalances1.CuentaContable.Rows(n).Item("SaldoAnterior") = 0
+				DsBalances1.CuentaContable.Rows(n).Item("Debitos") = 0
+				DsBalances1.CuentaContable.Rows(n).Item("Creditos") = 0
+				DsBalances1.CuentaContable.Rows(n).Item("SaldoMes") = 0
+				DsBalances1.CuentaContable.Rows(n).Item("SaldoActual") = 0
 
-                DsBalances1.CuentaContable.Rows(n).Item("SaldoAnteriorD") = 0
-                DsBalances1.CuentaContable.Rows(n).Item("DebitosD") = 0
-                DsBalances1.CuentaContable.Rows(n).Item("CreditosD") = 0
-                DsBalances1.CuentaContable.Rows(n).Item("SaldoMesD") = 0
-                DsBalances1.CuentaContable.Rows(n).Item("SaldoActualD") = 0
-            Else
-                DsBalances1.CuentaContable.Rows(n).Item("SaldoAnterior") = 0
-                DsBalances1.CuentaContable.Rows(n).Item("Debitos") = 0
-                DsBalances1.CuentaContable.Rows(n).Item("Creditos") = 0
-                DsBalances1.CuentaContable.Rows(n).Item("SaldoMes") = 0
-                DsBalances1.CuentaContable.Rows(n).Item("SaldoActual") = 0
-            End If
+				DsBalances1.CuentaContable.Rows(n).Item("SaldoAnteriorD") = 0
+				DsBalances1.CuentaContable.Rows(n).Item("DebitosD") = 0
+				DsBalances1.CuentaContable.Rows(n).Item("CreditosD") = 0
+				DsBalances1.CuentaContable.Rows(n).Item("SaldoMesD") = 0
+				DsBalances1.CuentaContable.Rows(n).Item("SaldoActualD") = 0
+			Else
+				DsBalances1.CuentaContable.Rows(n).Item("SaldoAnterior") = 0
+				DsBalances1.CuentaContable.Rows(n).Item("Debitos") = 0
+				DsBalances1.CuentaContable.Rows(n).Item("Creditos") = 0
+				DsBalances1.CuentaContable.Rows(n).Item("SaldoMes") = 0
+				DsBalances1.CuentaContable.Rows(n).Item("SaldoActual") = 0
+			End If
 
-        Next
-    End Sub
-
-
-    Function Estado(ByVal valor As Boolean)
-        Me.dtFinal.Enabled = valor
-        Me.dtInicial.Enabled = valor
-        smbGenerar.Enabled = valor
-        Check_Cierre.Enabled = valor
-
-    End Function
+		Next
+	End Sub
 
 
-    Private Sub dtInicial_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dtInicial.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            dtFinal.Focus()
-        End If
-    End Sub
+	Function Estado(ByVal valor As Boolean)
+		Me.dtFinal.Enabled = valor
+		Me.dtInicial.Enabled = valor
+		smbGenerar.Enabled = valor
+		Check_Cierre.Enabled = valor
+
+	End Function
 
 
-    Private Sub dtFinal_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dtFinal.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            Moneda.Focus()
-        End If
-    End Sub
+	Private Sub dtInicial_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dtInicial.KeyDown
+		If e.KeyCode = Keys.Enter Then
+			dtFinal.Focus()
+		End If
+	End Sub
 
 
-    Private Sub Moneda_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Moneda.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            smbGenerar.Focus()
-        End If
-    End Sub
+	Private Sub dtFinal_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dtFinal.KeyDown
+		If e.KeyCode = Keys.Enter Then
+			Moneda.Focus()
+		End If
+	End Sub
+
+
+	Private Sub Moneda_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Moneda.KeyDown
+		If e.KeyCode = Keys.Enter Then
+			smbGenerar.Focus()
+		End If
+	End Sub
 #End Region
 
 #Region "ToolBar"
-    Private Sub ToolBar1_ButtonClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ToolBarButtonClickEventArgs) Handles ToolBar1.ButtonClick
-        Dim PMU As New PerfilModulo_Class   'Declara la variable Perfil Modulo Usuario
-        PMU = VSM(usua.Cedula, Me.Name) 'Carga los privilegios del usuario con el modulo
+	Private Sub ToolBar1_ButtonClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ToolBarButtonClickEventArgs) Handles ToolBar1.ButtonClick
+		Dim PMU As New PerfilModulo_Class   'Declara la variable Perfil Modulo Usuario
+		PMU = VSM(usua.Cedula, Me.Name) 'Carga los privilegios del usuario con el modulo
 
-        Select Case ToolBar1.Buttons.IndexOf(e.Button)
-            Case 0 : Nuevo()
+		Select Case ToolBar1.Buttons.IndexOf(e.Button)
+			Case 0 : Nuevo()
 
-            Case 1 : If PMU.Print Then Importar() Else MsgBox("No tiene permiso para imprimir los datos...", MsgBoxStyle.Information, "Atención...") : Exit Sub
+			Case 1 : If PMU.Print Then Importar() Else MsgBox("No tiene permiso para imprimir los datos...", MsgBoxStyle.Information, "Atención...") : Exit Sub
 
-            Case 2 : If PMU.Print Then Imprimir() Else MsgBox("No tiene permiso para imprimir los datos...", MsgBoxStyle.Information, "Atención...") : Exit Sub
+			Case 2 : If PMU.Print Then Imprimir() Else MsgBox("No tiene permiso para imprimir los datos...", MsgBoxStyle.Information, "Atención...") : Exit Sub
 
-            Case 3 : Me.Close()
-        End Select
-    End Sub
+			Case 3 : Me.Close()
+		End Select
+	End Sub
 #End Region
 
 #Region "Generar Balance"
-    Private Sub GeneraBalance()
-        Try
-            Dim Fecha1, Fecha2 As Date
-            Fecha1 = Format(dtInicial.Value.Date, "dd/MM/yyyy H:mm:ss")
-            Fecha2 = Format(dtFinal.Value.Date, "dd/MM/yyyy H:mm:ss")
-            If Fecha1 > Fecha2 Then
-                MsgBox("La fecha inicial no puede ser mayor a la fecha final", MsgBoxStyle.Information)
-                Exit Sub
-            End If
+	Private Sub GeneraBalance()
+		Try
+			Nuevo()
 
-            Me.DsBalances1.Temporal2.Clear()
-            Me.DsBalances1.CuentaContable.Clear()
-            Me.DsBalances1.Usuarios.Clear()
-            Me.DsBalances1.DetallesAsientosContable.Clear()
-            Me.DsBalances1.AsientosContables.Clear()
-            AdCuentas.Fill(Me.DsBalances1.CuentaContable)
-            'Me.AdDetalleAsiento.Fill(Me.DsBalances1.DetallesAsientosContable) 'Llenar solo lo del mes del período de trabajo
-            TreeList2.Columns(1).Width = 300
-            LLenarCeros()
-            CargarAsientos(Fecha1)
-            CargarDebitos(Fecha1, Fecha2)
-            Calcular_Saldos()
-            Calcular()
+			Dim Fecha1, Fecha2 As Date
+			Fecha1 = Format(dtInicial.Value.Date, "dd/MM/yyyy H:mm:ss")
+			Fecha2 = Format(dtFinal.Value.Date, "dd/MM/yyyy H:mm:ss")
+			If Fecha1 > Fecha2 Then
+				MsgBox("La fecha inicial no puede ser mayor a la fecha final", MsgBoxStyle.Information)
+				Exit Sub
+			End If
 
-            TreeList2.DataSource = DsBalances1
-            TreeList2.DataMember = "CuentaContable"
-            Me.dtFinal.Enabled = False
-            Me.dtInicial.Enabled = False
-            Check_Cierre.Enabled = False
-            If Configuracion.Claves.Configuracion("ExpandirTodas").Equals("1") Then
-                TreeList2.FullExpand()
+			Me.DsBalances1.Temporal2.Clear()
+			Me.DsBalances1.CuentaContable.Clear()
+			Me.DsBalances1.Usuarios.Clear()
+			Me.DsBalances1.DetallesAsientosContable.Clear()
+			Me.DsBalances1.AsientosContables.Clear()
+			AdCuentas.Fill(Me.DsBalances1.CuentaContable)
+			'Me.AdDetalleAsiento.Fill(Me.DsBalances1.DetallesAsientosContable) 'Llenar solo lo del mes del período de trabajo
+			TreeList2.Columns(1).Width = 300
+			LLenarCeros()
+			CargarSaldoAnterior(Fecha1)
+			CargarMovimientos(Fecha1, Fecha2)
+			If Configuracion.Claves.Configuracion("Ecole", "0").Equals("1") Then
+				AjusteEcole.AjustarCuenta(DsBalances1, Fecha1, Moneda.SelectedValue, Tipo)
+			End If
+			Calcular_Saldos()
+			Calcular()
 
-            End If
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-    End Sub
+			TreeList2.DataSource = DsBalances1
+			TreeList2.DataMember = "CuentaContable"
+			Me.dtFinal.Enabled = False
+			Me.dtInicial.Enabled = False
+			Check_Cierre.Enabled = False
+			If Configuracion.Claves.Configuracion("ExpandirTodas").Equals("1") Then
+				TreeList2.FullExpand()
 
-    Private Sub smbGenerar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles smbGenerar.Click
-        Try
-            Nuevo()
-            Dim Fecha1, Fecha2 As Date
-            Fecha1 = Format(dtInicial.Value.Date, "dd/MM/yyyy H:mm:ss")
-            Fecha2 = Format(dtFinal.Value.Date, "dd/MM/yyyy H:mm:ss")
-            If Fecha1 > Fecha2 Then
-                MsgBox("La fecha inicial no puede ser mayor a la fecha final", MsgBoxStyle.Information)
-                Exit Sub
-            End If
+			End If
+		Catch ex As Exception
+			MsgBox(ex.Message)
+		End Try
+	End Sub
 
-            Me.DsBalances1.Temporal2.Clear()
-            Me.DsBalances1.CuentaContable.Clear()
-            Me.DsBalances1.Usuarios.Clear()
-            Me.DsBalances1.DetallesAsientosContable.Clear()
-            Me.DsBalances1.AsientosContables.Clear()
-            AdCuentas.Fill(Me.DsBalances1.CuentaContable)
-            'Me.AdDetalleAsiento.Fill(Me.DsBalances1.DetallesAsientosContable) 'Llenar solo lo del mes del período de trabajo
-            TreeList2.Columns(1).Width = 300
-            LLenarCeros()
-            CargarAsientos(Fecha1)
-            CargarDebitos(Fecha1, Fecha2)
-            Calcular_Saldos()
-            Calcular()
+	Private Sub smbGenerar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles smbGenerar.Click
+		GeneraBalance()
 
-            TreeList2.DataSource = DsBalances1
-            TreeList2.DataMember = "CuentaContable"
-            Me.dtFinal.Enabled = False
-            Me.dtInicial.Enabled = False
-            Check_Cierre.Enabled = False
-
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-    End Sub
+	End Sub
 #End Region
 
 #Region "Cargar Asientos"
-    Function fnConexionConta() As String
-        Dim saldoCorrectos As Boolean = False
-        If Configuracion.Claves.Configuracion("saldosCorrectos", "0").Equals("1") Then
-            saldoCorrectos = True
+	Function fnConexionConta() As String
+		'Dim saldoCorrectos As Boolean = False
+		'If Configuracion.Claves.Configuracion("saldosCorrectos", "0").Equals("1") Then
+		'	saldoCorrectos = True
 
-        End If
-        Dim fs As DateTime = "01/02/2020"
-        If saldoCorrectos And dtInicial.Value < fs Then
+		'End If
+		'Dim fs As DateTime = "01/02/2020"
+		'If saldoCorrectos And dtInicial.Value < fs Then
 
-            Return Configuracion.Claves.Conexion("ContabilidadBK")
+		'	Return Configuracion.Claves.Conexion("ContabilidadBK")
 
-        End If
-        Return Configuracion.Claves.Conexion("Contabilidad")
-    End Function
-    Function CargarAsientos(ByVal FechaInicio As String)
-        Dim cnnv As SqlConnection = Nothing     'CARGA LOS ASIENTOS CONTABLES PARA EL CALCULO DEL SALDO ANTERIOR
-        Dim cConexion As New Conexion
-        Dim funcion As New cFunciones
-        Dim Debe, Haber, Monto, DebeD, HaberD As Double
-        Dim i, n, x As Integer
+		'End If
+		Return Configuracion.Claves.Conexion("Contabilidad")
+	End Function
 
-        Try
-            Dim sConn As String = fnConexionConta()
-            cnnv = New SqlConnection(sConn)
+	Sub CargarSaldoAnterior(ByVal FechaInicio As String)
+		Dim cnnv As SqlConnection = Nothing     'CARGA LOS ASIENTOS CONTABLES PARA EL CALCULO DEL SALDO ANTERIOR
+		Dim cConexion As New Conexion
+		Dim funcion As New cFunciones
+		Dim Debe, Haber, DebeD, HaberD As Double
+		Dim i, n, x As Integer
 
-            cnnv.Open()
-            'Creamos el comando para la consulta
-            Dim cmdv As SqlCommand = New SqlCommand
-            Dim sel As String
-            If Check_Cierre.Checked = False Then
-                sel = " SELECT     dbo.AsientoDC_DH.Cuenta, SUM(dbo.AsientoDC_DH.DebeDolar) AS Ddolar, SUM(dbo.AsientoDC_DH.DebeColon)AS Dcolon, " &
-                            " SUM(dbo.AsientoDC_DH.HaberColon) AS Hcolon, SUM(dbo.AsientoDC_DH.HaberDolar) AS Hdolar, dbo.CuentaContable.Descripcion " &
-                            " FROM         dbo.AsientoDC_DH INNER JOIN " &
-                            " dbo.CuentaContable ON dbo.AsientoDC_DH.Cuenta = dbo.CuentaContable.CuentaContable " &
-                            " WHERE     (Fecha < dbo.DateOnlyInicio(@Fecha)) " &
-                            " GROUP BY dbo.AsientoDC_DH.Cuenta, dbo.CuentaContable.Descripcion "
-            Else
-                sel = " SELECT     dbo.AsientoDC_DH.Cuenta, SUM(dbo.AsientoDC_DH.DebeDolar) AS Ddolar, SUM(dbo.AsientoDC_DH.DebeColon)AS Dcolon, " &
-                            " SUM(dbo.AsientoDC_DH.HaberColon) AS Hcolon, SUM(dbo.AsientoDC_DH.HaberDolar) AS Hdolar, dbo.CuentaContable.Descripcion " &
-                            " FROM         dbo.AsientoDC_DH INNER JOIN " &
-                            " dbo.CuentaContable ON dbo.AsientoDC_DH.Cuenta = dbo.CuentaContable.CuentaContable " &
-                            " WHERE     (Fecha < dbo.DateOnlyInicio(@Fecha)) AND (AsientoDC_DH.NumAsiento <> '" & CierreAnual() & "'" &
-                            " GROUP BY dbo.AsientoDC_DH.Cuenta, dbo.CuentaContable.Descripcion "
-            End If
+		Try
+			Dim sConn As String = fnConexionConta()
+			cnnv = New SqlConnection(sConn)
 
+			cnnv.Open()
+			'Creamos el comando para la consulta
+			Dim cmdv As SqlCommand = New SqlCommand
+			Dim sel As String
+			If Moneda.SelectedValue = 3 Then
 
-            cmdv.CommandText = sel
-            cmdv.Connection = cnnv
-            cmdv.CommandType = CommandType.Text
-            cmdv.CommandTimeout = 90
-            'Los parámetros usados en la cadena de la consulta 
-            cmdv.Parameters.Add(New SqlParameter("@Fecha", SqlDbType.DateTime))
-            'cmdv.Parameters("@Fecha").Value = Format(FechaInicio, "dd/MM/yyyy H:mm:ss")
-            cmdv.Parameters("@Fecha").Value = FechaInicio
-            cmdv.Parameters.Add(New SqlParameter("@Periodo", SqlDbType.VarChar, 10))
-            cmdv.Parameters("@Periodo").Value = funcion.BuscaPeriodo(dtInicial.Value)
-            'Creamos el dataAdapter y asignamos el comando de selección
-            Dim dv As New SqlDataAdapter
-            dv.SelectCommand = cmdv
-            ' Llenamos la tabla
-            Me.DsBalances1.AsientoDC_DH_AG.Clear()
-            dv.Fill(Me.DsBalances1.AsientoDC_DH_AG)
-            If Me.DsBalances1.AsientoDC_DH_AG.Rows.Count = 0 Then
-                Exit Function
-            End If
-            For x = 0 To Me.DsBalances1.CuentaContable.Rows.Count - 1
-                For i = 0 To Me.DsBalances1.AsientoDC_DH_AG.Rows.Count - 1
-                    If Me.DsBalances1.AsientoDC_DH_AG(i).Cuenta.Equals(Me.DsBalances1.CuentaContable(x).CuentaContable) Then
-                        If Tipo = 1 Then
-                            Debe += Me.DsBalances1.AsientoDC_DH_AG(i).Dcolon
-                            Haber += Me.DsBalances1.AsientoDC_DH_AG(i).Hcolon
-                            DebeD += Me.DsBalances1.AsientoDC_DH_AG(i).Ddolar
-                            HaberD += Me.DsBalances1.AsientoDC_DH_AG(i).Hdolar
-                        Else
-                            If Moneda.SelectedValue = 1 Then
-                                Debe += Me.DsBalances1.AsientoDC_DH_AG(i).Dcolon
-                                Haber += Me.DsBalances1.AsientoDC_DH_AG(i).Hcolon
-
-                            Else
-                                Debe += Me.DsBalances1.AsientoDC_DH_AG(i).Ddolar
-                                Haber += Me.DsBalances1.AsientoDC_DH_AG(i).Hdolar
-                            End If
-
-                        End If
-                    End If
-                Next
-
-                If Tipo = 1 Then
-                    If DsBalances1.CuentaContable.Rows(x).Item("Tipo") = "ACTIVOS" Or DsBalances1.CuentaContable.Rows(x).Item("Tipo") = "COSTO VENTA" Or DsBalances1.CuentaContable.Rows(x).Item("Tipo") = "GASTOS" Then
-                        DsBalances1.CuentaContable.Rows(x).Item("SaldoAnterior") = Debe - Haber
-                        DsBalances1.CuentaContable.Rows(x).Item("SaldoAnteriorD") = DebeD - HaberD
-                    Else
-                        DsBalances1.CuentaContable.Rows(x).Item("SaldoAnterior") = Haber - Debe
-                        DsBalances1.CuentaContable.Rows(x).Item("SaldoAnteriorD") = HaberD - DebeD
-                    End If
-                Else
-                    If DsBalances1.CuentaContable.Rows(x).Item("Tipo") = "ACTIVOS" Or DsBalances1.CuentaContable.Rows(x).Item("Tipo") = "COSTO VENTA" Or DsBalances1.CuentaContable.Rows(x).Item("Tipo") = "GASTOS" Then
-                        DsBalances1.CuentaContable.Rows(x).Item("SaldoAnterior") = Debe - Haber
-                    Else
-                        DsBalances1.CuentaContable.Rows(x).Item("SaldoAnterior") = Haber - Debe
-                    End If
-
-                End If
-                Debe = 0
-                Haber = 0
-                DebeD = 0
-                HaberD = 0
-            Next
-
-        Catch ex As System.Exception
-            MsgBox(ex.ToString)
-        Finally
-            If Not cnnv Is Nothing Then
-                cnnv.Close()
-            End If
-        End Try
-    End Function
+				If Check_Cierre.Checked = False Then
+					sel = " SELECT     dbo.AsientoDC_DH.Cuenta, SUM(dbo.AsientoDC_DH.DebeDolar) AS Ddolar, SUM(dbo.AsientoDC_DH.DebeEuro)AS Dcolon, " &
+								" SUM(dbo.AsientoDC_DH.HaberEuro) AS Hcolon, SUM(dbo.AsientoDC_DH.HaberDolar) AS Hdolar, SUM(dbo.AsientoDC_DH.HaberEuro) AS Heuro, SUM(dbo.AsientoDC_DH.DebeEuro) AS Deuro,  dbo.CuentaContable.Descripcion " &
+								" FROM         dbo.AsientoDC_DH INNER JOIN " &
+								" dbo.CuentaContable ON dbo.AsientoDC_DH.Cuenta = dbo.CuentaContable.CuentaContable " &
+								" WHERE     (Fecha < dbo.DateOnlyInicio(@Fecha)) " &
+								" GROUP BY dbo.AsientoDC_DH.Cuenta, dbo.CuentaContable.Descripcion "
+				Else
+					sel = " SELECT     dbo.AsientoDC_DH.Cuenta, SUM(dbo.AsientoDC_DH.DebeDolar) AS Ddolar, SUM(dbo.AsientoDC_DH.DebeEuro)AS Dcolon, " &
+								" SUM(dbo.AsientoDC_DH.HaberEuro) AS Hcolon, SUM(dbo.AsientoDC_DH.HaberDolar) AS Hdolar, SUM(dbo.AsientoDC_DH.HaberEuro) AS Heuro, SUM(dbo.AsientoDC_DH.DebeEuro) AS Deuro, dbo.CuentaContable.Descripcion " &
+								" FROM         dbo.AsientoDC_DH INNER JOIN " &
+								" dbo.CuentaContable ON dbo.AsientoDC_DH.Cuenta = dbo.CuentaContable.CuentaContable " &
+								" WHERE     (Fecha < dbo.DateOnlyInicio(@Fecha)) AND (AsientoDC_DH.NumAsiento <> '" & CierreAnual() & "'" &
+								" GROUP BY dbo.AsientoDC_DH.Cuenta, dbo.CuentaContable.Descripcion "
+				End If
+			Else
+				If Check_Cierre.Checked = False Then
+					sel = " SELECT     dbo.AsientoDC_DH.Cuenta, SUM(dbo.AsientoDC_DH.DebeDolar) AS Ddolar, SUM(dbo.AsientoDC_DH.DebeColon) AS Dcolon, " &
+								" SUM(dbo.AsientoDC_DH.HaberColon) AS Hcolon, SUM(dbo.AsientoDC_DH.HaberDolar) AS Hdolar,
+								SUM(dbo.AsientoDC_DH.HaberEuro) AS Heuro, SUM(dbo.AsientoDC_DH.DebeEuro) AS Deuro,  dbo.CuentaContable.Descripcion " &
+								" FROM         dbo.AsientoDC_DH INNER JOIN " &
+								" dbo.CuentaContable ON dbo.AsientoDC_DH.Cuenta = dbo.CuentaContable.CuentaContable " &
+								" WHERE     (Fecha < dbo.DateOnlyInicio(@Fecha)) " &
+								" GROUP BY dbo.AsientoDC_DH.Cuenta, dbo.CuentaContable.Descripcion "
+				Else
+					sel = " SELECT     dbo.AsientoDC_DH.Cuenta, SUM(dbo.AsientoDC_DH.DebeDolar) AS Ddolar, SUM(dbo.AsientoDC_DH.DebeColon)AS Dcolon, " &
+								" SUM(dbo.AsientoDC_DH.HaberColon) AS Hcolon, SUM(dbo.AsientoDC_DH.HaberDolar) AS Hdolar, SUM(dbo.AsientoDC_DH.HaberEuro) AS Heuro, SUM(dbo.AsientoDC_DH.DebeEuro) AS Deuro, dbo.CuentaContable.Descripcion " &
+								" FROM         dbo.AsientoDC_DH INNER JOIN " &
+								" dbo.CuentaContable ON dbo.AsientoDC_DH.Cuenta = dbo.CuentaContable.CuentaContable " &
+								" WHERE     (Fecha < dbo.DateOnlyInicio(@Fecha)) AND (AsientoDC_DH.NumAsiento <> '" & CierreAnual() & "'" &
+								" GROUP BY dbo.AsientoDC_DH.Cuenta, dbo.CuentaContable.Descripcion "
+				End If
+			End If
 
 
-    Function CargarDebitos(ByVal FechaInicio As String, ByVal FechaFinal As String)
-        Dim cnnv As SqlConnection = Nothing     'CARGA LOS ASIENTOS CONTABLES DEL PERIODO
-        Dim cConexion As New Conexion
-        Dim funcion As New cFunciones
-        Dim Debe, Haber, Monto, DebeD, HaberD As Double
-        Dim i, n, x As Integer
 
-        Try
-            Dim sConn As String = fnConexionConta()
-            cnnv = New SqlConnection(sConn)
-            cnnv.Open()
-            'Creamos el comando para la consulta
-            Dim cmdv As SqlCommand = New SqlCommand
-            Dim sel As String = " SELECT     dbo.AsientoDC_DH.Cuenta, SUM(dbo.AsientoDC_DH.DebeDolar) AS Ddolar, SUM(dbo.AsientoDC_DH.DebeColon) AS Dcolon, " & _
-" SUM(dbo.AsientoDC_DH.HaberColon) AS Hcolon, SUM(dbo.AsientoDC_DH.HaberDolar) AS Hdolar, dbo.CuentaContable.Descripcion " & _
-" FROM         dbo.AsientoDC_DH INNER JOIN " & _
-" dbo.CuentaContable ON dbo.AsientoDC_DH.Cuenta = dbo.CuentaContable.CuentaContable " & _
-" WHERE     (Fecha >= dbo.DateOnlyInicio(@Fecha) AND Fecha <= dbo.DateOnlyFinal(@Fecha2)) " & _
+
+			cmdv.CommandText = sel
+			cmdv.Connection = cnnv
+			cmdv.CommandType = CommandType.Text
+			cmdv.CommandTimeout = 90
+			'Los parámetros usados en la cadena de la consulta 
+			cmdv.Parameters.Add(New SqlParameter("@Fecha", SqlDbType.DateTime))
+			'cmdv.Parameters("@Fecha").Value = Format(FechaInicio, "dd/MM/yyyy H:mm:ss")
+			cmdv.Parameters("@Fecha").Value = FechaInicio
+			cmdv.Parameters.Add(New SqlParameter("@Periodo", SqlDbType.VarChar, 10))
+			cmdv.Parameters("@Periodo").Value = funcion.BuscaPeriodo(dtInicial.Value)
+			'Creamos el dataAdapter y asignamos el comando de selección
+			Dim dv As New SqlDataAdapter
+			dv.SelectCommand = cmdv
+			' Llenamos la tabla
+			Me.DsBalances1.AsientoDC_DH_AG.Clear()
+			dv.Fill(Me.DsBalances1.AsientoDC_DH_AG)
+			If Me.DsBalances1.AsientoDC_DH_AG.Rows.Count = 0 Then
+				Exit Sub
+			End If
+			For x = 0 To Me.DsBalances1.CuentaContable.Rows.Count - 1
+				For i = 0 To Me.DsBalances1.AsientoDC_DH_AG.Rows.Count - 1
+					If Me.DsBalances1.AsientoDC_DH_AG(i).Cuenta.Equals(Me.DsBalances1.CuentaContable(x).CuentaContable) Then
+						If Tipo = 1 Then
+							Debe += Me.DsBalances1.AsientoDC_DH_AG(i).Dcolon
+							Haber += Me.DsBalances1.AsientoDC_DH_AG(i).Hcolon
+							DebeD += Me.DsBalances1.AsientoDC_DH_AG(i).Ddolar
+							HaberD += Me.DsBalances1.AsientoDC_DH_AG(i).Hdolar
+						Else
+							If Moneda.SelectedValue = 1 Then
+								Debe += Me.DsBalances1.AsientoDC_DH_AG(i).Dcolon
+								Haber += Me.DsBalances1.AsientoDC_DH_AG(i).Hcolon
+
+							ElseIf Moneda.SelectedValue = 2 Then
+								Debe += Me.DsBalances1.AsientoDC_DH_AG(i).Ddolar
+								Haber += Me.DsBalances1.AsientoDC_DH_AG(i).Hdolar
+							ElseIf Moneda.SelectedValue = 3 Then
+								Debe += Me.DsBalances1.AsientoDC_DH_AG(i).Deuro
+								Haber += Me.DsBalances1.AsientoDC_DH_AG(i).Heuro
+
+							End If
+
+						End If
+					End If
+				Next
+
+				If Tipo = 1 Then
+					If DsBalances1.CuentaContable.Rows(x).Item("Tipo") = "ACTIVOS" Or DsBalances1.CuentaContable.Rows(x).Item("Tipo") = "COSTO VENTA" Or DsBalances1.CuentaContable.Rows(x).Item("Tipo") = "GASTOS" Then
+						DsBalances1.CuentaContable.Rows(x).Item("SaldoAnterior") = Debe - Haber
+						DsBalances1.CuentaContable.Rows(x).Item("SaldoAnteriorD") = DebeD - HaberD
+					Else
+						DsBalances1.CuentaContable.Rows(x).Item("SaldoAnterior") = Haber - Debe
+						DsBalances1.CuentaContable.Rows(x).Item("SaldoAnteriorD") = HaberD - DebeD
+					End If
+				Else
+					If DsBalances1.CuentaContable.Rows(x).Item("Tipo") = "ACTIVOS" Or DsBalances1.CuentaContable.Rows(x).Item("Tipo") = "COSTO VENTA" Or DsBalances1.CuentaContable.Rows(x).Item("Tipo") = "GASTOS" Then
+						DsBalances1.CuentaContable.Rows(x).Item("SaldoAnterior") = Debe - Haber
+					Else
+						DsBalances1.CuentaContable.Rows(x).Item("SaldoAnterior") = Haber - Debe
+					End If
+
+				End If
+				Debe = 0
+				Haber = 0
+				DebeD = 0
+				HaberD = 0
+			Next
+
+		Catch ex As System.Exception
+			MsgBox(ex.ToString)
+		Finally
+			If Not cnnv Is Nothing Then
+				cnnv.Close()
+			End If
+		End Try
+	End Sub
+
+
+	Sub CargarMovimientos(ByVal FechaInicio As String, ByVal FechaFinal As String)
+		Dim cnnv As SqlConnection = Nothing     'CARGA LOS ASIENTOS CONTABLES DEL PERIODO
+		Dim cConexion As New Conexion
+		Dim funcion As New cFunciones
+		Dim Debe, Haber, Monto, DebeD, HaberD As Double
+		Dim i, n, x As Integer
+
+		Try
+			Dim sConn As String = fnConexionConta()
+			cnnv = New SqlConnection(sConn)
+			cnnv.Open()
+			'Creamos el comando para la consulta
+			Dim cmdv As SqlCommand = New SqlCommand
+			Dim sel As String = " SELECT     dbo.AsientoDC_DH.Cuenta, SUM(dbo.AsientoDC_DH.DebeDolar) AS Ddolar, SUM(dbo.AsientoDC_DH.DebeColon) AS Dcolon, " &
+" SUM(dbo.AsientoDC_DH.HaberColon) AS Hcolon, SUM(dbo.AsientoDC_DH.HaberDolar) AS Hdolar, SUM(dbo.AsientoDC_DH.HaberEuro) AS Heuro, SUM(dbo.AsientoDC_DH.DebeEuro) AS Deuro, dbo.CuentaContable.Descripcion " &
+" FROM         dbo.AsientoDC_DH INNER JOIN " &
+" dbo.CuentaContable ON dbo.AsientoDC_DH.Cuenta = dbo.CuentaContable.CuentaContable " &
+" WHERE     (Fecha >= dbo.DateOnlyInicio(@Fecha) AND Fecha <= dbo.DateOnlyFinal(@Fecha2)) " &
 " GROUP BY dbo.AsientoDC_DH.Cuenta, dbo.CuentaContable.Descripcion "
 
-            'Dim sel As String = "SELECT * FROM AsientoDC_DH_AG WHERE Fecha >= dbo.DateOnlyInicio(@Fecha) AND Fecha <= dbo.DateOnlyFinal(@Fecha2)"
-            If Check_Cierre.Checked Then
-                sel = sel & " AND (AsientosContables.NumAsiento <> '" & CierreAnual() & "')"
-            End If
-            cmdv.CommandText = sel
-            cmdv.Connection = cnnv
-            cmdv.CommandType = CommandType.Text
-            cmdv.CommandTimeout = 90
-            'Los parámetros usados en la cadena de la consulta 
-            cmdv.Parameters.Add(New SqlParameter("@Fecha", SqlDbType.DateTime))
-            'cmdv.Parameters("@Fecha").Value = Format(FechaInicio, "dd/MM/yyyy H:mm:ss")
-            cmdv.Parameters("@Fecha").Value = FechaInicio
-            cmdv.Parameters.Add(New SqlParameter("@Fecha2", SqlDbType.DateTime))
-            'cmdv.Parameters("@Fecha2").Value = Format(FechaFinal, "dd/MM/yyyy H:mm:ss")
-            cmdv.Parameters("@Fecha2").Value = FechaFinal
-            'Creamos el dataAdapter y asignamos el comando de selección
-            Dim dv As New SqlDataAdapter
-            dv.SelectCommand = cmdv
-            ' Llenamos la tabla
-            Me.DsBalances1.AsientoDC_DH_AG.Clear()
+			'Dim sel As String = "SELECT * FROM AsientoDC_DH_AG WHERE Fecha >= dbo.DateOnlyInicio(@Fecha) AND Fecha <= dbo.DateOnlyFinal(@Fecha2)"
+			If Check_Cierre.Checked Then
+				sel = sel & " AND (AsientosContables.NumAsiento <> '" & CierreAnual() & "')"
+			End If
+			cmdv.CommandText = sel
+			cmdv.Connection = cnnv
+			cmdv.CommandType = CommandType.Text
+			cmdv.CommandTimeout = 90
+			'Los parámetros usados en la cadena de la consulta 
+			cmdv.Parameters.Add(New SqlParameter("@Fecha", SqlDbType.DateTime))
+			'cmdv.Parameters("@Fecha").Value = Format(FechaInicio, "dd/MM/yyyy H:mm:ss")
+			cmdv.Parameters("@Fecha").Value = FechaInicio
+			cmdv.Parameters.Add(New SqlParameter("@Fecha2", SqlDbType.DateTime))
+			'cmdv.Parameters("@Fecha2").Value = Format(FechaFinal, "dd/MM/yyyy H:mm:ss")
+			cmdv.Parameters("@Fecha2").Value = FechaFinal
+			'Creamos el dataAdapter y asignamos el comando de selección
+			Dim dv As New SqlDataAdapter
+			dv.SelectCommand = cmdv
+			' Llenamos la tabla
+			Me.DsBalances1.AsientoDC_DH_AG.Clear()
 
-            dv.Fill(Me.DsBalances1.AsientoDC_DH_AG)
+			dv.Fill(Me.DsBalances1.AsientoDC_DH_AG)
 
-            For x = 0 To Me.DsBalances1.CuentaContable.Rows.Count - 1
+			For x = 0 To Me.DsBalances1.CuentaContable.Rows.Count - 1
 
-                For i = 0 To Me.DsBalances1.AsientoDC_DH_AG.Rows.Count - 1
-                    Dim cuent As String = Me.DsBalances1.AsientoDC_DH_AG(i).Cuenta.TrimEnd(" ")
-                    If cuent.Equals(Me.DsBalances1.CuentaContable(x).CuentaContable) Then
-                        If Me.Tipo = 1 Then
-                            DsBalances1.CuentaContable.Rows(x).Item("Debitos") += Me.DsBalances1.AsientoDC_DH_AG(i).Dcolon
-                            DsBalances1.CuentaContable.Rows(x).Item("Creditos") += Me.DsBalances1.AsientoDC_DH_AG(i).Hcolon
-                            DsBalances1.CuentaContable.Rows(x).Item("DebitosD") += Me.DsBalances1.AsientoDC_DH_AG(i).Ddolar
-                            DsBalances1.CuentaContable.Rows(x).Item("CreditosD") += Me.DsBalances1.AsientoDC_DH_AG(i).Hdolar
+				For i = 0 To Me.DsBalances1.AsientoDC_DH_AG.Rows.Count - 1
+					Dim cuent As String = Me.DsBalances1.AsientoDC_DH_AG(i).Cuenta.TrimEnd(" ")
+					If cuent.Equals(Me.DsBalances1.CuentaContable(x).CuentaContable) Then
+						If Me.Tipo = 1 Then
+							DsBalances1.CuentaContable.Rows(x).Item("Debitos") += Me.DsBalances1.AsientoDC_DH_AG(i).Dcolon
+							DsBalances1.CuentaContable.Rows(x).Item("Creditos") += Me.DsBalances1.AsientoDC_DH_AG(i).Hcolon
+							DsBalances1.CuentaContable.Rows(x).Item("DebitosD") += Me.DsBalances1.AsientoDC_DH_AG(i).Ddolar
+							DsBalances1.CuentaContable.Rows(x).Item("CreditosD") += Me.DsBalances1.AsientoDC_DH_AG(i).Hdolar
 
-                        Else
-                            If Moneda.SelectedValue = 1 Then
-                                DsBalances1.CuentaContable.Rows(x).Item("Debitos") += Me.DsBalances1.AsientoDC_DH_AG(i).Dcolon
-                                DsBalances1.CuentaContable.Rows(x).Item("Creditos") += Me.DsBalances1.AsientoDC_DH_AG(i).Hcolon
-                            Else
-                                DsBalances1.CuentaContable.Rows(x).Item("Debitos") += Me.DsBalances1.AsientoDC_DH_AG(i).Ddolar
-                                DsBalances1.CuentaContable.Rows(x).Item("Creditos") += Me.DsBalances1.AsientoDC_DH_AG(i).Hdolar
+						Else
+							If Moneda.SelectedValue = 1 Then
+								DsBalances1.CuentaContable.Rows(x).Item("Debitos") += Me.DsBalances1.AsientoDC_DH_AG(i).Dcolon
+								DsBalances1.CuentaContable.Rows(x).Item("Creditos") += Me.DsBalances1.AsientoDC_DH_AG(i).Hcolon
+							ElseIf Moneda.SelectedValue = 2 Then
+								DsBalances1.CuentaContable.Rows(x).Item("Debitos") += Me.DsBalances1.AsientoDC_DH_AG(i).Ddolar
+								DsBalances1.CuentaContable.Rows(x).Item("Creditos") += Me.DsBalances1.AsientoDC_DH_AG(i).Hdolar
+							ElseIf Moneda.SelectedValue = 3 Then
+								DsBalances1.CuentaContable.Rows(x).Item("Debitos") += Me.DsBalances1.AsientoDC_DH_AG(i).Deuro
+								DsBalances1.CuentaContable.Rows(x).Item("Creditos") += Me.DsBalances1.AsientoDC_DH_AG(i).Heuro
+							End If
 
-                            End If
+						End If
 
-                        End If
+					End If
 
-                    End If
+				Next
+			Next
 
-                Next
-            Next
-
-        Catch ex As System.Exception
-            MsgBox(ex.ToString)
-        Finally
-            If Not cnnv Is Nothing Then
-                cnnv.Close()
-            End If
-        End Try
-    End Function
+		Catch ex As System.Exception
+			MsgBox(ex.ToString)
+		Finally
+			If Not cnnv Is Nothing Then
+				cnnv.Close()
+			End If
+		End Try
+	End Sub
 
 
-    Function CierreAnual() As String
-        Try
-            Dim cConexion As New Conexion       'BUSCA NUMERO DE ASIENTO DEL ULTIMO CIERRE ANUAL
-            CierreAnual = cConexion.SlqExecuteScalar(cConexion.Conectar("Contabilidad"), "SELECT NumAsiento FROM dbo.AsientosContables WHERE TipoDoc = 30 AND Anulado = 0 AND Mayorizado = 1 AND Fecha <= dbo.DateOnlyFinal('" & Format(dtFinal.Value, "dd/MM/yyyy H:mm:ss") & "') ORDER BY Fecha DESC")
-            cConexion.DesConectar(cConexion.sQlconexion)
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Information, "Comunique el siguiente error a su Empresa Proveedora de Software")
-        End Try
-    End Function
+	Function CierreAnual() As String
+		Try
+			Dim cConexion As New Conexion       'BUSCA NUMERO DE ASIENTO DEL ULTIMO CIERRE ANUAL
+			CierreAnual = cConexion.SlqExecuteScalar(cConexion.Conectar("Contabilidad"), "SELECT NumAsiento FROM dbo.AsientosContables WHERE TipoDoc = 30 AND Anulado = 0 AND Mayorizado = 1 AND Fecha <= dbo.DateOnlyFinal('" & Format(dtFinal.Value, "dd/MM/yyyy H:mm:ss") & "') ORDER BY Fecha DESC")
+			cConexion.DesConectar(cConexion.sQlconexion)
+		Catch ex As Exception
+			MsgBox(ex.Message, MsgBoxStyle.Information, "Comunique el siguiente error a su Empresa Proveedora de Software")
+		End Try
+	End Function
 #End Region
 
 #Region "Calculos"
-    Private Sub Calcular()
-        Dim i, n, j, k, h As Integer
-        Dim SaldoAnterior, Debitos, Creditos, SaldoMes, SaldoActual As Double
-        Dim Total As String
-        Dim SaldoAnterior1, Debitos1, Creditos1, SaldoMes1, SaldoActual1 As Double
+	Private Sub Calcular()
+		Dim i, n, j, k, h As Integer
+		Dim SaldoAnterior, Debitos, Creditos, SaldoMes, SaldoActual As Double
+		Dim Total As String
+		Dim SaldoAnterior1, Debitos1, Creditos1, SaldoMes1, SaldoActual1 As Double
 
-        Try
-            '-----------------------------------------------------------------------------------------------------------------------------------------
-            Calcular(6)
-            Calcular(5)
-            Calcular(4)
-            Calcular(3)
-            Calcular(2)
-            Calcular(1)
+		Try
+			'-----------------------------------------------------------------------------------------------------------------------------------------
+			Calcular(6)
+			Calcular(5)
+			Calcular(4)
+			Calcular(3)
+			Calcular(2)
+			Calcular(1)
 
-            For k = 0 To Me.DsBalances1.CuentaContable.Rows.Count - 1
-                If Tipo = 0 Then
-                    If Me.DsBalances1.CuentaContable.Rows(k).Item("Nivel") = 0 Then
-                        If DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "ACTIVOS" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "COSTO VENTA" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "GASTOS" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "OTROS GASTOS" Then
-                            SaldoAnterior = SaldoAnterior + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnterior")
-                            SaldoMes = SaldoMes + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes")
-                            SaldoActual = SaldoActual + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActual")
-                        Else
-                            SaldoAnterior = SaldoAnterior - Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnterior")
-                            SaldoMes = SaldoMes - Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes")
-                            SaldoActual = SaldoActual - Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActual")
-                        End If
-                        Debitos = Debitos + Me.DsBalances1.CuentaContable.Rows(k).Item("Debitos")
-                        Creditos = Creditos + Me.DsBalances1.CuentaContable.Rows(k).Item("Creditos")
-                    End If
-                Else
-                    If Me.DsBalances1.CuentaContable.Rows(k).Item("Nivel") = 0 Then
-                        If DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "ACTIVOS" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "COSTO VENTA" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "GASTOS" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "OTROS GASTOS" Then
-                            SaldoAnterior = SaldoAnterior + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnterior")
-                            SaldoAnterior1 = SaldoAnterior1 + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnteriorD")
-                            SaldoMes = SaldoMes + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes")
-                            SaldoMes1 = SaldoMes1 + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMesD")
-                            SaldoActual = SaldoActual + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActual")
-                            SaldoActual1 = SaldoActual1 + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActualD")
+			For k = 0 To Me.DsBalances1.CuentaContable.Rows.Count - 1
+				If Tipo = 0 Then
+					If Me.DsBalances1.CuentaContable.Rows(k).Item("Nivel") = 0 Then
+						If DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "ACTIVOS" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "COSTO VENTA" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "GASTOS" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "OTROS GASTOS" Then
+							SaldoAnterior = SaldoAnterior + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnterior")
+							SaldoMes = SaldoMes + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes")
+							SaldoActual = SaldoActual + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActual")
+						Else
+							SaldoAnterior = SaldoAnterior - Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnterior")
+							SaldoMes = SaldoMes - Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes")
+							SaldoActual = SaldoActual - Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActual")
+						End If
+						Debitos = Debitos + Me.DsBalances1.CuentaContable.Rows(k).Item("Debitos")
+						Creditos = Creditos + Me.DsBalances1.CuentaContable.Rows(k).Item("Creditos")
+					End If
+				Else
+					If Me.DsBalances1.CuentaContable.Rows(k).Item("Nivel") = 0 Then
+						If DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "ACTIVOS" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "COSTO VENTA" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "GASTOS" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "OTROS GASTOS" Then
+							SaldoAnterior = SaldoAnterior + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnterior")
+							SaldoAnterior1 = SaldoAnterior1 + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnteriorD")
+							SaldoMes = SaldoMes + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes")
+							SaldoMes1 = SaldoMes1 + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMesD")
+							SaldoActual = SaldoActual + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActual")
+							SaldoActual1 = SaldoActual1 + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActualD")
 
-                        Else
-                            SaldoAnterior = SaldoAnterior - Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnterior")
-                            SaldoMes = SaldoMes - Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes")
-                            SaldoActual = SaldoActual - Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActual")
-                            SaldoAnterior1 = SaldoAnterior1 - Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnteriorD")
-                            SaldoMes1 = SaldoMes1 - Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMesD")
-                            SaldoActual1 = SaldoActual1 - Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActualD")
-                        End If
-                        Debitos = Debitos + Me.DsBalances1.CuentaContable.Rows(k).Item("Debitos")
-                        Creditos = Creditos + Me.DsBalances1.CuentaContable.Rows(k).Item("Creditos")
-                        Debitos1 = Debitos1 + Me.DsBalances1.CuentaContable.Rows(k).Item("DebitosD")
-                        Creditos1 = Creditos1 + Me.DsBalances1.CuentaContable.Rows(k).Item("CreditosD")
-                    End If
-                End If
-            Next
+						Else
+							SaldoAnterior = SaldoAnterior - Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnterior")
+							SaldoMes = SaldoMes - Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes")
+							SaldoActual = SaldoActual - Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActual")
+							SaldoAnterior1 = SaldoAnterior1 - Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnteriorD")
+							SaldoMes1 = SaldoMes1 - Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMesD")
+							SaldoActual1 = SaldoActual1 - Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActualD")
+						End If
+						Debitos = Debitos + Me.DsBalances1.CuentaContable.Rows(k).Item("Debitos")
+						Creditos = Creditos + Me.DsBalances1.CuentaContable.Rows(k).Item("Creditos")
+						Debitos1 = Debitos1 + Me.DsBalances1.CuentaContable.Rows(k).Item("DebitosD")
+						Creditos1 = Creditos1 + Me.DsBalances1.CuentaContable.Rows(k).Item("CreditosD")
+					End If
+				End If
+			Next
 
-            Me.txtSaldoAnterior.Text = Format(SaldoAnterior, "#,#0.00")
-            Me.txtDebitos.Text = Format(Debitos, "#,#0.00")
-            Me.txtCreditos.Text = Format(Creditos, "#,#0.00")
-            Me.txtSaldoMes.Text = Format(SaldoMes, "#,#0.00")
-            Me.txtSaldoActual.Text = Format(SaldoActual, "#,#0.00")
-            If Tipo = 1 Then
-                Me.TextBox1.Text = Format(SaldoAnterior1, "#,#0.00")
-                Me.TextBox2.Text = Format(Debitos1, "#,#0.00")
-                Me.TextBox3.Text = Format(Creditos1, "#,#0.00")
-                Me.TextBox4.Text = Format(SaldoMes1, "#,#0.00")
-                Me.TextBox5.Text = Format(SaldoActual1, "#,#0.00")
-            End If
-
-
-        Catch ex As Exception
-            MsgBox(ex.ToString)
-        End Try
-    End Sub
+			Me.txtSaldoAnterior.Text = Format(SaldoAnterior, "#,#0.00")
+			Me.txtDebitos.Text = Format(Debitos, "#,#0.00")
+			Me.txtCreditos.Text = Format(Creditos, "#,#0.00")
+			Me.txtSaldoMes.Text = Format(SaldoMes, "#,#0.00")
+			Me.txtSaldoActual.Text = Format(SaldoActual, "#,#0.00")
+			If Tipo = 1 Then
+				Me.TextBox1.Text = Format(SaldoAnterior1, "#,#0.00")
+				Me.TextBox2.Text = Format(Debitos1, "#,#0.00")
+				Me.TextBox3.Text = Format(Creditos1, "#,#0.00")
+				Me.TextBox4.Text = Format(SaldoMes1, "#,#0.00")
+				Me.TextBox5.Text = Format(SaldoActual1, "#,#0.00")
+			End If
 
 
-    Function Calcular(ByVal Nivel As Integer)
-        Dim k, j As Integer
-        For k = 0 To Me.DsBalances1.CuentaContable.Rows.Count - 1
-            If Me.DsBalances1.CuentaContable.Rows(k).Item("Nivel") = Nivel Then
-                For j = 0 To Me.DsBalances1.CuentaContable.Rows.Count - 1
-                    If Me.DsBalances1.CuentaContable.Rows(j).Item("Id") = Me.DsBalances1.CuentaContable.Rows(k).Item("PARENTID") Then
-                        If Me.Tipo = 1 Then
-                            Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoAnterior") = Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoAnterior") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnterior")
-                            Me.DsBalances1.CuentaContable.Rows(j).Item("Debitos") = Me.DsBalances1.CuentaContable.Rows(j).Item("Debitos") + Me.DsBalances1.CuentaContable.Rows(k).Item("Debitos")
-                            Me.DsBalances1.CuentaContable.Rows(j).Item("Creditos") = Me.DsBalances1.CuentaContable.Rows(j).Item("Creditos") + Me.DsBalances1.CuentaContable.Rows(k).Item("Creditos")
-                            Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoMes") = Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoMes") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes")
-                            Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoActual") = Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoActual") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActual")
-
-                            Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoAnteriorD") = Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoAnteriorD") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnteriorD")
-                            Me.DsBalances1.CuentaContable.Rows(j).Item("DebitosD") = Me.DsBalances1.CuentaContable.Rows(j).Item("DebitosD") + Me.DsBalances1.CuentaContable.Rows(k).Item("DebitosD")
-                            Me.DsBalances1.CuentaContable.Rows(j).Item("CreditosD") = Me.DsBalances1.CuentaContable.Rows(j).Item("CreditosD") + Me.DsBalances1.CuentaContable.Rows(k).Item("CreditosD")
-                            Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoMesD") = Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoMesD") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMesD")
-                            Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoActualD") = Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoActualD") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActualD")
-                        Else
-
-                            Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoAnterior") = Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoAnterior") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnterior")
-                            Me.DsBalances1.CuentaContable.Rows(j).Item("Debitos") = Me.DsBalances1.CuentaContable.Rows(j).Item("Debitos") + Me.DsBalances1.CuentaContable.Rows(k).Item("Debitos")
-                            Me.DsBalances1.CuentaContable.Rows(j).Item("Creditos") = Me.DsBalances1.CuentaContable.Rows(j).Item("Creditos") + Me.DsBalances1.CuentaContable.Rows(k).Item("Creditos")
-                            Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoMes") = Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoMes") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes")
-                            Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoActual") = Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoActual") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActual")
-
-                        End If
-                    End If
-                Next
-            End If
-        Next
-    End Function
+		Catch ex As Exception
+			MsgBox(ex.ToString)
+		End Try
+	End Sub
 
 
-    Private Sub Calcular_Saldos()
-        Dim k As Integer
-        Try
-            For k = 0 To Me.DsBalances1.CuentaContable.Rows.Count - 1
-                If Tipo = 1 Then
-                    If DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "ACTIVOS" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "COSTO VENTA" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "GASTOS" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "OTROS GASTOS" Then
-                        Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes") = Me.DsBalances1.CuentaContable.Rows(k).Item("Debitos") - Me.DsBalances1.CuentaContable.Rows(k).Item("Creditos")
-                        Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMesD") = Me.DsBalances1.CuentaContable.Rows(k).Item("DebitosD") - Me.DsBalances1.CuentaContable.Rows(k).Item("CreditosD")
+	Function Calcular(ByVal Nivel As Integer)
+		Dim k, j As Integer
+		For k = 0 To Me.DsBalances1.CuentaContable.Rows.Count - 1
+			If Me.DsBalances1.CuentaContable.Rows(k).Item("Nivel") = Nivel Then
+				For j = 0 To Me.DsBalances1.CuentaContable.Rows.Count - 1
+					If Me.DsBalances1.CuentaContable.Rows(j).Item("Id") = Me.DsBalances1.CuentaContable.Rows(k).Item("PARENTID") Then
+						If Me.Tipo = 1 Then
+							Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoAnterior") = Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoAnterior") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnterior")
+							Me.DsBalances1.CuentaContable.Rows(j).Item("Debitos") = Me.DsBalances1.CuentaContable.Rows(j).Item("Debitos") + Me.DsBalances1.CuentaContable.Rows(k).Item("Debitos")
+							Me.DsBalances1.CuentaContable.Rows(j).Item("Creditos") = Me.DsBalances1.CuentaContable.Rows(j).Item("Creditos") + Me.DsBalances1.CuentaContable.Rows(k).Item("Creditos")
+							Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoMes") = Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoMes") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes")
+							Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoActual") = Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoActual") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActual")
 
-                    Else
-                        Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes") = Me.DsBalances1.CuentaContable.Rows(k).Item("Creditos") - Me.DsBalances1.CuentaContable.Rows(k).Item("Debitos")
-                        Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMesD") = Me.DsBalances1.CuentaContable.Rows(k).Item("CreditosD") - Me.DsBalances1.CuentaContable.Rows(k).Item("DebitosD")
+							Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoAnteriorD") = Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoAnteriorD") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnteriorD")
+							Me.DsBalances1.CuentaContable.Rows(j).Item("DebitosD") = Me.DsBalances1.CuentaContable.Rows(j).Item("DebitosD") + Me.DsBalances1.CuentaContable.Rows(k).Item("DebitosD")
+							Me.DsBalances1.CuentaContable.Rows(j).Item("CreditosD") = Me.DsBalances1.CuentaContable.Rows(j).Item("CreditosD") + Me.DsBalances1.CuentaContable.Rows(k).Item("CreditosD")
+							Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoMesD") = Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoMesD") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMesD")
+							Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoActualD") = Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoActualD") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActualD")
+						Else
 
-                    End If
+							Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoAnterior") = Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoAnterior") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnterior")
+							Me.DsBalances1.CuentaContable.Rows(j).Item("Debitos") = Me.DsBalances1.CuentaContable.Rows(j).Item("Debitos") + Me.DsBalances1.CuentaContable.Rows(k).Item("Debitos")
+							Me.DsBalances1.CuentaContable.Rows(j).Item("Creditos") = Me.DsBalances1.CuentaContable.Rows(j).Item("Creditos") + Me.DsBalances1.CuentaContable.Rows(k).Item("Creditos")
+							Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoMes") = Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoMes") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes")
+							Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoActual") = Me.DsBalances1.CuentaContable.Rows(j).Item("SaldoActual") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActual")
 
-                    Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActual") = Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnterior") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes")
-                    Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActualD") = Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnteriorD") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMesD")
+						End If
+					End If
+				Next
+			End If
+		Next
+	End Function
 
 
-                Else
-                    If DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "ACTIVOS" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "COSTO VENTA" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "GASTOS" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "OTROS GASTOS" Then
-                        Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes") = Me.DsBalances1.CuentaContable.Rows(k).Item("Debitos") - Me.DsBalances1.CuentaContable.Rows(k).Item("Creditos")
-                    Else
-                        Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes") = Me.DsBalances1.CuentaContable.Rows(k).Item("Creditos") - Me.DsBalances1.CuentaContable.Rows(k).Item("Debitos")
-                    End If
+	Private Sub Calcular_Saldos()
+		Dim k As Integer
+		Try
+			For k = 0 To Me.DsBalances1.CuentaContable.Rows.Count - 1
+				If Tipo = 1 Then
+					If DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "ACTIVOS" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "COSTO VENTA" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "GASTOS" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "OTROS GASTOS" Then
+						Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes") = Me.DsBalances1.CuentaContable.Rows(k).Item("Debitos") - Me.DsBalances1.CuentaContable.Rows(k).Item("Creditos")
+						Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMesD") = Me.DsBalances1.CuentaContable.Rows(k).Item("DebitosD") - Me.DsBalances1.CuentaContable.Rows(k).Item("CreditosD")
 
-                    Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActual") = Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnterior") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes")
+					Else
+						Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes") = Me.DsBalances1.CuentaContable.Rows(k).Item("Creditos") - Me.DsBalances1.CuentaContable.Rows(k).Item("Debitos")
+						Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMesD") = Me.DsBalances1.CuentaContable.Rows(k).Item("CreditosD") - Me.DsBalances1.CuentaContable.Rows(k).Item("DebitosD")
 
-                End If
-            Next
+					End If
 
-        Catch ex As Exception
-            MsgBox(ex.ToString)
-        End Try
-    End Sub
+					Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActual") = Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnterior") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes")
+					Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActualD") = Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnteriorD") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMesD")
+
+
+				Else
+					If DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "ACTIVOS" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "COSTO VENTA" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "GASTOS" Or DsBalances1.CuentaContable.Rows(k).Item("Tipo") = "OTROS GASTOS" Then
+						Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes") = Me.DsBalances1.CuentaContable.Rows(k).Item("Debitos") - Me.DsBalances1.CuentaContable.Rows(k).Item("Creditos")
+					Else
+						Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes") = Me.DsBalances1.CuentaContable.Rows(k).Item("Creditos") - Me.DsBalances1.CuentaContable.Rows(k).Item("Debitos")
+					End If
+
+					Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoActual") = Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoAnterior") + Me.DsBalances1.CuentaContable.Rows(k).Item("SaldoMes")
+
+				End If
+			Next
+
+		Catch ex As Exception
+			MsgBox(ex.ToString)
+		End Try
+	End Sub
 #End Region
 
 #Region "Importar"
-    Private Sub Importar()
-        Try
-            Cconexion.DeleteRecords("Temporal", "")
-            cargar()
-            DataTableToExcel(Me.DsBalances1.Temporal2)
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-    End Sub
+	Private Sub Importar()
+		Try
+			Cconexion.DeleteRecords("Temporal", "")
+			cargar()
+			DataTableToExcel(Me.DsBalances1.Temporal2)
+		Catch ex As Exception
+			MsgBox(ex.Message)
+		End Try
+	End Sub
 
-    Public Sub DataTableToExcel(ByVal pDataTable As DataTable)
-        Try
+	Public Sub DataTableToExcel(ByVal pDataTable As DataTable)
+		Try
 
-            Dim vFileName As String = Path.GetTempFileName()
+			Dim vFileName As String = Path.GetTempFileName()
 
-            FileOpen(1, vFileName, OpenMode.Output)
+			FileOpen(1, vFileName, OpenMode.Output)
 
-            Dim sb As String
-            Dim dc As DataColumn
-            For Each dc In pDataTable.Columns
-                sb &= dc.Caption & Microsoft.VisualBasic.ControlChars.Tab
-            Next
-            PrintLine(1, sb)
+			Dim sb As String
+			Dim dc As DataColumn
+			For Each dc In pDataTable.Columns
+				sb &= dc.Caption & Microsoft.VisualBasic.ControlChars.Tab
+			Next
+			PrintLine(1, sb)
 
-            Dim i As Integer = 0
-            Dim dr As DataRow
-            For Each dr In pDataTable.Rows
-                i = 0 : sb = ""
-                For Each dc In pDataTable.Columns
-                    If Not IsDBNull(dr(i)) Then
-                        sb &= CStr(dr(i)) & Microsoft.VisualBasic.ControlChars.Tab
-                    Else
-                        sb &= Microsoft.VisualBasic.ControlChars.Tab
-                    End If
-                    i += 1
-                Next
-                PrintLine(1, sb)
+			Dim i As Integer = 0
+			Dim dr As DataRow
+			For Each dr In pDataTable.Rows
+				i = 0 : sb = ""
+				For Each dc In pDataTable.Columns
+					If Not IsDBNull(dr(i)) Then
+						sb &= CStr(dr(i)) & Microsoft.VisualBasic.ControlChars.Tab
+					Else
+						sb &= Microsoft.VisualBasic.ControlChars.Tab
+					End If
+					i += 1
+				Next
+				PrintLine(1, sb)
 
-            Next
-            FileClose(1)
-            TextToExcel(vFileName)
+			Next
+			FileClose(1)
+			TextToExcel(vFileName)
 
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-    End Sub
-
-
-    Public Sub TextToExcel(ByVal pFileName As String)
-        Try
-            Dim vFormato As Excel.XlRangeAutoFormat
-
-            Dim vCultura As System.Globalization.CultureInfo = System.Threading.Thread.CurrentThread.CurrentCulture
-            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US")
-
-            Dim Exc As Excel.Application = New Excel.Application
-            Exc.Workbooks.OpenText(pFileName, , , , Excel.XlTextQualifier.xlTextQualifierNone, , True)
-
-            Dim Wb As Excel.Workbook = Exc.ActiveWorkbook
-            Dim Ws As Excel.Worksheet = Wb.ActiveSheet
-
-            'Se le indica el formato al que queremos exportarlo
-            Dim valor As Integer = 1
-            If valor > -1 Then
-                Select Case valor
-                    Case 0 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatNone
-                    Case 1 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatSimple
-                    Case 2 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatClassic1
-                    Case 3 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatClassic2
-                    Case 4 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatClassic3
-                    Case 5 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatAccounting1
-                    Case 6 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatAccounting2
-                    Case 7 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatAccounting3
-                    Case 8 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatAccounting4
-                    Case 9 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatColor1
-                    Case 10 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatColor2
-                    Case 11 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatColor3
-                    Case 12 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatList1
-                    Case 13 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatList2
-                    Case 14 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatList3
-                    Case 15 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormat3DEffects1
-                    Case 16 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormat3DEffects2
-                End Select
-
-                Ws.Range(Ws.Cells(1, 1), Ws.Cells(Ws.UsedRange.Rows.Count, Ws.UsedRange.Columns.Count)).AutoFormat(vFormato)
-                pFileName = Path.GetTempFileName.Replace("tmp", "xls")
-                File.Delete(pFileName)
-                Exc.ActiveWorkbook.SaveAs(pFileName, Excel.XlTextQualifier.xlTextQualifierNone - 1)
-            End If
-
-            Exc.Quit()
-            Ws = Nothing
-            Wb = Nothing
-            Exc = Nothing
-            GC.Collect()
-
-            If valor > -1 Then
-                Dim p As System.Diagnostics.Process = New System.Diagnostics.Process
-                p.EnableRaisingEvents = False
-                p.Start("Excel.exe", pFileName)
-            End If
-            System.Threading.Thread.CurrentThread.CurrentCulture = vCultura
-
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-    End Sub
+		Catch ex As Exception
+			MsgBox(ex.Message)
+		End Try
+	End Sub
 
 
-    Function cargar()
-        Dim i As Integer
-        Dim trans As SqlTransaction
-        Try
-            DsBalances1.Temporal2.Clear()
+	Public Sub TextToExcel(ByVal pFileName As String)
+		Try
+			Dim vFormato As Excel.XlRangeAutoFormat
 
-            For i = 0 To Me.DsBalances1.CuentaContable.Rows.Count - 1
-                If Tipo = 1 Then
-                    If Me.DsBalances1.CuentaContable.Rows(i).Item("Debitos") <> 0 Or Me.DsBalances1.CuentaContable.Rows(i).Item("DebitosD") <> 0 Or Me.DsBalances1.CuentaContable.Rows(i).Item("Creditos") <> 0 Or Me.DsBalances1.CuentaContable.Rows(i).Item("CreditosD") <> 0 Or Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoAnterior") <> 0 Or Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoAnteriorD") <> 0 Then
-                        Me.BindingContext(Me.DsBalances1.Temporal2).AddNew()
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("CuentaContable") = Me.DsBalances1.CuentaContable.Rows(i).Item("CuentaContable")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("Descripcion") = Me.DsBalances1.CuentaContable.Rows(i).Item("Descripcion")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoAnterior") = Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoAnterior")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("Debitos") = Me.DsBalances1.CuentaContable.Rows(i).Item("Debitos")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("Creditos") = Me.DsBalances1.CuentaContable.Rows(i).Item("Creditos")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoMes") = Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoMes")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoActual") = Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoActual")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("Nivel") = Me.DsBalances1.CuentaContable.Rows(i).Item("Nivel")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("Movimiento") = Me.DsBalances1.CuentaContable.Rows(i).Item("Movimiento")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("Id") = Me.DsBalances1.CuentaContable.Rows(i).Item("Id")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("PARENTID") = Me.DsBalances1.CuentaContable.Rows(i).Item("PARENTID")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoAnteriorD") = Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoAnteriorD")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("DebitosD") = Me.DsBalances1.CuentaContable.Rows(i).Item("DebitosD")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("CreditosD") = Me.DsBalances1.CuentaContable.Rows(i).Item("CreditosD")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoMesD") = Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoMesD")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoActualD") = Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoActualD")
+			Dim vCultura As System.Globalization.CultureInfo = System.Threading.Thread.CurrentThread.CurrentCulture
+			System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US")
 
-                        Me.BindingContext(Me.DsBalances1.Temporal2).EndCurrentEdit()
-                    End If
-                Else
-                    If Me.DsBalances1.CuentaContable.Rows(i).Item("Debitos") <> 0 Or Me.DsBalances1.CuentaContable.Rows(i).Item("Creditos") <> 0 Or Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoAnterior") <> 0 Then
-                        Me.BindingContext(Me.DsBalances1.Temporal2).AddNew()
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("CuentaContable") = Me.DsBalances1.CuentaContable.Rows(i).Item("CuentaContable")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("Descripcion") = Me.DsBalances1.CuentaContable.Rows(i).Item("Descripcion")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoAnterior") = Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoAnterior")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("Debitos") = Me.DsBalances1.CuentaContable.Rows(i).Item("Debitos")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("Creditos") = Me.DsBalances1.CuentaContable.Rows(i).Item("Creditos")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoMes") = Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoMes")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoActual") = Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoActual")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("Nivel") = Me.DsBalances1.CuentaContable.Rows(i).Item("Nivel")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("Movimiento") = Me.DsBalances1.CuentaContable.Rows(i).Item("Movimiento")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("Id") = Me.DsBalances1.CuentaContable.Rows(i).Item("Id")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("PARENTID") = Me.DsBalances1.CuentaContable.Rows(i).Item("PARENTID")
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoAnteriorD") = 0
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("DebitosD") = 0
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("CreditosD") = 0
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoMesD") = 0
-                        Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoActualD") = 0
+			Dim Exc As Excel.Application = New Excel.Application
+			Exc.Workbooks.OpenText(pFileName, , , , Excel.XlTextQualifier.xlTextQualifierNone, , True)
 
-                        Me.BindingContext(Me.DsBalances1.Temporal2).EndCurrentEdit()
-                    End If
-                End If
+			Dim Wb As Excel.Workbook = Exc.ActiveWorkbook
+			Dim Ws As Excel.Worksheet = Wb.ActiveSheet
 
-            Next
+			'Se le indica el formato al que queremos exportarlo
+			Dim valor As Integer = 1
+			If valor > -1 Then
+				Select Case valor
+					Case 0 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatNone
+					Case 1 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatSimple
+					Case 2 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatClassic1
+					Case 3 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatClassic2
+					Case 4 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatClassic3
+					Case 5 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatAccounting1
+					Case 6 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatAccounting2
+					Case 7 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatAccounting3
+					Case 8 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatAccounting4
+					Case 9 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatColor1
+					Case 10 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatColor2
+					Case 11 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatColor3
+					Case 12 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatList1
+					Case 13 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatList2
+					Case 14 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormatList3
+					Case 15 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormat3DEffects1
+					Case 16 : vFormato = Excel.XlRangeAutoFormat.xlRangeAutoFormat3DEffects2
+				End Select
 
-            If Me.SqlConnection1.State <> ConnectionState.Open Then Me.SqlConnection1.Open()
-            trans = Me.SqlConnection1.BeginTransaction
-            Me.AdTemporal2.InsertCommand.Transaction = trans
-            Me.AdTemporal2.UpdateCommand.Transaction = trans
-            Me.AdTemporal2.DeleteCommand.Transaction = trans
-            Me.AdTemporal2.Update(Me.DsBalances1, "Temporal2")
-            trans.Commit()
+				Ws.Range(Ws.Cells(1, 1), Ws.Cells(Ws.UsedRange.Rows.Count, Ws.UsedRange.Columns.Count)).AutoFormat(vFormato)
+				pFileName = Path.GetTempFileName.Replace("tmp", "xls")
+				File.Delete(pFileName)
+				Exc.ActiveWorkbook.SaveAs(pFileName, Excel.XlTextQualifier.xlTextQualifierNone - 1)
+			End If
 
-        Catch ex As Exception
-            MsgBox(ex.ToString)
-            trans.Rollback()
-        Finally
-            Me.SqlConnection1.Close()
-        End Try
-    End Function
+			Exc.Quit()
+			Ws = Nothing
+			Wb = Nothing
+			Exc = Nothing
+			GC.Collect()
+
+			If valor > -1 Then
+				Dim p As System.Diagnostics.Process = New System.Diagnostics.Process
+				p.EnableRaisingEvents = False
+				p.Start("Excel.exe", pFileName)
+			End If
+			System.Threading.Thread.CurrentThread.CurrentCulture = vCultura
+
+		Catch ex As Exception
+			MsgBox(ex.Message)
+		End Try
+	End Sub
+
+
+	Function cargar()
+		Dim i As Integer
+		Dim trans As SqlTransaction
+		Try
+			DsBalances1.Temporal2.Clear()
+
+			For i = 0 To Me.DsBalances1.CuentaContable.Rows.Count - 1
+				If Tipo = 1 Then
+					If Me.DsBalances1.CuentaContable.Rows(i).Item("Debitos") <> 0 Or Me.DsBalances1.CuentaContable.Rows(i).Item("DebitosD") <> 0 Or Me.DsBalances1.CuentaContable.Rows(i).Item("Creditos") <> 0 Or Me.DsBalances1.CuentaContable.Rows(i).Item("CreditosD") <> 0 Or Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoAnterior") <> 0 Or Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoAnteriorD") <> 0 Then
+						Me.BindingContext(Me.DsBalances1.Temporal2).AddNew()
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("CuentaContable") = Me.DsBalances1.CuentaContable.Rows(i).Item("CuentaContable")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("Descripcion") = Me.DsBalances1.CuentaContable.Rows(i).Item("Descripcion")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoAnterior") = Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoAnterior")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("Debitos") = Me.DsBalances1.CuentaContable.Rows(i).Item("Debitos")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("Creditos") = Me.DsBalances1.CuentaContable.Rows(i).Item("Creditos")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoMes") = Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoMes")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoActual") = Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoActual")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("Nivel") = Me.DsBalances1.CuentaContable.Rows(i).Item("Nivel")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("Movimiento") = Me.DsBalances1.CuentaContable.Rows(i).Item("Movimiento")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("Id") = Me.DsBalances1.CuentaContable.Rows(i).Item("Id")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("PARENTID") = Me.DsBalances1.CuentaContable.Rows(i).Item("PARENTID")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoAnteriorD") = Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoAnteriorD")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("DebitosD") = Me.DsBalances1.CuentaContable.Rows(i).Item("DebitosD")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("CreditosD") = Me.DsBalances1.CuentaContable.Rows(i).Item("CreditosD")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoMesD") = Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoMesD")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoActualD") = Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoActualD")
+
+						Me.BindingContext(Me.DsBalances1.Temporal2).EndCurrentEdit()
+					End If
+				Else
+					If Me.DsBalances1.CuentaContable.Rows(i).Item("Debitos") <> 0 Or Me.DsBalances1.CuentaContable.Rows(i).Item("Creditos") <> 0 Or Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoAnterior") <> 0 Then
+						Me.BindingContext(Me.DsBalances1.Temporal2).AddNew()
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("CuentaContable") = Me.DsBalances1.CuentaContable.Rows(i).Item("CuentaContable")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("Descripcion") = Me.DsBalances1.CuentaContable.Rows(i).Item("Descripcion")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoAnterior") = Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoAnterior")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("Debitos") = Me.DsBalances1.CuentaContable.Rows(i).Item("Debitos")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("Creditos") = Me.DsBalances1.CuentaContable.Rows(i).Item("Creditos")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoMes") = Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoMes")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoActual") = Me.DsBalances1.CuentaContable.Rows(i).Item("SaldoActual")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("Nivel") = Me.DsBalances1.CuentaContable.Rows(i).Item("Nivel")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("Movimiento") = Me.DsBalances1.CuentaContable.Rows(i).Item("Movimiento")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("Id") = Me.DsBalances1.CuentaContable.Rows(i).Item("Id")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("PARENTID") = Me.DsBalances1.CuentaContable.Rows(i).Item("PARENTID")
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoAnteriorD") = 0
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("DebitosD") = 0
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("CreditosD") = 0
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoMesD") = 0
+						Me.BindingContext(Me.DsBalances1.Temporal2).Current("SaldoActualD") = 0
+
+						Me.BindingContext(Me.DsBalances1.Temporal2).EndCurrentEdit()
+					End If
+				End If
+
+			Next
+
+			If Me.SqlConnection1.State <> ConnectionState.Open Then Me.SqlConnection1.Open()
+			trans = Me.SqlConnection1.BeginTransaction
+			Me.AdTemporal2.InsertCommand.Transaction = trans
+			Me.AdTemporal2.UpdateCommand.Transaction = trans
+			Me.AdTemporal2.DeleteCommand.Transaction = trans
+			Me.AdTemporal2.Update(Me.DsBalances1, "Temporal2")
+			trans.Commit()
+
+		Catch ex As Exception
+			MsgBox(ex.ToString)
+			trans.Rollback()
+		Finally
+			Me.SqlConnection1.Close()
+		End Try
+	End Function
 #End Region
 
 #Region "Nuevo"
-    Private Sub Nuevo()
-        Try
-            If Me.ToolBarNuevo.Text = "Nuevo" Then
-                Me.ToolBarNuevo.ImageIndex = "3"
-                Me.ToolBarNuevo.Text = "Cancelar"
-                Me.TreeList2.DataSource = ""
-                Me.TreeList2.DataMember = ""
-                Estado(True)
-                dtInicial.Focus()
-            Else
-                Me.ToolBarNuevo.ImageIndex = "0"
-                Me.ToolBarNuevo.Text = "Nuevo"
-                Me.TreeList2.DataSource = ""
-                Me.TreeList2.DataMember = ""
-                Estado(False)
-            End If
+	Private Sub Nuevo()
+		Try
+			If Me.ToolBarNuevo.Text = "Nuevo" Then
+				Me.ToolBarNuevo.ImageIndex = "3"
+				Me.ToolBarNuevo.Text = "Cancelar"
+				Me.TreeList2.DataSource = ""
+				Me.TreeList2.DataMember = ""
+				Estado(True)
+				dtInicial.Focus()
+			Else
+				Me.ToolBarNuevo.ImageIndex = "0"
+				Me.ToolBarNuevo.Text = "Nuevo"
+				Me.TreeList2.DataSource = ""
+				Me.TreeList2.DataMember = ""
+				Estado(False)
+			End If
 
-            Me.dtFinal.Enabled = True
-            Me.dtInicial.Enabled = True
-            Me.Moneda.Enabled = True
+			Me.dtFinal.Enabled = True
+			Me.dtInicial.Enabled = True
+			Me.Moneda.Enabled = True
 
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-    End Sub
+		Catch ex As Exception
+			MsgBox(ex.Message)
+		End Try
+	End Sub
 #End Region
 
 #Region "Imprimir"
-    Private Sub Imprimir()
-        Dim Fecha1, Fecha2 As Date
-        Fecha1 = Format(dtInicial.Value.Date, "dd/MM/yyyy H:mm:ss")
-        Fecha2 = Format(Me.dtFinal.Value.Date, "dd/MM/yyyy H:mm:ss")
-        If Fecha1 > Fecha2 Then
-            MsgBox("La fecha inicial no puede ser mayor a la fecha final", MsgBoxStyle.Information)
-            Exit Sub
-        End If
+	Private Sub Imprimir()
+		Dim Fecha1, Fecha2 As Date
+		Fecha1 = Format(dtInicial.Value.Date, "dd/MM/yyyy H:mm:ss")
+		Fecha2 = Format(Me.dtFinal.Value.Date, "dd/MM/yyyy H:mm:ss")
+		If Fecha1 > Fecha2 Then
+			MsgBox("La fecha inicial no puede ser mayor a la fecha final", MsgBoxStyle.Information)
+			Exit Sub
+		End If
 
-        Try
-            Cconexion.DeleteRecords("Temporal2", "")
-            Dim nivel As New Nivel
-            cargar()
-            nivel.reporte = "Balance de Comprobación"
-            nivel.Analitico = True
-            nivel.saldoant = Me.txtSaldoAnterior.Text
-            nivel.saldomes = Me.txtSaldoMes.Text
-            nivel.saldoactual = Me.txtSaldoActual.Text
-            nivel.debitos = Me.txtDebitos.Text
-            nivel.creditos = Me.txtCreditos.Text
-            nivel.saldoant1 = Me.TextBox1.Text
-            nivel.saldomes1 = Me.TextBox4.Text
-            nivel.saldoactual1 = Me.TextBox5.Text
-            nivel.debitos1 = Me.TextBox2.Text
-            nivel.creditos1 = Me.TextBox3.Text
-            nivel.dtInicial.Text = Me.dtInicial.Text
-            nivel.dtFinal.Text = Me.dtFinal.Text
-            nivel.moneda = DsBalances1.Moneda(Moneda.SelectedIndex).MonedaNombre
-            nivel.simbolo = DsBalances1.Moneda(Moneda.SelectedIndex).Simbolo
-            nivel.CodMoneda = DsBalances1.Moneda(Moneda.SelectedIndex).CodMoneda
-            nivel.Tipo = Me.Tipo
-            nivel.Show()
+		Try
+			Cconexion.DeleteRecords("Temporal2", "")
+			Dim nivel As New Nivel
+			cargar()
+			nivel.reporte = "Balance de Comprobación"
+			nivel.Analitico = True
+			nivel.saldoant = Me.txtSaldoAnterior.Text
+			nivel.saldomes = Me.txtSaldoMes.Text
+			nivel.saldoactual = Me.txtSaldoActual.Text
+			nivel.debitos = Me.txtDebitos.Text
+			nivel.creditos = Me.txtCreditos.Text
+			nivel.saldoant1 = Me.TextBox1.Text
+			nivel.saldomes1 = Me.TextBox4.Text
+			nivel.saldoactual1 = Me.TextBox5.Text
+			nivel.debitos1 = Me.TextBox2.Text
+			nivel.creditos1 = Me.TextBox3.Text
+			nivel.dtInicial.Text = Me.dtInicial.Text
+			nivel.dtFinal.Text = Me.dtFinal.Text
+			nivel.moneda = DsBalances1.Moneda(Moneda.SelectedIndex).MonedaNombre
+			nivel.simbolo = DsBalances1.Moneda(Moneda.SelectedIndex).Simbolo
+			nivel.CodMoneda = DsBalances1.Moneda(Moneda.SelectedIndex).CodMoneda
+			nivel.Tipo = Me.Tipo
+			nivel.Show()
 
-        Catch ex As Exception
-            MsgBox(ex.ToString)
-        End Try
-    End Sub
+		Catch ex As Exception
+			MsgBox(ex.ToString)
+		End Try
+	End Sub
 #End Region
 
 #Region "Analitico Detallado"
-    Private Sub TreeList2_FocusedNodeChanged(ByVal sender As System.Object, ByVal e As DevExpress.XtraTreeList.FocusedNodeChangedEventArgs) Handles TreeList2.FocusedNodeChanged
-        If e.Node.Id = Nothing Then
-        Else
-            Reporte_ID = e.Node.Id
-        End If
-        If e.Node.Id = 0 Then
-            Reporte_ID = e.Node.Id
-        End If
-    End Sub
+	Private Sub TreeList2_FocusedNodeChanged(ByVal sender As System.Object, ByVal e As DevExpress.XtraTreeList.FocusedNodeChangedEventArgs) Handles TreeList2.FocusedNodeChanged
+		If e.Node.Id = Nothing Then
+		Else
+			Reporte_ID = e.Node.Id
+		End If
+		If e.Node.Id = 0 Then
+			Reporte_ID = e.Node.Id
+		End If
+	End Sub
 
-    Private WithEvents frm As New frmAnaliticoDetallado
+	Private WithEvents frm As New frmAnaliticoDetallado
 
-    Private Sub frm_Refresca() Handles frm.Actualiza
-        Cconexion.SlqExecuteScalar(conectadobd, "EXEC dbo.ReporteAnaliticoDetallado '" & DsBalances1.CuentaContable(Reporte_ID).CuentaContable & "'," & (DsBalances1.CuentaContable(Reporte_ID).Nivel + 1) & ",'" & Me.dtInicial.Value.Date & "','" & Me.dtFinal.Value.Date & "'," & DsBalances1.Moneda(Moneda.SelectedIndex).CodMoneda & "," & Check_Cierre.Checked)
-    End Sub
+	Private Sub frm_Refresca() Handles frm.Actualiza
+		Cconexion.SlqExecuteScalar(conectadobd, "EXEC dbo.ReporteAnaliticoDetallado '" & DsBalances1.CuentaContable(Reporte_ID).CuentaContable & "'," & (DsBalances1.CuentaContable(Reporte_ID).Nivel + 1) & ",'" & Me.dtInicial.Value.Date & "','" & Me.dtFinal.Value.Date & "'," & DsBalances1.Moneda(Moneda.SelectedIndex).CodMoneda & "," & Check_Cierre.Checked)
+	End Sub
 
-    Private Sub TreeList2_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles TreeList2.DoubleClick
-        If DsBalances1.CuentaContable(Reporte_ID).Movimiento = False Then Exit Sub
-        Try
+	Private Sub TreeList2_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles TreeList2.DoubleClick
+		If DsBalances1.CuentaContable(Reporte_ID).Movimiento = False Then Exit Sub
+		Try
 			'Se ejecuta el procedimiento y llena la tabla TemporalAnaliticoDetallado 
 			frm = New frmAnaliticoDetallado
 			BanderaGeneral.ACTUALIZO_ASIENTO = False
 			Cconexion.SlqExecuteScalar(conectadobd, "EXEC dbo.ReporteAnaliticoDetallado '" & DsBalances1.CuentaContable(Reporte_ID).CuentaContable & "'," & (DsBalances1.CuentaContable(Reporte_ID).Nivel + 1) & ",'" & Me.dtInicial.Value.Date & "','" & Me.dtFinal.Value.Date & "'," & DsBalances1.Moneda(Moneda.SelectedIndex).CodMoneda & ",'" & Check_Cierre.Checked & "'")
 			frm.NombreMoneda = DsBalances1.Moneda(Moneda.SelectedIndex).MonedaNombre
-            frm.SaldoMes = DsBalances1.CuentaContable(Reporte_ID).SaldoMes
-            frm.SaldoAnterior = DsBalances1.CuentaContable(Reporte_ID).SaldoAnterior
-            frm.CuentaContable = DsBalances1.CuentaContable(Reporte_ID).CuentaContable
-            frm.NombreCuenta = DsBalances1.CuentaContable(Reporte_ID).Descripcion
-            frm.usua = Me.usua
-            frm.ShowDialog()
-            If BanderaGeneral.ACTUALIZO_ASIENTO = True Then
-                Me.GeneraBalance()
-            End If
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "Atención...")
-        End Try
-    End Sub
+			frm.SaldoMes = DsBalances1.CuentaContable(Reporte_ID).SaldoMes
+			frm.SaldoAnterior = DsBalances1.CuentaContable(Reporte_ID).SaldoAnterior
+			frm.CuentaContable = DsBalances1.CuentaContable(Reporte_ID).CuentaContable
+			frm.NombreCuenta = DsBalances1.CuentaContable(Reporte_ID).Descripcion
+			frm.usua = Me.usua
+			frm.ShowDialog()
+			If BanderaGeneral.ACTUALIZO_ASIENTO = True Then
+				Me.GeneraBalance()
+			End If
+		Catch ex As Exception
+			MsgBox(ex.Message, MsgBoxStyle.Critical, "Atención...")
+		End Try
+	End Sub
 #End Region
 
 
-    Private Sub btnExpandirTodas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnExpandirTodas.Click
-        TreeList2.FullExpand()
+	Private Sub btnExpandirTodas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnExpandirTodas.Click
+		TreeList2.FullExpand()
 
-    End Sub
+	End Sub
 
-    Private Sub btnContraerTodas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnContraerTodas.Click
-        TreeList2.FullCollapse()
+	Private Sub btnContraerTodas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnContraerTodas.Click
+		TreeList2.FullCollapse()
 
-    End Sub
+	End Sub
 End Class
+
+
+

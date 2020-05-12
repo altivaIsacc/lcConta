@@ -106,7 +106,8 @@
               <xs:element name="Dcolon" msprop:Generator_ColumnVarNameInTable="columnDcolon" msprop:Generator_ColumnPropNameInRow="Dcolon" msprop:Generator_ColumnPropNameInTable="DcolonColumn" msprop:Generator_UserColumnName="Dcolon" type="xs:double" minOccurs="0" />
               <xs:element name="Hcolon" msprop:Generator_ColumnVarNameInTable="columnHcolon" msprop:Generator_ColumnPropNameInRow="Hcolon" msprop:Generator_ColumnPropNameInTable="HcolonColumn" msprop:Generator_UserColumnName="Hcolon" type="xs:double" minOccurs="0" />
               <xs:element name="Hdolar" msprop:Generator_ColumnVarNameInTable="columnHdolar" msprop:Generator_ColumnPropNameInRow="Hdolar" msprop:Generator_ColumnPropNameInTable="HdolarColumn" msprop:Generator_UserColumnName="Hdolar" type="xs:double" minOccurs="0" />
-              <xs:element name="Descripcion" msprop:Generator_ColumnVarNameInTable="columnDescripcion" msprop:Generator_ColumnPropNameInRow="Descripcion" msprop:Generator_ColumnPropNameInTable="DescripcionColumn" msprop:Generator_UserColumnName="Descripcion" type="xs:string" />
+              <xs:element name="Heuro" msprop:Generator_ColumnVarNameInTable="columnHeuro" msprop:Generator_ColumnPropNameInRow="Heuro" msprop:Generator_ColumnPropNameInTable="HeuroColumn" msprop:Generator_UserColumnName="Heuro" type="xs:string" minOccurs="0" />
+              <xs:element name="Deuro" msprop:Generator_ColumnVarNameInTable="columnDeuro" msprop:Generator_ColumnPropNameInRow="Deuro" msprop:Generator_ColumnPropNameInTable="DeuroColumn" msprop:Generator_UserColumnName="Deuro" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

@@ -11,6 +11,9 @@ Public Module Principal
     Sub Main()
         Try
             Login.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+            Login.ShowInTaskbar = True
+
+
             Login.ShowDialog()
             If Login.conectado Then
                 Usuario = Login.Usuario
