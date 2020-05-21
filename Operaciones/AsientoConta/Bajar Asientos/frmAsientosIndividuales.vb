@@ -1415,13 +1415,14 @@ Public Class frmAsientosIndividuales
                 .Current("CodMoneda") = dt.Rows(ic).Item("Cod_MonedaCompra")
 
 
-                'If dt.Rows(ic).Item("TipoCambio") = 1 Or dt.Rows(ic).Item("TipoCambio") = 0 Then
-                '    tc = fx.TipoCambio(dt.Rows(ic).Item("Fecha"), False)
-                'Else
-                '    tc = dt.Rows(ic).Item("TipoCambio")
-                'End If
-                .Current("TipoCambio") = dt.Rows(ic).Item("TipoCambio")
-                .EndCurrentEdit()
+				'If dt.Rows(ic).Item("TipoCambio") = 1 Or dt.Rows(ic).Item("TipoCambio") = 0 Then
+				'    tc = fx.TipoCambio(dt.Rows(ic).Item("Fecha"), False)
+				'Else
+				'    tc = dt.Rows(ic).Item("TipoCambio")
+				'End If
+				.Current("TipoCambio") = dt.Rows(ic).Item("TipoCambio")
+				tc = dt.Rows(ic).Item("TipoCambio")
+				.EndCurrentEdit()
 
                 ''LINEA CUENTA DEL PROVEEDOR PASIVO
                 'If dt.Rows(ic).Item("Cod_MonedaCompra") = 1 Then 'COLONES
@@ -1839,13 +1840,14 @@ Public Class frmAsientosIndividuales
                 .Current("CodMoneda") = dt.Rows(ic).Item("Cod_MonedaCompra")
 
 
-                'If dt.Rows(ic).Item("TipoCambio") = 1 Or dt.Rows(ic).Item("TipoCambio") = 0 Then
-                '    tc = fx.TipoCambio(dt.Rows(ic).Item("Fecha"), False)
-                'Else
-                '    tc = dt.Rows(ic).Item("TipoCambio")
-                'End If
-                .Current("TipoCambio") = dt.Rows(ic).Item("TipoCambio")
-                .EndCurrentEdit()
+				'If dt.Rows(ic).Item("TipoCambio") = 1 Or dt.Rows(ic).Item("TipoCambio") = 0 Then
+				'    tc = fx.TipoCambio(dt.Rows(ic).Item("Fecha"), False)
+				'Else
+				'    tc = dt.Rows(ic).Item("TipoCambio")
+				'End If
+				.Current("TipoCambio") = dt.Rows(ic).Item("TipoCambio")
+				tc = dt.Rows(ic).Item("TipoCambio")
+				.EndCurrentEdit()
 
                 'LINEA CUENTA DEL PROVEEDOR PASIVO
                 'If dt.Rows(ic).Item("Cod_MonedaCompra") = 1 Then 'COLONES
@@ -2200,9 +2202,10 @@ Public Class frmAsientosIndividuales
                 .Current("TotalDebe") = 0
                 .Current("TotalHaber") = 0
                 .Current("CodMoneda") = dt.Rows(ic).Item("Cod_Moneda")
-                ' tc = fx.TipoCambio(dt.Rows(ic).Item("Fecha"), False)
-                .Current("TipoCambio") = dt.Rows(ic).Item("TipoCambio")
-                .EndCurrentEdit()
+				' tc = fx.TipoCambio(dt.Rows(ic).Item("Fecha"), False)
+				.Current("TipoCambio") = dt.Rows(ic).Item("TipoCambio")
+				tc = dt.Rows(ic).Item("TipoCambio")
+				.EndCurrentEdit()
 
 
 
