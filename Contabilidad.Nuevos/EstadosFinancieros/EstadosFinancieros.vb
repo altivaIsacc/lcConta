@@ -1,8 +1,9 @@
 ﻿Imports System.ComponentModel
+Imports System.Drawing.Drawing2D
 Imports System.Threading
 Public Class EstadosFinancieros
     Dim hacer As New BackgroundWorker
-    Private Shared dts As New dtsEstadosFinancieros
+    Public Shared dts As New dtsEstadosFinancieros
     Public Shared Function Cargar(EsExtendido As Boolean, EsBalance As Boolean, EsMensual As Boolean, Moneda As Integer, MonedaNombre As String, CantPeriodos As Integer, Mes As Integer, MesNombre As String, Año As Integer, Nivel As Integer) As CrystalDecisions.CrystalReports.Engine.ReportDocument
         Dim dtPeriodoConsultar As New DataTable
         Dim cmd As New SqlClient.SqlCommand
@@ -70,13 +71,13 @@ Public Class EstadosFinancieros
         ElseIf EsExtendido And EsMensual Then
             Filtro = "Periodo: " & Año
 
-			Dim cd As New SqlClient.SqlCommand
+            Dim cd As New SqlClient.SqlCommand
             cd.CommandText = "Select P.*, DATEPART(YEAR,PF.FechaFinal) AS Periodo From Periodo P, PeriodoFiscal PF Where  PF.Id = P.Id_PeriodoFiscal AND   (CAST(P.Anno AS VARCHAR(4)) + '' + CAST(P.Mes AS VARCHAR(2)) <= CAST(@aa AS VARCHAR(4)) + '' + CAST(@mm AS VARCHAR(2))) ORDER BY P.Anno ASC, P.Mes ASC"
             cd.Parameters.AddWithValue("@aa", Año)
-			cd.Parameters.AddWithValue("@mm", Mes)
-			bdAcceso.Cargar(cd, dtPeriodoConsultar)
-			cmd.CommandText = consulta12M(Moneda, dtPeriodoConsultar.Rows.Count)
-			For i As Integer = 0 To dtPeriodoConsultar.Rows.Count - 1
+            cd.Parameters.AddWithValue("@mm", Mes)
+            bdAcceso.Cargar(cd, dtPeriodoConsultar)
+            cmd.CommandText = consulta12M(Moneda, dtPeriodoConsultar.Rows.Count)
+            For i As Integer = 0 To dtPeriodoConsultar.Rows.Count - 1
                 Dim fD As DateTime = "01/" & dtPeriodoConsultar.Rows(i).Item("Mes") & "/" & dtPeriodoConsultar.Rows(i).Item("Anno")
                 Dim fH As DateTime = fD.AddMonths(+1).AddDays(-1)
                 cmd.Parameters.AddWithValue("@i" & i + 1, fD)
@@ -107,15 +108,13 @@ Public Class EstadosFinancieros
 
         End If
         bdAcceso.Cargar(cmd, dts.Resultados)
-        iniciarCeros()
-        Calculos(dts)
-
-        For Each linea In dts.Resultados
-            If linea.Movimientos Then
-                SumarPadre(linea, dts, linea.PARENTID)
-            End If
+        For Each item In dts.Resultados
+            MostrarLinea(item, dts.Resultados, EsBalance, Nivel)
         Next
-        GenerarSubTotales(Nivel, dts)
+
+        Calculos(dts, EsBalance)
+
+
 
         Dim Titulo As String = ""
         Dim TipoReporte As String = ""
@@ -156,13 +155,13 @@ Public Class EstadosFinancieros
                 rpt.SetDataSource(dts)
                 For i As Integer = 0 To dtPeriodoConsultar.Rows.Count - 1
                     Dim p As Date = "01/" & dtPeriodoConsultar.Rows(i).Item("Mes") & "/" & dtPeriodoConsultar.Rows(i).Item("Anno")
-					rpt.SetParameterValue("Periodo" & (i + 1), p.ToString("MMM/yy"))
-					If dtPeriodoConsultar.Rows.Count = (i + 1) Then
-						For n As Integer = dtPeriodoConsultar.Rows.Count To 11
-							rpt.SetParameterValue("Periodo" & (n + 1), "-")
-						Next
-					End If
-				Next
+                    rpt.SetParameterValue("Periodo" & (i + 1), p.ToString("MMM/yy"))
+                    If dtPeriodoConsultar.Rows.Count = (i + 1) Then
+                        For n As Integer = dtPeriodoConsultar.Rows.Count To 11
+                            rpt.SetParameterValue("Periodo" & (n + 1), "-")
+                        Next
+                    End If
+                Next
                 rpt.SetParameterValue("Acumulado", "Acum. " & Año)
             End If
 
@@ -188,8 +187,8 @@ Public Class EstadosFinancieros
 
 
     End Sub
-    Private Shared Sub Calculos(ByRef dts As dtsEstadosFinancieros)
-
+    Private Shared Sub Calculos(ByRef dts As dtsEstadosFinancieros, EsBalance As Boolean)
+        iniciarCeros()
         Dim lista As New List(Of CalculoRenta)
         lista.Add(New CalculoRenta) : lista.Add(New CalculoRenta) : lista.Add(New CalculoRenta) : lista.Add(New CalculoRenta) : lista.Add(New CalculoRenta)
         lista.Add(New CalculoRenta) : lista.Add(New CalculoRenta) : lista.Add(New CalculoRenta) : lista.Add(New CalculoRenta) : lista.Add(New CalculoRenta)
@@ -225,106 +224,164 @@ Public Class EstadosFinancieros
             End If
 
         Next
+        If Not EsBalance Then
+            addItemTotal(dts, "5zzz", "UTILIDAD BRUTA", "INGRESOS", lista)
+            addItemTotal(dts, "6zzz", "UTILIDAD NETA ANTES RENTA", "INGRESOS", lista)
+            addItemTotal(dts, "6zzz", "RENTA", "INGRESOS", lista)
+            addItemTotal(dts, "6zzz", "UTILIDAD NETA DESPUÉS RENTA", "INGRESOS", lista)
+        End If
 
-        addItemTotal(dts, "5zzz", "UTILIDAD BRUTA", lista)
-        '  addItemTotal(dts, "5zzz", "UTILIDAD BRUTA RENTA", lista)
-        addItemTotal(dts, "6zzz", "UTILIDAD NETA ANTES RENTA", lista)
-        ' addItemTotal(dts, "6zzz", "UTILIDAD NETA ANTES RENTA", lista)
-        addItemTotal(dts, "6zzz", "RENTA", lista)
-        addItemTotal(dts, "6zzz", "UTILIDAD NETA DESPUÉS RENTA", lista)
-        sumarGanacia(dts, lista)
+
+        If EsBalance Then
+            sumarGanacia(dts, lista)
+        End If
+
+
+        For Each linea In dts.Resultados
+
+            If linea.Movimientos Then
+                SumarPadre(linea, dts, linea.PARENTID)
+            End If
+        Next
+        GenerarSubTotales(dts)
     End Sub
-    Private Shared Sub addItemTotal(ByRef dts As dtsEstadosFinancieros, CuentaContable As String, Descripcion As String, saldos As List(Of CalculoRenta))
+    Private Shared Sub MostrarLinea(linea As dtsEstadosFinancieros.ResultadosRow, datos As dtsEstadosFinancieros.ResultadosDataTable, EsBalance As Boolean, nivel As Integer)
+        linea.Mostrar = False
+
+        If EsBalance Then
+            If linea.Tipo.Equals("ACTIVOS") Or linea.Tipo.Equals("PASIVOS") Or linea.Tipo.Equals("CAPITAL") Then
+                linea.Mostrar = True
+
+            Else
+                linea.Mostrar = False
+            End If
+        Else
+            If Not (linea.Tipo.Equals("ACTIVOS") Or linea.Tipo.Equals("PASIVOS") Or linea.Tipo.Equals("CAPITAL")) Then
+                linea.Mostrar = True
+            Else
+                linea.Mostrar = False
+            End If
+        End If
+        If linea.Mostrar Then
+            If linea.Nivel = 0 Or (linea.Nivel - nivel) = 0 Or (linea.Nivel - nivel) = -1 Then
+                linea.Mostrar = True
+            Else
+                linea.Mostrar = False
+                maxNivel = linea.Nivel
+                NivelHijos(linea, datos)
+                linea.MaxHijoNivel = maxNivel
+                If (maxNivel - linea.Nivel = 0) Or (linea.Nivel - maxNivel) = -1 Then
+                    linea.Mostrar = True
+                Else
+                    linea.Mostrar = False
+                End If
+            End If
+        End If
+    End Sub
+    Private Shared maxNivel As Integer = 0
+    Private Shared Sub NivelHijos(linea As dtsEstadosFinancieros.ResultadosRow, datos As dtsEstadosFinancieros.ResultadosDataTable)
+        For Each item In datos
+            If linea.id = item.PARENTID Then
+                If item.Nivel > maxNivel Then
+                    maxNivel = item.Nivel
+                    NivelHijos(item, datos)
+                End If
+            End If
+        Next
+    End Sub
+    Private Shared Sub addItemTotal(ByRef dts As dtsEstadosFinancieros, CuentaContable As String, Descripcion As String, Tipo As String, saldos As List(Of CalculoRenta))
         Dim linea As dtsEstadosFinancieros.ResultadosRow
-		linea = dts.Resultados.NewResultadosRow
+        linea = dts.Resultados.NewResultadosRow
 
-		Dim AcumuladoUtilidadNeta As Double = 0
-		Dim AcumuladoIngresosCompletos As Double = 0
+        Dim AcumuladoUtilidadNeta As Double = 0
+        Dim AcumuladoIngresosCompletos As Double = 0
 
-		With linea
+        With linea
             .CuentaContable = CuentaContable
             .Descripcion = Descripcion
             .Tipo = "SUBTOTAL"
             .Nivel = -10
             .Movimientos = 0
-			For i As Integer = 0 To 12 - 1
-				If Descripcion.Equals("UTILIDAD BRUTA") Then
-					.Item("SaldoAcumulado" & (i + 1)) = saldos(i).UtilidadBrutaCompleta
-					.Item("Acumulado") += saldos(i).UtilidadBrutaCompleta
-				End If
-				If Descripcion.Equals("UTILIDAD BRUTA RENTA") Then
-					.Item("SaldoAcumulado" & (i + 1)) = saldos(i).UtilidadBruta
-				End If
-				If Descripcion.Equals("UTILIDAD NETA COMPLETA") Then
-					.Item("SaldoAcumulado" & (i + 1)) = saldos(i).UtilidadNetaCompleta
-				End If
-				If Descripcion.Equals("UTILIDAD NETA ANTES RENTA") Then
-					.Item("SaldoAcumulado" & (i + 1)) = saldos(i).UtilidadNetaCompleta
-					.Item("Acumulado") += saldos(i).UtilidadNetaCompleta
-				End If
-				If Descripcion.Equals("RENTA") Then
-					.Item("SaldoAcumulado" & (i + 1)) = saldos(i).Renta30
-					AcumuladoUtilidadNeta += saldos(i).UtilidadNetaCompleta
-					AcumuladoIngresosCompletos += saldos(i).IngresosCompletos
-					If (i = 11) Then
-						saldos(i).AcumuladoUtilidadNeta = AcumuladoUtilidadNeta
-						saldos(i).AcumuladoIngresosCompletos = AcumuladoIngresosCompletos
-						.Item("Acumulado") = saldos(i).Renta
-					End If
-				End If
-				If Descripcion.Equals("UTILIDAD NETA DESPUÉS RENTA") Then
-					.Item("SaldoAcumulado" & (i + 1)) = saldos(i).Ganancia30
-					AcumuladoUtilidadNeta += saldos(i).UtilidadNetaCompleta
-					AcumuladoIngresosCompletos += saldos(i).IngresosCompletos
-					If (i = 11) Then
-						saldos(i).AcumuladoUtilidadNeta = AcumuladoUtilidadNeta
-						saldos(i).AcumuladoIngresosCompletos = AcumuladoIngresosCompletos
-						.Item("Acumulado") += saldos(i).Ganancia
-					End If
-				End If
-			Next
+            .Mostrar = True
 
-			.PARENTID = 0
+            For i As Integer = 0 To 12 - 1
+                If Descripcion.Equals("UTILIDAD BRUTA") Then
+                    .Item("SaldoAcumulado" & (i + 1)) = saldos(i).UtilidadBrutaCompleta
+                    .Item("Acumulado") += saldos(i).UtilidadBrutaCompleta
+                End If
+                If Descripcion.Equals("UTILIDAD BRUTA RENTA") Then
+                    .Item("SaldoAcumulado" & (i + 1)) = saldos(i).UtilidadBruta
+                End If
+                If Descripcion.Equals("UTILIDAD NETA COMPLETA") Then
+                    .Item("SaldoAcumulado" & (i + 1)) = saldos(i).UtilidadNetaCompleta
+                End If
+                If Descripcion.Equals("UTILIDAD NETA ANTES RENTA") Then
+                    .Item("SaldoAcumulado" & (i + 1)) = saldos(i).UtilidadNetaCompleta
+                    .Item("Acumulado") += saldos(i).UtilidadNetaCompleta
+                End If
+                If Descripcion.Equals("RENTA") Then
+                    .Item("SaldoAcumulado" & (i + 1)) = saldos(i).Renta30
+                    AcumuladoUtilidadNeta += saldos(i).UtilidadNetaCompleta
+                    AcumuladoIngresosCompletos += saldos(i).IngresosCompletos
+                    If (i = 11) Then
+                        saldos(i).AcumuladoUtilidadNeta = AcumuladoUtilidadNeta
+                        saldos(i).AcumuladoIngresosCompletos = AcumuladoIngresosCompletos
+                        .Item("Acumulado") = saldos(i).Renta
+                    End If
+                End If
+                If Descripcion.Equals("UTILIDAD NETA DESPUÉS RENTA") Then
+                    .Item("SaldoAcumulado" & (i + 1)) = saldos(i).Ganancia30
+                    AcumuladoUtilidadNeta += saldos(i).UtilidadNetaCompleta
+                    AcumuladoIngresosCompletos += saldos(i).IngresosCompletos
+                    If (i = 11) Then
+                        saldos(i).AcumuladoUtilidadNeta = AcumuladoUtilidadNeta
+                        saldos(i).AcumuladoIngresosCompletos = AcumuladoIngresosCompletos
+                        .Item("Acumulado") += saldos(i).Ganancia
+                    End If
+                End If
+            Next
+
+            .PARENTID = 0
         End With
         dts.Resultados.AddResultadosRow(linea)
     End Sub
-	Private Shared Sub addItemSubTotal(ByRef dts As dtsEstadosFinancieros, CuentaContable As String, Descripcion As String, Nivel As Integer,
-									   Saldo1 As Double, Saldo2 As Double, Saldo3 As Double,
-									Optional Saldo4 As Double = 0, Optional Saldo5 As Double = 0, Optional Saldo6 As Double = 0,
-									Optional Saldo7 As Double = 0, Optional Saldo8 As Double = 0, Optional Saldo9 As Double = 0,
-									Optional Saldo10 As Double = 0, Optional Saldo11 As Double = 0, Optional Saldo12 As Double = 0,
-									Optional Acumulado As Double = 0)
-		Dim linea As dtsEstadosFinancieros.ResultadosRow
-		linea = dts.Resultados.NewResultadosRow
-		With linea
-			.CuentaContable = CuentaContable
-			.Descripcion = Descripcion
-			.Tipo = "SUBTOTAL"
-			.Nivel = Nivel
-			.Movimientos = 0
-			.PARENTID = 0
-			.SaldoAcumulado1 = Saldo1
-			.SaldoAcumulado2 = Saldo2
-			.SaldoAcumulado3 = Saldo3
-			.SaldoAcumulado4 = Saldo4
-			.SaldoAcumulado5 = Saldo5
-			.SaldoAcumulado6 = Saldo6
-			.SaldoAcumulado7 = Saldo7
-			.SaldoAcumulado8 = Saldo8
-			.SaldoAcumulado9 = Saldo9
-			.SaldoAcumulado10 = Saldo10
-			.SaldoAcumulado11 = Saldo11
-			.SaldoAcumulado12 = Saldo12
-			.Acumulado = Acumulado
-
-		End With
-		dts.Resultados.AddResultadosRow(linea)
-	End Sub
-	Private Shared Sub GenerarSubTotales(Nivel As Integer, ByRef dts As dtsEstadosFinancieros)
+    Private Shared Sub addItemSubTotal(ByRef dts As dtsEstadosFinancieros, CuentaContable As String, Descripcion As String, Nivel As Integer, Tipo As String,
+                                       Saldo1 As Double, Saldo2 As Double, Saldo3 As Double,
+                                    Optional Saldo4 As Double = 0, Optional Saldo5 As Double = 0, Optional Saldo6 As Double = 0,
+                                    Optional Saldo7 As Double = 0, Optional Saldo8 As Double = 0, Optional Saldo9 As Double = 0,
+                                    Optional Saldo10 As Double = 0, Optional Saldo11 As Double = 0, Optional Saldo12 As Double = 0,
+                                    Optional Acumulado As Double = 0)
+        Dim linea As dtsEstadosFinancieros.ResultadosRow
+        linea = dts.Resultados.NewResultadosRow
+        With linea
+            .CuentaContable = CuentaContable
+            .Descripcion = Descripcion
+            .Tipo = "SUBTOTAL"
+            .Nivel = Nivel
+            .Movimientos = 0
+            .PARENTID = 0
+            .SaldoAcumulado1 = Saldo1
+            .SaldoAcumulado2 = Saldo2
+            .SaldoAcumulado3 = Saldo3
+            .SaldoAcumulado4 = Saldo4
+            .SaldoAcumulado5 = Saldo5
+            .SaldoAcumulado6 = Saldo6
+            .SaldoAcumulado7 = Saldo7
+            .SaldoAcumulado8 = Saldo8
+            .SaldoAcumulado9 = Saldo9
+            .SaldoAcumulado10 = Saldo10
+            .SaldoAcumulado11 = Saldo11
+            .SaldoAcumulado12 = Saldo12
+            .Acumulado = Acumulado
+            .Mostrar = True
+        End With
+        dts.Resultados.AddResultadosRow(linea)
+    End Sub
+    Private Shared Sub GenerarSubTotales(ByRef dts As dtsEstadosFinancieros)
         Dim rdts As dtsEstadosFinancieros
         rdts = dts.Copy()
         For Each line As dtsEstadosFinancieros.ResultadosRow In rdts.Resultados
-            If Not line.Movimientos And (line.Nivel - Nivel) = -2 Then
+            If Not line.Movimientos And line.Mostrar Then
                 Dim cuenta As String = ""
                 For Each hija As dtsEstadosFinancieros.ResultadosRow In rdts.Resultados
                     If line.id = hija.PARENTID Then
@@ -333,28 +390,17 @@ Public Class EstadosFinancieros
                         End If
                     End If
                 Next
-				addItemSubTotal(dts, cuenta & "zA", "TOTAL " & line.Descripcion, line.Nivel,
-								line.SaldoAcumulado1, line.SaldoAcumulado2, line.SaldoAcumulado3,
-								line.SaldoAcumulado4, line.SaldoAcumulado5, line.SaldoAcumulado6,
-								line.SaldoAcumulado7, line.SaldoAcumulado8, line.SaldoAcumulado9,
-								line.SaldoAcumulado10, line.SaldoAcumulado11, line.SaldoAcumulado12, line.Acumulado)
-			End If
-            If Not line.Movimientos And line.Nivel = 0 Then
-                Dim cuenta As String = ""
-                For Each hija As dtsEstadosFinancieros.ResultadosRow In rdts.Resultados
-                    If line.id = hija.PARENTID Then
-                        If cuenta < hija.CuentaContable Then
-                            cuenta = hija.CuentaContable
-                        End If
-                    End If
-                Next
-                cuenta = cuenta.Replace("00", "zB")
-				addItemSubTotal(dts, cuenta, "TOTAL " & line.Descripcion, line.Nivel,
-								line.SaldoAcumulado1, line.SaldoAcumulado2, line.SaldoAcumulado3,
-								line.SaldoAcumulado4, line.SaldoAcumulado5, line.SaldoAcumulado6,
-								line.SaldoAcumulado7, line.SaldoAcumulado8, line.SaldoAcumulado9,
-								line.SaldoAcumulado10, line.SaldoAcumulado11, line.SaldoAcumulado12, line.Acumulado)
-			End If
+                If Not cuenta.Equals("") Then
+                    Dim cuentaTotal As String = cuenta.Replace("00", "zz")
+                    addItemSubTotal(dts, cuentaTotal, "TOTAL " & line.Descripcion, line.Nivel, line.Tipo,
+                                line.SaldoAcumulado1, line.SaldoAcumulado2, line.SaldoAcumulado3,
+                                line.SaldoAcumulado4, line.SaldoAcumulado5, line.SaldoAcumulado6,
+                                line.SaldoAcumulado7, line.SaldoAcumulado8, line.SaldoAcumulado9,
+                                line.SaldoAcumulado10, line.SaldoAcumulado11, line.SaldoAcumulado12, line.Acumulado)
+                End If
+
+            End If
+
         Next
     End Sub
 
@@ -370,7 +416,7 @@ Public Class EstadosFinancieros
 
         If cantPeriodos = 3 Then
             Return "Select CuentaContable, Descripcion, '' AS Notas, " & saldo & "(CuentaContable.CuentaContable,@fp1) as SaldoAcumulado1, " & saldo & "(CuentaContable,@fp2) As SaldoAcumulado2, " & saldo & "(CuentaContable,@fp3) as SaldoAcumulado3, Nivel, Movimiento As Movimientos, PARENTID, id, Tipo, GastoNoDeducible, 0 AS SaldoAcumulado4, 0 AS SaldoAcumulado5, 0 AS SaldoAcumulado6, 0 AS SaldoAcumulado7, 0 AS SaldoAcumulado8, 0 AS SaldoAcumulado9, 0 AS SaldoAcumulado10, 0 AS SaldoAcumulado11, 0 AS SaldoAcumulado12, 0 AS Acumulado From CuentaContable WHERE Inactivo = 0"
-        End If
+            End If
         If cantPeriodos = 2 Then
             Return "Select CuentaContable, Descripcion, '' AS Notas,  " & saldo & "(CuentaContable.CuentaContable,@fp1) as SaldoAcumulado1, " & saldo & "(CuentaContable,@fp2) As SaldoAcumulado2, 0 as SaldoAcumulado3, Nivel, Movimiento As Movimientos, PARENTID, id, Tipo, GastoNoDeducible, 0 AS SaldoAcumulado4, 0 AS SaldoAcumulado5, 0 AS SaldoAcumulado6, 0 AS SaldoAcumulado7, 0 AS SaldoAcumulado8, 0 AS SaldoAcumulado9, 0 AS SaldoAcumulado10, 0 AS SaldoAcumulado11, 0 AS SaldoAcumulado12, 0 AS Acumulado  From CuentaContable WHERE Inactivo = 0"
         End If
@@ -534,16 +580,8 @@ Public Class EstadosFinancieros
         For Each linea In _dts.Resultados
             If dt.Rows(0).Item("CuentaContable") = linea.CuentaContable Then
                 With linea
-
-                    For i As Integer = 0 To 12 - 1
-
-                        .Item("SaldoAcumulado" & (i + 1)) = saldos(i).Ganancia30
-                        If (i = 11) Then
-                            .Item("Acumulado") += saldos(i).Ganancia30
-                        End If
-
-                    Next
-
+                    .SaldoAcumulado1 = saldos(0).GananciaCompleta()
+                    .SaldoAcumulado2 = saldos(1).GananciaCompleta()
                 End With
             End If
         Next
@@ -576,7 +614,19 @@ Public Class CalculoRenta
         Return IngresosCompletos - GastosCompletos - CostosCompletos
 
     End Function
-	Function UtilidadNetaMensual() As Double
+
+    Function GananciaCompleta()
+        Return UtilidadNetaCompleta() - RentaCompleta()
+
+    End Function
+
+    Function RentaCompleta()
+        If UtilidadNetaCompleta() > 0 Then
+            Return UtilidadNetaCompleta() * (30 / 100)
+        End If
+        Return 0
+    End Function
+    Function UtilidadNetaMensual() As Double
 		Return Ingresos - Gastos - Costos
 	End Function
 	Function UtilidadNetaTotal() As Double

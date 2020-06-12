@@ -63,6 +63,8 @@ Public Class frmResultado
         crv.Enabled = True
 
         pnParametros.Enabled = True
+        ResultadoBS.DataSource = EstadosFinancieros.dts
+        ResultadoBS.DataSource = EstadosFinancieros.dts.Resultados
 
     End Sub
 End Class

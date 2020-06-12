@@ -52,17 +52,12 @@ Represents a strongly typed in-memory cache of data.
 Represents the strongly named DataTable class.
 </summary>
 </member>
-<member name="T:LcConta.Nuevos.dtsEstadosFinancieros.ResultadosDataTable">
-<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member>
 <member name="T:LcConta.Nuevos.dtsEstadosFinancieros.configuracionDataTable">
 <summary>
 Represents the strongly named DataTable class.
 </summary>
 </member>
-<member name="T:LcConta.Nuevos.dtsEstadosFinancieros.Resultados12MDataTable">
+<member name="T:LcConta.Nuevos.dtsEstadosFinancieros.ResultadosDataTable">
 <summary>
 Represents the strongly named DataTable class.
 </summary>
@@ -72,17 +67,12 @@ Represents the strongly named DataTable class.
 Represents strongly named DataRow class.
 </summary>
 </member>
-<member name="T:LcConta.Nuevos.dtsEstadosFinancieros.ResultadosRow">
-<summary>
-Represents strongly named DataRow class.
-</summary>
-</member>
 <member name="T:LcConta.Nuevos.dtsEstadosFinancieros.configuracionRow">
 <summary>
 Represents strongly named DataRow class.
 </summary>
 </member>
-<member name="T:LcConta.Nuevos.dtsEstadosFinancieros.Resultados12MRow">
+<member name="T:LcConta.Nuevos.dtsEstadosFinancieros.ResultadosRow">
 <summary>
 Represents strongly named DataRow class.
 </summary>
@@ -92,17 +82,12 @@ Represents strongly named DataRow class.
 Row event argument class
 </summary>
 </member>
-<member name="T:LcConta.Nuevos.dtsEstadosFinancieros.ResultadosRowChangeEvent">
-<summary>
-Row event argument class
-</summary>
-</member>
 <member name="T:LcConta.Nuevos.dtsEstadosFinancieros.configuracionRowChangeEvent">
 <summary>
 Row event argument class
 </summary>
 </member>
-<member name="T:LcConta.Nuevos.dtsEstadosFinancieros.Resultados12MRowChangeEvent">
+<member name="T:LcConta.Nuevos.dtsEstadosFinancieros.ResultadosRowChangeEvent">
 <summary>
 Row event argument class
 </summary>
