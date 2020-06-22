@@ -1728,6 +1728,7 @@ Public Class frmBalanceComprobacion
 				Me.TreeList2.DataSource = ""
 				Me.TreeList2.DataMember = ""
 				Estado(True)
+				dtInicial.Value = fnObtenerFechaInicioPeriodoFiscal()
 				dtInicial.Focus()
 			Else
 				Me.ToolBarNuevo.ImageIndex = "0"
@@ -1826,6 +1827,28 @@ Public Class frmBalanceComprobacion
 		End Try
 	End Sub
 #End Region
+
+	Function fnObtenerFechaInicioPeriodoFiscal() As DateTime
+		Try
+			Dim Hoy As DateTime = Now
+			Dim dt As New DataTable
+			Dim sql As SqlCommand
+
+			dt.Clear()
+			sql = New SqlCommand("Select FechaInicio from PeriodoFiscal where @Hoy between FechaInicio and FechaFinal")
+			sql.Parameters.AddWithValue("@Hoy", Hoy)
+			cFunciones.Llenar_Tabla_Generico(sql, dt, Configuracion.Claves.Conexion("Contabilidad"))
+
+			If dt.Rows.Count > 0 Then
+				Return Convert.ToDateTime(dt.Rows(0).Item("FechaInicio"))
+			Else
+				Return "01/01/" & Hoy.Year
+			End If
+
+		Catch ex As Exception
+			Return Now
+		End Try
+	End Function
 
 
 	Private Sub btnExpandirTodas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnExpandirTodas.Click
