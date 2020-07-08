@@ -1015,30 +1015,32 @@ Public Class FrmSettingHotelCuentaContable
         Me.tbpImpuestos.Padding = New System.Windows.Forms.Padding(3)
         Me.tbpImpuestos.Size = New System.Drawing.Size(650, 390)
         Me.tbpImpuestos.TabIndex = 2
-        Me.tbpImpuestos.Text = "Impuestos y Extra Propina Salonero"
+        Me.tbpImpuestos.Text = "Impuestos"
         Me.tbpImpuestos.UseVisualStyleBackColor = True
         '
         'txtPorcImpRenta
         '
         Me.txtPorcImpRenta.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.bdsSetting, "PorcImpuestoRenta", True))
-        Me.txtPorcImpRenta.Location = New System.Drawing.Point(173, 120)
+        Me.txtPorcImpRenta.Location = New System.Drawing.Point(173, 147)
         Me.txtPorcImpRenta.Name = "txtPorcImpRenta"
         Me.txtPorcImpRenta.Size = New System.Drawing.Size(63, 20)
         Me.txtPorcImpRenta.TabIndex = 215
         Me.txtPorcImpRenta.Text = "0"
         Me.txtPorcImpRenta.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.txtPorcImpRenta.Visible = False
         '
         'Label3
         '
         Me.Label3.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(133, Byte), Integer), CType(CType(242, Byte), Integer))
         Me.Label3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.White
-        Me.Label3.Location = New System.Drawing.Point(23, 120)
+        Me.Label3.Location = New System.Drawing.Point(23, 147)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(144, 14)
         Me.Label3.TabIndex = 214
         Me.Label3.Text = "Impuesto de Renta:"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.Label3.Visible = False
         '
         'cboExtraPropina
         '
@@ -1046,7 +1048,7 @@ Public Class FrmSettingHotelCuentaContable
         Me.cboExtraPropina.DataSource = Me.BindingSource23
         Me.cboExtraPropina.DisplayMember = "Descripción"
         Me.cboExtraPropina.FormattingEnabled = True
-        Me.cboExtraPropina.Location = New System.Drawing.Point(173, 155)
+        Me.cboExtraPropina.Location = New System.Drawing.Point(173, 86)
         Me.cboExtraPropina.Name = "cboExtraPropina"
         Me.cboExtraPropina.Size = New System.Drawing.Size(469, 21)
         Me.cboExtraPropina.TabIndex = 3
@@ -1063,7 +1065,7 @@ Public Class FrmSettingHotelCuentaContable
         Me.cboImpuestoRenta.DataSource = Me.BindingSource22
         Me.cboImpuestoRenta.DisplayMember = "Descripción"
         Me.cboImpuestoRenta.FormattingEnabled = True
-        Me.cboImpuestoRenta.Location = New System.Drawing.Point(173, 86)
+        Me.cboImpuestoRenta.Location = New System.Drawing.Point(173, 113)
         Me.cboImpuestoRenta.Name = "cboImpuestoRenta"
         Me.cboImpuestoRenta.Size = New System.Drawing.Size(469, 21)
         Me.cboImpuestoRenta.TabIndex = 2
@@ -1113,7 +1115,7 @@ Public Class FrmSettingHotelCuentaContable
         Me.Label32.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(133, Byte), Integer), CType(CType(242, Byte), Integer))
         Me.Label32.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label32.ForeColor = System.Drawing.Color.White
-        Me.Label32.Location = New System.Drawing.Point(23, 86)
+        Me.Label32.Location = New System.Drawing.Point(23, 113)
         Me.Label32.Name = "Label32"
         Me.Label32.Size = New System.Drawing.Size(144, 14)
         Me.Label32.TabIndex = 213
@@ -1141,7 +1143,7 @@ Public Class FrmSettingHotelCuentaContable
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(144, 14)
         Me.Label9.TabIndex = 1
-        Me.Label9.Text = "Impuesto venta:"
+        Me.Label9.Text = "IVA Venta:"
         Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label11
@@ -1153,7 +1155,7 @@ Public Class FrmSettingHotelCuentaContable
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(144, 14)
         Me.Label11.TabIndex = 182
-        Me.Label11.Text = "Impuesto Servicio:"
+        Me.Label11.Text = "IVA Compra:"
         Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label24
@@ -1161,11 +1163,11 @@ Public Class FrmSettingHotelCuentaContable
         Me.Label24.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(133, Byte), Integer), CType(CType(242, Byte), Integer))
         Me.Label24.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label24.ForeColor = System.Drawing.Color.White
-        Me.Label24.Location = New System.Drawing.Point(23, 154)
+        Me.Label24.Location = New System.Drawing.Point(23, 85)
         Me.Label24.Name = "Label24"
         Me.Label24.Size = New System.Drawing.Size(144, 14)
         Me.Label24.TabIndex = 208
-        Me.Label24.Text = "Extra Propina:"
+        Me.Label24.Text = "IVA Gasto:"
         Me.Label24.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'txtUsuario

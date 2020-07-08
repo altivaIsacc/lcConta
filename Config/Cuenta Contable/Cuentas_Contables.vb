@@ -1221,8 +1221,10 @@ Public Class Cuentas_Contables
             AdapterCuentasContables.Fill(DataSetCuentasContables1.CuentaContable)
             AdapterTipoCuenta.Fill(DataSetCuentasContables1.TipoCuenta)
             AdapterMoneda.Fill(DataSetCuentasContables1.Moneda)
+            If Configuracion.Claves.Configuracion("Tipo").Equals("LCPYMES") Then
+                adTipoCompra.Fill(DataSetCuentasContables1.TipoCompra)
+            End If
 
-            adTipoCompra.Fill(DataSetCuentasContables1.TipoCompra)
 
             ToolBarRegistrar.Enabled = False
             obtiene_formato()

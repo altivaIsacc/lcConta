@@ -4,7 +4,7 @@
   <description asmv2:iconFile="SeeSoftContabilidad.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="lcConta" version="6.1.7468.21508" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="lcConta" version="6.1.7473.28365" language="neutral" processorArchitecture="msil" />
     <commandLine file="lcConta.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -488,13 +488,13 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="lcConta.exe" size="17102248">
-      <assemblyIdentity name="lcConta" version="6.1.7468.21508" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="lcConta" version="6.1.7473.28365" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>hxQcNY1CsetYIqwkJzOp0owPyaM=</dsig:DigestValue>
+        <dsig:DigestValue>P0swi7zr4UCiXIoq7nA1VoQ88gw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
