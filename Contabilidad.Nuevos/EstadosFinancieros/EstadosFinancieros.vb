@@ -1,6 +1,8 @@
 ﻿Imports System.ComponentModel
 Imports System.Drawing.Drawing2D
 Imports System.Threading
+Imports System.Web
+
 Public Class EstadosFinancieros
     Dim hacer As New BackgroundWorker
     Public Shared dts As New dtsEstadosFinancieros
@@ -270,12 +272,26 @@ Public Class EstadosFinancieros
                 maxNivel = linea.Nivel
                 NivelHijos(linea, datos)
                 linea.MaxHijoNivel = maxNivel
-                If (maxNivel - linea.Nivel = 0) Or (linea.Nivel - maxNivel) = -1 Then
-                    linea.Mostrar = True
-                Else
-                    linea.Mostrar = False
+                If (maxNivel < nivel) Then
+                    If (maxNivel - linea.Nivel = 0) Or (linea.Nivel - maxNivel) = -1 Then
+                        linea.Mostrar = True
+                    End If
                 End If
             End If
+            If linea.Nivel = nivel Then
+                linea.Movimientos = True
+            End If
+            Try
+                Try
+
+                Catch ex As Exception
+
+                End Try
+                Dim teta As String
+            Catch ex As Exception
+                teta = ""
+
+            End Try
         End If
     End Sub
     Private Shared maxNivel As Integer = 0
