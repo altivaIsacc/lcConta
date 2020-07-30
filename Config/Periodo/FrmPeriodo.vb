@@ -575,7 +575,9 @@ Public Class FrmPeriodo
                         MsgBox("No tiene permiso para agregar o actualizar datos...", MsgBoxStyle.Information, "Atención...") : Exit Sub
                     End If
 
-                Case 5 : Editar()
+                Case 5
+                    AccesoEditar()
+
 
                 Case 6 : Me.Cerrar()
             End Select
@@ -751,11 +753,12 @@ Public Class FrmPeriodo
                             btReversarCierre.Visible = False
                         Else
                             spEvaluarReversar()
+                            AccesoEditar()
                         End If
                         Exit Sub
                     End If
                 Next
-                MsgBox("No se encontro el periodo", MsgBoxStyle.OkOnly)
+                MsgBox("No se encontró el periodo", MsgBoxStyle.OkOnly)
 
             End If
 
@@ -997,6 +1000,25 @@ Public Class FrmPeriodo
 
             End If
 
+        End If
+    End Sub
+
+    Private Sub AccesoEditar()
+        Dim fAcceso As New AccesoEditar
+        If chbCerradoFinal.Checked Or CheckCerrado.Checked Then
+
+            If fAcceso.ShowDialog = System.Windows.Forms.DialogResult.OK Then
+                fAcceso.Close()
+                Editar()
+                btReversarCierre.Enabled = True
+            Else
+                CheckActivo.Enabled = False
+                CheckCerrado.Enabled = False
+                btReversarCierre.Enabled = False
+                MsgBox("Contraseña de acceso incorrecta", MsgBoxStyle.Exclamation, "Acceso incorrecto")
+            End If
+        Else
+            Editar()
         End If
     End Sub
 End Class

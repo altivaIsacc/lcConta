@@ -988,4 +988,158 @@ Public Class cFunciones
             Return False
         End Try
     End Function
+
+    Public Shared Function ValidarExistePeriodo() As Boolean
+        Dim cConexion As New Conexion                   'VALIDA SI EXISTE UN PERIODO
+        Dim sqlConexion As New SqlConnection
+        Dim rs As SqlDataReader
+
+        Try
+            ValidarExistePeriodo = False
+            'CANTIDAD DE PERIODOS
+            rs = cConexion.GetRecorset(cConexion.Conectar("Contabilidad"), "SELECT TOP 1 Id_Periodo FROM Periodo")
+
+            While rs.Read
+                If rs("Id_Periodo") > 0 Then
+                    ValidarExistePeriodo = True     'SI EXISTE AL MENOS UN PERIODO CREADO
+                Else
+                    MsgBox("No existen periodos de trabajo registrados. Para crear un nuevo periodo, se debe dirigir al menú principal de contabilidad y seguir la ruta: Operaciones -> Periodo de Trabajo. ", MsgBoxStyle.Exclamation, "Atención...")
+                End If
+            End While
+            rs.Close()
+
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Information, "Comunique el siguiente error a su Empresa Proveedora de Software")
+        Finally
+            cConexion.DesConectar(sqlConexion)
+        End Try
+    End Function
+
+    Public Shared Function ValidarPeriodoAbierto() As Boolean  'VALIDA LA EXISTENCIA DE PERIODOS ABIERTOS EN EL SISTEMA'
+        Dim cConexion As New Conexion
+        Dim sqlConexion As New SqlConnection
+        Dim rs As SqlDataReader
+        Try
+            ValidarPeriodoAbierto = False
+            rs = cConexion.GetRecorset(cConexion.Conectar("Contabilidad"), "SELECT Estado, Cerrado FROM Periodo WHERE Estado = 0 AND Cerrado = 0")
+            While rs.Read
+                If rs("Estado") = False And rs("Cerrado") = False Then
+                    ValidarPeriodoAbierto = True
+                End If
+            End While
+            rs.Close()
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Information, "Comunique el siguiente error a su Empresa Proveedora de Software")
+        Finally
+            cConexion.DesConectar(sqlConexion)
+        End Try
+    End Function
+
+    Public Shared Function PeriodoAbiertoMenuPrincipal() As Boolean 'SE MUESTRA SI NO HAY PERIODOS ABIERTOS'
+
+        If ValidarPeriodoAbierto() Then
+            PeriodoAbiertoMenuPrincipal = True
+        Else
+            MsgBox("No existen periodos de trabajo abiertos. Para ingresar un nuevo periodo, se debe dirigir al menú principal de contabilidad y seguir la ruta: Operaciones -> Periodo de Trabajo.", MsgBoxStyle.Exclamation, "¡Atención!")
+            PeriodoAbiertoMenuPrincipal = False
+        End If
+    End Function
+    Public Shared Function ExistenPeriodos() As Boolean 'SI HAY ALGUN PERIODO REGISTRADO
+
+        If ValidarExistePeriodo() Then
+            ExistenPeriodos = True
+        Else
+            MsgBox("No existen periodos de trabajo. Para ingresar un nuevo periodo, se debe dirigir al menú principal de contabilidad y seguir la ruta: Operaciones -> Periodo de Trabajo.", MsgBoxStyle.Exclamation, "¡Atención!")
+            ExistenPeriodos = False
+        End If
+    End Function
+
+    Public Shared Function FechaValida(ByVal Fecha As DateTime) As Boolean
+        Dim dt As New DataTable
+        Dim cmd As New SqlCommand
+        cmd.CommandText = "SELECT [dbo].[ValidarFecha] (@Fecha) AS Puede "
+        cmd.Parameters.AddWithValue("@Fecha", Fecha)
+        Llenar_Tabla_GenericoC(cmd, dt, GetSetting("SEESOFT", "CONTABILIDAD", "CONEXION"))
+        If dt.Rows.Count > 0 Then
+            Return dt.Rows(0).Item("Puede")
+        End If
+        Return False
+    End Function
+    Public Shared Function Llenar_Tabla_GenericoC(ByVal SQLCommand As SqlCommand, ByRef Tabla As DataTable, Optional ByVal NuevaConexionStr As String = "")
+        Dim StringConexion As String
+        StringConexion = IIf(NuevaConexionStr = "", Configuracion.Claves.Conexion("SeePos"), NuevaConexionStr)
+        Dim ConexionX As SqlConnection = New SqlConnection(StringConexion)
+        Try
+            ConexionX.Open()
+            SQLCommand.Connection = ConexionX
+            Dim da As New SqlDataAdapter
+            da.SelectCommand = SQLCommand
+            Tabla.Clear()
+            da.Fill(Tabla)
+        Catch ex As System.Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "Alerta..") ' Si hay error, devolvemos un valor nulo.
+            Return Nothing
+        Finally
+            If Not ConexionX Is Nothing Then ' Por si se produce un error comprobamos si en realidad el objeto Connection está iniciado de ser así, lo cerramos.
+                ConexionX.Close()
+            End If
+        End Try
+    End Function
+    Public Shared Function ValidarAccesoEditar() As Boolean 'ACCESO PARA EDITAR UN PERIODO
+
+        If ValidoEditar() Then
+            ValidarAccesoEditar = True
+        Else
+            MsgBox("Lo sentimos contraseña incorrecta", MsgBoxStyle.Exclamation, "¡Atención!")
+            ValidarAccesoEditar = False
+        End If
+    End Function
+
+    Public Shared Function ValidoEditar() As Boolean 'ACCESO PARA EDITAR UN PERIODO
+        Dim cConexion As New Conexion                   'VALIDA SI EXISTE UN PERIODO
+        Dim sqlConexion As New SqlConnection
+        Dim rs As SqlDataReader
+        Dim Message, Title, MyValue
+
+        Try
+            ValidoEditar = False
+            'CANTIDAD DE PERIODOS
+            rs = cConexion.GetRecorset(cConexion.Conectar("Contabilidad"), "SELECT Estado, Cerrado FROM Periodo WHERE Estado = 0 AND Cerrado = 0")
+            'cmd.CommandText = "SELECT [dbo].[ValidarFecha] (@Fecha) AS Puede "
+            'cmd.Parameters.AddWithValue("@Fecha", Fecha)
+            While rs.Read
+                If rs("Estado") = True And rs("Cerrado") = True Then
+
+                    Message = "Enter key"    ' Set prompt.
+                    Title = "Acceso para editar un periodo"    ' Set title.
+                    'Default = "1"    ' Set default.
+                    ' Display message, title, and default value.
+                    'Call inputbox_Password(FrmPeriodo, "*")
+                    MyValue = InputBox(Message, Title)
+                    If MyValue = "nice" Then
+                        ValidoEditar = True
+                    End If
+
+                    ' Use Helpfile and context. The Help button is added automatically.
+                    'MyValue = InputBox(Message, Title, "DEMO.HLP", 10)
+
+                    ' Display dialog box at position 100, 100.
+                    'MyValue = InputBox(Message, Title, Default, 100, 100)
+
+
+                    'Else
+                    '    ValidoEditar = True
+                End If
+            End While
+            rs.Close()
+
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Information, "Comunique el siguiente error a su Empresa Proveedora de Software")
+        Finally
+            cConexion.DesConectar(sqlConexion)
+        End Try
+
+    End Function
+
+
 End Class

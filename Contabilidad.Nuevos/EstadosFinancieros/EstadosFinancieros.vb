@@ -287,9 +287,9 @@ Public Class EstadosFinancieros
                 Catch ex As Exception
 
                 End Try
-                Dim teta As String
+
             Catch ex As Exception
-                teta = ""
+
 
             End Try
         End If

@@ -20,6 +20,7 @@ Public Class FrmAsientos
     Friend WithEvents txtNoDocumentoDetalle As TextBox
     Friend WithEvents Label25 As Label
     Public NumAsiento As String = ""
+    Dim Class_cFunciones As New cFunciones
 #End Region
 
 #Region " Código generado por el Diseñador de Windows Forms "
@@ -1791,7 +1792,11 @@ Public Class FrmAsientos
                     TextBox1.Text = usua.Nombre
                     TxtUsuario.Enabled = False
                     TextBox1.Enabled = False
-                    ToolBar1.Buttons(0).Enabled = True
+                    If cFunciones.ExistenPeriodos Then
+                        If cFunciones.PeriodoAbiertoMenuPrincipal Then
+                            ToolBar1.Buttons(0).Enabled = True
+                        End If
+                    End If
                     ToolBar1.Buttons(1).Enabled = True
                 Else
                     TxtUsuario.Focus()
@@ -2801,8 +2806,13 @@ Public Class FrmAsientos
         PMU = VSM(usua.Cedula, Me.Name) 'Carga los privilegios del usuario con el modulo
 
         Select Case ToolBar1.Buttons.IndexOf(e.Button)
-            Case 0 : Nuevo()
+            Case 0
 
+                If cFunciones.ExistenPeriodos Then
+                    If cFunciones.PeriodoAbiertoMenuPrincipal Then
+                        Nuevo()
+                    End If
+                End If
             Case 1 : If PMU.Find Then Buscar() Else MsgBox("No tiene permiso para Buscar información...", MsgBoxStyle.Information, "Atención...") : Exit Sub
 
             Case 2 : If PMU.Update Then Registrar() Else MsgBox("No tiene permiso para agregar o actualizar datos...", MsgBoxStyle.Information, "Atención...") : Exit Sub
