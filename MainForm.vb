@@ -962,7 +962,9 @@ Public Class MainForm
             mniHotelGeneracionAutomatica.Visible = False
 
         End If
-
+        If cFunciones.ExistenPeriodos Then
+            cFunciones.PeriodoAbiertoMenuPrincipal()
+        End If
         If Me.Cedula_Empresa = "3-102-622891" Or Me.Cedula_Empresa = "3-101-629600" Then
             'si es ksa plastico 
             Me.MenuItem7.Visible = True

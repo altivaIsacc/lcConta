@@ -281,17 +281,7 @@ Public Class EstadosFinancieros
             If linea.Nivel = nivel Then
                 linea.Movimientos = True
             End If
-            Try
-                Try
 
-                Catch ex As Exception
-
-                End Try
-                Dim teta As String
-            Catch ex As Exception
-                teta = ""
-
-            End Try
         End If
     End Sub
     Private Shared maxNivel As Integer = 0

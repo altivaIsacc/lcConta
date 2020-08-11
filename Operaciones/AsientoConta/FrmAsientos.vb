@@ -95,7 +95,6 @@ Public Class FrmAsientos
     Friend WithEvents TxtTotalHaber As System.Windows.Forms.TextBox
     Friend WithEvents TxtTotalDebe As System.Windows.Forms.TextBox
     Friend WithEvents Label5 As System.Windows.Forms.Label
-    Friend WithEvents LblTipo As System.Windows.Forms.Label
     Friend WithEvents GridView1 As DevExpress.XtraGrid.Views.Grid.GridView
     Friend WithEvents GridControl2 As DevExpress.XtraGrid.GridControl
     Friend WithEvents ImageList1 As System.Windows.Forms.ImageList
@@ -124,7 +123,7 @@ Public Class FrmAsientos
     Friend WithEvents SqlInsertCommand5 As System.Data.SqlClient.SqlCommand
     Friend WithEvents SqlUpdateCommand5 As System.Data.SqlClient.SqlCommand
     Friend WithEvents SqlDeleteCommand5 As System.Data.SqlClient.SqlCommand
-    Friend WithEvents SimpleButton1 As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents buttonEditarDetalle As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents butEliminarDetalle As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents btnReporteDetalle As System.Windows.Forms.Button
     Friend WithEvents AdapterMoneda As System.Data.SqlClient.SqlDataAdapter
@@ -177,11 +176,11 @@ Public Class FrmAsientos
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmAsientos))
-        Dim ColumnFilterInfo1 As DevExpress.XtraGrid.Columns.ColumnFilterInfo = New DevExpress.XtraGrid.Columns.ColumnFilterInfo()
-        Dim ColumnFilterInfo2 As DevExpress.XtraGrid.Columns.ColumnFilterInfo = New DevExpress.XtraGrid.Columns.ColumnFilterInfo()
-        Dim ColumnFilterInfo3 As DevExpress.XtraGrid.Columns.ColumnFilterInfo = New DevExpress.XtraGrid.Columns.ColumnFilterInfo()
-        Dim ColumnFilterInfo4 As DevExpress.XtraGrid.Columns.ColumnFilterInfo = New DevExpress.XtraGrid.Columns.ColumnFilterInfo()
-        Dim ColumnFilterInfo5 As DevExpress.XtraGrid.Columns.ColumnFilterInfo = New DevExpress.XtraGrid.Columns.ColumnFilterInfo()
+        Dim ColumnFilterInfo6 As DevExpress.XtraGrid.Columns.ColumnFilterInfo = New DevExpress.XtraGrid.Columns.ColumnFilterInfo()
+        Dim ColumnFilterInfo7 As DevExpress.XtraGrid.Columns.ColumnFilterInfo = New DevExpress.XtraGrid.Columns.ColumnFilterInfo()
+        Dim ColumnFilterInfo8 As DevExpress.XtraGrid.Columns.ColumnFilterInfo = New DevExpress.XtraGrid.Columns.ColumnFilterInfo()
+        Dim ColumnFilterInfo9 As DevExpress.XtraGrid.Columns.ColumnFilterInfo = New DevExpress.XtraGrid.Columns.ColumnFilterInfo()
+        Dim ColumnFilterInfo10 As DevExpress.XtraGrid.Columns.ColumnFilterInfo = New DevExpress.XtraGrid.Columns.ColumnFilterInfo()
         Me.FrameEncabezado = New System.Windows.Forms.GroupBox()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.DPTrans = New System.Windows.Forms.DateTimePicker()
@@ -212,7 +211,7 @@ Public Class FrmAsientos
         Me.Label10 = New System.Windows.Forms.Label()
         Me.butEliminarDetalle = New DevExpress.XtraEditors.SimpleButton()
         Me.ImageList = New System.Windows.Forms.ImageList(Me.components)
-        Me.SimpleButton1 = New DevExpress.XtraEditors.SimpleButton()
+        Me.buttonEditarDetalle = New DevExpress.XtraEditors.SimpleButton()
         Me.TxtNumCuenta = New DevExpress.XtraEditors.TextEdit()
         Me.ButNuevoDetalle = New DevExpress.XtraEditors.SimpleButton()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
@@ -227,7 +226,6 @@ Public Class FrmAsientos
         Me.TxtDescAsiento = New System.Windows.Forms.TextBox()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Label18 = New System.Windows.Forms.Label()
-        Me.LblTipo = New System.Windows.Forms.Label()
         Me.AdapAsientos = New System.Data.SqlClient.SqlDataAdapter()
         Me.SqlDeleteCommand1 = New System.Data.SqlClient.SqlCommand()
         Me.SqlConnection2 = New System.Data.SqlClient.SqlConnection()
@@ -632,13 +630,11 @@ Public Class FrmAsientos
         Me.FrameDetalles.Controls.Add(Me.TextBoxTipoCambio)
         Me.FrameDetalles.Controls.Add(Me.Label10)
         Me.FrameDetalles.Controls.Add(Me.butEliminarDetalle)
-        Me.FrameDetalles.Controls.Add(Me.SimpleButton1)
+        Me.FrameDetalles.Controls.Add(Me.buttonEditarDetalle)
         Me.FrameDetalles.Controls.Add(Me.TxtNumCuenta)
         Me.FrameDetalles.Controls.Add(Me.ButNuevoDetalle)
         Me.FrameDetalles.Controls.Add(Me.LblDescCuenta)
         Me.FrameDetalles.Controls.Add(Me.ButAgregarDetalle)
-        Me.FrameDetalles.Controls.Add(Me.RadHaber)
-        Me.FrameDetalles.Controls.Add(Me.RadDebe)
         Me.FrameDetalles.Controls.Add(Me.Label13)
         Me.FrameDetalles.Controls.Add(Me.TxtMonto)
         Me.FrameDetalles.Controls.Add(Me.Label15)
@@ -646,7 +642,8 @@ Public Class FrmAsientos
         Me.FrameDetalles.Controls.Add(Me.TxtDescAsiento)
         Me.FrameDetalles.Controls.Add(Me.Label17)
         Me.FrameDetalles.Controls.Add(Me.Label18)
-        Me.FrameDetalles.Controls.Add(Me.LblTipo)
+        Me.FrameDetalles.Controls.Add(Me.RadDebe)
+        Me.FrameDetalles.Controls.Add(Me.RadHaber)
         Me.FrameDetalles.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FrameDetalles.ForeColor = System.Drawing.Color.Gray
         Me.FrameDetalles.Location = New System.Drawing.Point(8, 128)
@@ -747,17 +744,17 @@ Public Class FrmAsientos
         Me.ImageList.Images.SetKeyName(8, "")
         Me.ImageList.Images.SetKeyName(9, "")
         '
-        'SimpleButton1
+        'buttonEditarDetalle
         '
-        Me.SimpleButton1.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.SimpleButton1.Enabled = False
-        Me.SimpleButton1.ImageIndex = 9
-        Me.SimpleButton1.ImageList = Me.ImageList
-        Me.SimpleButton1.Location = New System.Drawing.Point(711, 86)
-        Me.SimpleButton1.Name = "SimpleButton1"
-        Me.SimpleButton1.Size = New System.Drawing.Size(129, 24)
-        Me.SimpleButton1.TabIndex = 7
-        Me.SimpleButton1.Text = "Editar"
+        Me.buttonEditarDetalle.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.buttonEditarDetalle.Enabled = False
+        Me.buttonEditarDetalle.ImageIndex = 9
+        Me.buttonEditarDetalle.ImageList = Me.ImageList
+        Me.buttonEditarDetalle.Location = New System.Drawing.Point(711, 86)
+        Me.buttonEditarDetalle.Name = "buttonEditarDetalle"
+        Me.buttonEditarDetalle.Size = New System.Drawing.Size(129, 24)
+        Me.buttonEditarDetalle.TabIndex = 7
+        Me.buttonEditarDetalle.Text = "Editar"
         '
         'TxtNumCuenta
         '
@@ -825,9 +822,9 @@ Public Class FrmAsientos
         Me.RadHaber.Enabled = False
         Me.RadHaber.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RadHaber.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.RadHaber.Location = New System.Drawing.Point(796, 68)
+        Me.RadHaber.Location = New System.Drawing.Point(773, 61)
         Me.RadHaber.Name = "RadHaber"
-        Me.RadHaber.Size = New System.Drawing.Size(60, 12)
+        Me.RadHaber.Size = New System.Drawing.Size(88, 27)
         Me.RadHaber.TabIndex = 4
         Me.RadHaber.Text = "&Haber"
         Me.RadHaber.UseVisualStyleBackColor = False
@@ -840,9 +837,9 @@ Public Class FrmAsientos
         Me.RadDebe.Enabled = False
         Me.RadDebe.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RadDebe.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.RadDebe.Location = New System.Drawing.Point(700, 68)
+        Me.RadDebe.Location = New System.Drawing.Point(684, 61)
         Me.RadDebe.Name = "RadDebe"
-        Me.RadDebe.Size = New System.Drawing.Size(83, 12)
+        Me.RadDebe.Size = New System.Drawing.Size(83, 27)
         Me.RadDebe.TabIndex = 3
         Me.RadDebe.TabStop = True
         Me.RadDebe.Text = "&Debe"
@@ -944,16 +941,6 @@ Public Class FrmAsientos
         Me.Label18.TabIndex = 0
         Me.Label18.Text = "Cuenta Contable"
         Me.Label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'LblTipo
-        '
-        Me.LblTipo.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.LblTipo.BackColor = System.Drawing.Color.White
-        Me.LblTipo.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LblTipo.Location = New System.Drawing.Point(685, 67)
-        Me.LblTipo.Name = "LblTipo"
-        Me.LblTipo.Size = New System.Drawing.Size(175, 14)
-        Me.LblTipo.TabIndex = 21
         '
         'AdapAsientos
         '
@@ -1553,7 +1540,7 @@ Public Class FrmAsientos
         '
         Me.gcCodigo.Caption = "Código"
         Me.gcCodigo.FieldName = "Codigo"
-        Me.gcCodigo.FilterInfo = ColumnFilterInfo1
+        Me.gcCodigo.FilterInfo = ColumnFilterInfo6
         Me.gcCodigo.Name = "gcCodigo"
         Me.gcCodigo.Options = CType((((((DevExpress.XtraGrid.Columns.ColumnOptions.CanMoved Or DevExpress.XtraGrid.Columns.ColumnOptions.CanResized) _
             Or DevExpress.XtraGrid.Columns.ColumnOptions.CanSorted) _
@@ -1566,7 +1553,7 @@ Public Class FrmAsientos
         '
         Me.gcCentro.Caption = "Centro"
         Me.gcCentro.FieldName = "Nombre"
-        Me.gcCentro.FilterInfo = ColumnFilterInfo2
+        Me.gcCentro.FilterInfo = ColumnFilterInfo7
         Me.gcCentro.Name = "gcCentro"
         Me.gcCentro.Options = CType((((((DevExpress.XtraGrid.Columns.ColumnOptions.CanMoved Or DevExpress.XtraGrid.Columns.ColumnOptions.CanResized) _
             Or DevExpress.XtraGrid.Columns.ColumnOptions.CanSorted) _
@@ -1579,7 +1566,7 @@ Public Class FrmAsientos
         '
         Me.gcCuenta.Caption = "Cuenta Contable"
         Me.gcCuenta.FieldName = "Cuenta"
-        Me.gcCuenta.FilterInfo = ColumnFilterInfo3
+        Me.gcCuenta.FilterInfo = ColumnFilterInfo8
         Me.gcCuenta.Name = "gcCuenta"
         Me.gcCuenta.Options = CType((((((DevExpress.XtraGrid.Columns.ColumnOptions.CanMoved Or DevExpress.XtraGrid.Columns.ColumnOptions.CanResized) _
             Or DevExpress.XtraGrid.Columns.ColumnOptions.CanSorted) _
@@ -1592,7 +1579,7 @@ Public Class FrmAsientos
         '
         Me.gcNombreCuenta.Caption = "Descripción"
         Me.gcNombreCuenta.FieldName = "NombreC"
-        Me.gcNombreCuenta.FilterInfo = ColumnFilterInfo4
+        Me.gcNombreCuenta.FilterInfo = ColumnFilterInfo9
         Me.gcNombreCuenta.Name = "gcNombreCuenta"
         Me.gcNombreCuenta.Options = CType((((((DevExpress.XtraGrid.Columns.ColumnOptions.CanMoved Or DevExpress.XtraGrid.Columns.ColumnOptions.CanResized) _
             Or DevExpress.XtraGrid.Columns.ColumnOptions.CanSorted) _
@@ -1605,7 +1592,7 @@ Public Class FrmAsientos
         '
         Me.gcMonto.Caption = "Monto"
         Me.gcMonto.FieldName = "Monto"
-        Me.gcMonto.FilterInfo = ColumnFilterInfo5
+        Me.gcMonto.FilterInfo = ColumnFilterInfo10
         Me.gcMonto.Name = "gcMonto"
         Me.gcMonto.Options = CType((((((DevExpress.XtraGrid.Columns.ColumnOptions.CanMoved Or DevExpress.XtraGrid.Columns.ColumnOptions.CanResized) _
             Or DevExpress.XtraGrid.Columns.ColumnOptions.CanSorted) _
@@ -1758,13 +1745,15 @@ Public Class FrmAsientos
             ValoresDefault()
             Me.CrearTabla()
             Me.GridControl2.DataSource = Me.TablaAsiento
-            Me.SimpleButton1.Enabled = False
+            Me.buttonEditarDetalle.Enabled = False
             Me.ToolBarBuscar.Enabled = False
             Me.ToolBarNuevo.Enabled = False
             Me.ToolBarEliminar.Enabled = False
             Me.ToolBarImprimir.Enabled = False
             Me.ToolBarRegistrar.Enabled = False
             Me.ButNuevoDetalle.Enabled = False
+            Me.ToolBarDesmay.Enabled = False
+
             Me.DPTrans.Value = Now
             Me.LblPeriodo.Text = Funcion.BuscaPeriodo(DPTrans.Value)
             txtTipoCambio.Text = Funcion.TipoCambio(DPTrans.Value, True)
@@ -2437,8 +2426,8 @@ Public Class FrmAsientos
                 TipoCambio = CDbl(txtTipoCambio.Text)
             End If
 
-			sql.CommandText = "EXEC [dbo].[SpVentasXFechas2] " & CBMoneda.SelectedValue & ",N'" & DPTrans.Value.Date & "', N'" & DPTrans.Value.Date & "', " & Configuracion.Claves.Configuracion("Sucursal", "1") & "," & TipoCambio
-			cFunciones.Llenar_Tabla_Generico(sql, dt, Configuracion.Claves.Conexion("SEEPOS"))
+            sql.CommandText = "EXEC [dbo].[SpVentasXFechas2] " & CBMoneda.SelectedValue & ",N'" & DPTrans.Value.Date & "', N'" & DPTrans.Value.Date & "', " & Configuracion.Claves.Configuracion("Sucursal", "1") & "," & TipoCambio
+            cFunciones.Llenar_Tabla_Generico(sql, dt, Configuracion.Claves.Conexion("SEEPOS"))
 
             For i As Integer = 0 To dt.Rows.Count - 1
                 SubTotalExcento += CDbl(dt.Rows(i).Item("SubTotalExcento"))
@@ -2604,16 +2593,16 @@ Public Class FrmAsientos
 
             a = Me.BindingContext(TablaAsiento).Position()
 
-            If a = -1 Then
-                SimpleButton1.Enabled = False
+            If a = -1 Or (Not PeriodoValido) Then
+                buttonEditarDetalle.Enabled = False
                 butEliminarDetalle.Enabled = False
                 Exit Sub
             End If
             Me.ButNuevoDetalle.Text = "Nuevo Detalle"
             Me.ButNuevoDetalle.ImageIndex = "2"
-            SimpleButton1.Text = "Editar"
-            SimpleButton1.ImageIndex = "9"
-            SimpleButton1.Enabled = True
+            buttonEditarDetalle.Text = "Editar"
+            buttonEditarDetalle.ImageIndex = "9"
+            buttonEditarDetalle.Enabled = True
             DesActivarDetalles()
             DESBLOQUEAR()
             TxtNumCuenta.Text = TablaAsiento.Rows(a).Item("Cuenta")
@@ -2640,7 +2629,7 @@ Public Class FrmAsientos
             txtNoDocumentoDetalle.Text = TablaAsiento.Rows(a).Item("NoDocumentoDetalle")
             Me.TextBoxTipoCambio.Text = TablaAsiento.Rows(a).Item("Tipocambio")
             Id_Temp = TablaAsiento.Rows(a).Item("ID_Detalle")
-            SimpleButton1.Enabled = True
+            buttonEditarDetalle.Enabled = True
             butEliminarDetalle.Enabled = True
             ButNuevoDetalle.Enabled = True
 
@@ -2756,7 +2745,7 @@ Public Class FrmAsientos
 
     Sub cargarTemporal()
         Try
-            Me.DataSetAsientos1.Clear()
+
             Dim Ruta As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments & "\ConfiguracionesSeesoft\"
             Dim fileExists As Boolean
             fileExists = My.Computer.FileSystem.FileExists(Ruta & "tempAsiento.xml")
@@ -2764,6 +2753,7 @@ Public Class FrmAsientos
                 MsgBox("No hay datos que cargar", MsgBoxStyle.OkOnly)
                 Exit Sub
             End If
+            Me.DataSetAsientos1.Clear()
             Me.DataSetAsientos1.ReadXml(Ruta & "tempAsiento.xml", XmlReadMode.DiffGram)
             Dim tipoDoc As Integer = Me.DataSetAsientos1.AsientosContables.Item(0).TipoDoc
 
@@ -2801,8 +2791,16 @@ Public Class FrmAsientos
         PMU = VSM(usua.Cedula, Me.Name) 'Carga los privilegios del usuario con el modulo
 
         Select Case ToolBar1.Buttons.IndexOf(e.Button)
-            Case 0 : Nuevo()
+            Case 0
 
+                If cFunciones.ExistenPeriodos Then
+                    If cFunciones.PeriodoAbiertoMenuPrincipal Then
+                        Nuevo()
+                        PeriodoValido = True
+                    End If
+                Else
+                    PeriodoValido = False
+                End If
             Case 1 : If PMU.Find Then Buscar() Else MsgBox("No tiene permiso para Buscar información...", MsgBoxStyle.Information, "Atención...") : Exit Sub
 
             Case 2 : If PMU.Update Then Registrar() Else MsgBox("No tiene permiso para agregar o actualizar datos...", MsgBoxStyle.Information, "Atención...") : Exit Sub
@@ -3113,12 +3111,10 @@ Public Class FrmAsientos
 
 #Region "Buscar"
     Private NumAsientoParaEliminar As String = ""
-
-    Private Function Buscar()
+    Dim PeriodoValido As Boolean = False
+    Private Sub Buscar()
         Dim funcion As New cFunciones
         Dim Id As String
-        Dim Identificacion As Integer
-
         Try
             Nuev = False
             LIMPIAR()
@@ -3128,20 +3124,14 @@ Public Class FrmAsientos
             Me.DataSetAsientos1.DetallesAsientosContable.Clear()
             Me.DataSetAsientos1.AsientosContables.Clear()
             TablaAsiento.Clear()
+            DPTrans.MinDate = "01/01/2000"
+            DPTrans.MaxDate = "31/12/2100"
 
-            ' Dim frmBuscar As New Buscar
-            'frmBuscar.sqlstring = "SELECT NumAsiento, Descripcion FROM AsientosContablesBus where (NOT(NumAsiento LIKE 'VAL%')) AND  Periodo = '" & funcion.Periodo & "'"
-            ' frmBuscar.Text = "Buscar Asiento Contable"
-            'frmBuscar.campo = "Descripcion"
-            'frmBuscar.NuevaConexion = SqlConnection2.ConnectionString
-            'frmBuscar.sqlStringAdicional = " ORDER BY NumAsiento DESC"
-            'frmBuscar.ShowDialog()
-            ' Id = frmBuscar.codigo
             Dim frmBuscar As New FrmFindAsientos
             frmBuscar.ShowDialog()
             Id = frmBuscar.Label3.Text
             If Id = Nothing Then ' si se dio en el boton de cancelar
-                Exit Function
+                Exit Sub
             End If
             Me.LlenarAsiento(Id)
             Me.LlenarAsientoDetalle(Id)
@@ -3149,35 +3139,56 @@ Public Class FrmAsientos
             Me.NumAsientoParaEliminar = Id
 
             Me.BuscarTipoDocumento(Id)
-            'mayorizar / desmayorizar
-            Me.ToolBar1.Buttons(5).Enabled = True
+
             Me.ToolBar1.Buttons(5).Text = IIf(Me.CheckBox2.Checked = True, "DesMayorizar", "Mayorizar")
-            'nuevo
-            Me.ToolBar1.Buttons(0).Enabled = True
-            'buscar
-            Me.ToolBar1.Buttons(1).Enabled = True
-            'editar
-            Me.ToolBar1.Buttons(2).Enabled = True
-            Me.btnReporteDetalle.Enabled = True
-            Me.ToolBar1.Buttons(2).Text = "Actualizar"
+            PeriodoValido = False
 
-            'Anular
-            If Me.CheckAnulado.Checked = False Then
-                Me.ToolBar1.Buttons(3).Enabled = True
+            If cFunciones.ExistenPeriodos Then
+                If cFunciones.PeriodoAbiertoMenuPrincipal Then
+                    If cFunciones.FechaValida(DPTrans.Value) Then
+                        PeriodoValido = True
+                    Else
+                        MsgBox("No es posible realizar cambios en el asiento porque el periodo de trabajo ya está cerrado.", MsgBoxStyle.Exclamation, "¡Atención!")
+                    End If
+                End If
+            End If
+            If PeriodoValido Then
+                Me.ToolBar1.Buttons(5).Enabled = True
+                'nuevo
+                Me.ToolBar1.Buttons(0).Enabled = True
+                'buscar
+                Me.ToolBar1.Buttons(1).Enabled = True
+                'editar
+                Me.ToolBar1.Buttons(2).Enabled = True
+                Me.btnReporteDetalle.Enabled = True
+                Me.ToolBar1.Buttons(2).Text = "Actualizar"
+
+                'Anular
+                If Me.CheckAnulado.Checked = False Then
+                    Me.ToolBar1.Buttons(3).Enabled = True
+                Else
+                    Me.ToolBar1.Buttons(3).Enabled = False
+                End If
+                ActivarEncabezado()
+                'eliminar
+                Me.ToolBar1.Buttons(4).Enabled = True
+                'Imprimir
+                Me.ToolBar1.Buttons(5).Enabled = True
+                Me.TextBox1.Focus()
+                'Cerrar
+                If CheckBox2.CheckState = CheckState.Unchecked Then
+                    Me.GridControl2.Enabled = True
+                End If
             Else
-                Me.ToolBar1.Buttons(3).Enabled = False
-            End If
-            ActivarEncabezado()
-            'eliminar
-            Me.ToolBar1.Buttons(4).Enabled = True
-            'Imprimir
-            Me.ToolBar1.Buttons(5).Enabled = True
-            Me.TextBox1.Focus()
-            'Cerrar
-            If CheckBox2.CheckState = CheckState.Unchecked Then
-                Me.GridControl2.Enabled = True
+                DesActivarEncabezado()
+                ToolBarImprimir.Enabled = True
+                ToolBarDesmay.Enabled = False
+                ToolBarCargar.Enabled = False
+                ToolBarEliminar.Enabled = False
+
 
             End If
+
             Dim PMU As New PerfilModulo_Class   'Declara la variable Perfil Modulo Usuario
             PMU = VSM(usua.Cedula, Me.Name) 'Carga los privilegios del usuario con el modulo
             editaAutomaticos = PMU.Others
@@ -3190,7 +3201,7 @@ Public Class FrmAsientos
         Catch ex As SystemException
             MsgBox(ex.Message)
         End Try
-    End Function
+    End Sub
 
     Public Sub Buscar(ByVal id As String)
         Dim funcion As New cFunciones
@@ -3470,12 +3481,10 @@ Public Class FrmAsientos
                 MsgBox("El Asiento Debe Estar Balanceado", MsgBoxStyle.Information, "Sistema SeeSoft")
                 Exit Sub
             End If
-
-
             '-------------------------------------------------------------------------------
             'VALIDA EL PERIODO DE TRABAJO
-            If Fx.ValidarPeriodo(DPTrans.Value) = False Then
-                MsgBox("La Fecha del Asiento No Corresponde al Periodo de Trabajo! O el Periodo esta Cerrado!" & vbCrLf & "No se puede Guardar el Asiento", MsgBoxStyle.Information, "Sistema SeeSoft")
+            If Not cFunciones.FechaValida(DPTrans.Value) Then
+                MsgBox("No es posible registrar el cambio en el asiento, porque la fecha seleccionada se encuentra en un periodo de trabajo cerrado. Seleccione una fecha válida.", MsgBoxStyle.Exclamation, "¡Atención!")
                 Exit Sub
             End If
             '-------------------------------------------------------------------------------
@@ -3695,12 +3704,12 @@ Public Class FrmAsientos
         Next
         For Each line As DataSetAsientos.DetallesAsientosContableRow In DataSetAsientos1.DetallesAsientosContable
             If Not line.RowState = DataRowState.Deleted Then
-				If line.NoDocumentoDetalle Is DBNull.Value Then
-					line.NoDocumentoDetalle = ""
+                If line.NoDocumentoDetalle Is DBNull.Value Then
+                    line.NoDocumentoDetalle = ""
 
-				End If
+                End If
 
-			End If
+            End If
 
         Next
     End Sub
@@ -3731,7 +3740,14 @@ Public Class FrmAsientos
             ButAgregarDetalle.Enabled = False
             Me.TxtDocumento.Focus()
             TablaAsiento.Clear()
-
+            If cFunciones.ExistenPeriodos Then
+                If cFunciones.PeriodoAbiertoMenuPrincipal Then
+                    ToolBar1.Buttons(0).Enabled = True
+                    DPTrans.MinDate = cFunciones.FechaMin
+                    DPTrans.MaxDate = cFunciones.FechaMax
+                    PeriodoValido = True
+                End If
+            End If
             Nuev = True
         Else
             Nuev = False
@@ -3766,12 +3782,12 @@ Public Class FrmAsientos
             Me.BindingContext(Me.DataSetAsientos1, "AsientosContables").EndCurrentEdit()
             Me.LblConsecutivo.Text = consecutivo
             Me.TxtNumCuenta.Focus()
-            SimpleButton1.Enabled = False
+            buttonEditarDetalle.Enabled = False
             butEliminarDetalle.Enabled = False
-            SimpleButton1.Text = "Editar"
+            buttonEditarDetalle.Text = "Editar"
             Me.btnVerCentroC.Enabled = False
 
-            SimpleButton1.ImageIndex = "9"
+            buttonEditarDetalle.ImageIndex = "9"
             Mascaras()
             TxtNumCuenta.Enabled = True
 
@@ -3781,7 +3797,7 @@ Public Class FrmAsientos
             Me.BindingContext(DataSetAsientos1, "DetallesAsientosContable").CancelCurrentEdit()
             Me.ButNuevoDetalle.Text = "Nuevo Detalle"
             Me.ButNuevoDetalle.ImageIndex = "2"
-            SimpleButton1.Enabled = False
+            buttonEditarDetalle.Enabled = False
             butEliminarDetalle.Enabled = False
             TxtNumCuenta.Enabled = False
         End If
@@ -4070,19 +4086,19 @@ Public Class FrmAsientos
             End If
             If CheckBox2.CheckState = CheckState.Unchecked Then
                 ActivarDetalles()
-                If SimpleButton1.Text = "Editar" Then
-                    SimpleButton1.Text = "Actualizar"
+                If buttonEditarDetalle.Text = "Editar" Then
+                    buttonEditarDetalle.Text = "Actualizar"
                     Me.btnVerCentroC.Enabled = True
-                    SimpleButton1.ImageIndex = "2"
+                    buttonEditarDetalle.ImageIndex = "2"
                     Me.ButAgregarDetalle.Enabled = False
                     ActivarDetalle(True)
                 Else
                     Me.ButAgregarDetalle.Enabled = False
-                    SimpleButton1.Text = "Editar"
+                    buttonEditarDetalle.Text = "Editar"
                     Me.btnVerCentroC.Enabled = False
-                    SimpleButton1.ImageIndex = "9"
+                    buttonEditarDetalle.ImageIndex = "9"
                     Actualiza()
-                    SimpleButton1.Enabled = False
+                    buttonEditarDetalle.Enabled = False
                     butEliminarDetalle.Enabled = False
                     CalculaDiferencia()
                     Me.TxtDiferencia.Text = Format(Me.TxtTotalHaber.Text - Me.TxtTotalDebe.Text, "#,#0.00")
@@ -4099,7 +4115,7 @@ Public Class FrmAsientos
             MsgBox(ex.Message)
         End Try
     End Sub
-    Private Sub SimpleButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SimpleButton1.Click
+    Private Sub SimpleButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles buttonEditarDetalle.Click
         Me.EditarDetalle()
     End Sub
 
@@ -4180,7 +4196,7 @@ Public Class FrmAsientos
                     MsgBox(ex.ToString)
 
                 End Try
-                SimpleButton1.Enabled = False
+                buttonEditarDetalle.Enabled = False
                 butEliminarDetalle.Enabled = False
                 CalculaDiferencia()
                 Me.TxtDiferencia.Text = Format(Me.TxtTotalHaber.Text - Me.TxtTotalDebe.Text, "#,#0.00")

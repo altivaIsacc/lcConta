@@ -1,8 +1,139 @@
-Imports System.Data.SqlClient
+ï»¿Imports System.Data.SqlClient
 Imports CrystalDecisions.CrystalReports.Engine
 Public Class cFunciones
     Public Shared Descripcion As String
     Public Shared Fechaemp As Integer
+    Public Shared Function ValidarPeriodoAbierto() As Boolean  'VALIDA LA EXISTENCIA DE PERIODOS ABIERTOS EN EL SISTEMA'
+        Dim cConexion As New Conexion
+        Dim sqlConexion As New SqlConnection
+        Dim rs As SqlDataReader
+        Try
+            ValidarPeriodoAbierto = False
+            rs = cConexion.GetRecorset(cConexion.Conectar("Contabilidad"), "SELECT Estado, Cerrado FROM Periodo WHERE Estado = 0 AND Cerrado = 0")
+            While rs.Read
+                If rs("Estado") = False And rs("Cerrado") = False Then
+                    ValidarPeriodoAbierto = True
+                End If
+            End While
+            rs.Close()
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Information, "Comunique el siguiente error a su Empresa Proveedora de Software")
+        Finally
+            cConexion.DesConectar(sqlConexion)
+        End Try
+    End Function
+
+    Public Shared Function PeriodoAbiertoMenuPrincipal() As Boolean 'SE MUESTRA SI NO HAY PERIODOS ABIERTOS'
+
+        If ValidarPeriodoAbierto() Then
+            PeriodoAbiertoMenuPrincipal = True
+        Else
+            MsgBox("No existen periodos de trabajo abiertos. Para ingresar un nuevo periodo, se debe dirigir al menï¿½ principal de contabilidad y seguir la ruta: Operaciones -> Periodo de Trabajo.", MsgBoxStyle.Exclamation, "ï¿½Atenciï¿½n!")
+            PeriodoAbiertoMenuPrincipal = False
+        End If
+    End Function
+    Public Shared Function ExistenPeriodos() As Boolean 'SI HAY ALGUN PERIODO REGISTRADO
+
+        If ValidarExistePeriodo() Then
+            ExistenPeriodos = True
+        Else
+            MsgBox("No existen periodos de trabajo. Para ingresar un nuevo periodo, se debe dirigir al menï¿½ principal de contabilidad y seguir la ruta: Operaciones -> Periodo de Trabajo.", MsgBoxStyle.Exclamation, "ï¿½Atenciï¿½n!")
+            ExistenPeriodos = False
+        End If
+    End Function
+    Public Shared Function ValidarExistePeriodo() As Boolean
+        Dim cConexion As New Conexion                   'VALIDA SI EXISTE UN PERIODO
+        Dim sqlConexion As New SqlConnection
+        Dim rs As SqlDataReader
+
+        Try
+            ValidarExistePeriodo = False
+            'CANTIDAD DE PERIODOS
+            rs = cConexion.GetRecorset(cConexion.Conectar("Contabilidad"), "SELECT TOP 1 Id_Periodo FROM Periodo")
+
+            While rs.Read
+                If rs("Id_Periodo") > 0 Then
+                    ValidarExistePeriodo = True     'SI EXISTE AL MENOS UN PERIODO CREADO
+                Else
+                    MsgBox("No existen periodos de trabajo registrados. Para crear un nuevo periodo, se debe dirigir al menï¿½ principal de contabilidad y seguir la ruta: Operaciones -> Periodo de Trabajo. ", MsgBoxStyle.Exclamation, "Atenciï¿½n...")
+                End If
+            End While
+            rs.Close()
+
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Information, "Comunique el siguiente error a su Empresa Proveedora de Software")
+        Finally
+            cConexion.DesConectar(sqlConexion)
+        End Try
+    End Function
+    Public Shared Function FechaValida(ByVal Fecha As DateTime) As Boolean
+        Dim dt As New DataTable
+        Dim cmd As New SqlCommand
+        cmd.CommandText = "SELECT [dbo].[ValidarFecha] (@Fecha) AS Puede "
+        cmd.Parameters.AddWithValue("@Fecha", Fecha)
+        Llenar_Tabla_Generico(cmd, dt, GetSetting("SEESOFT", "CONTABILIDAD", "CONEXION"))
+        If dt.Rows.Count > 0 Then
+            Return dt.Rows(0).Item("Puede")
+        End If
+        Return False
+    End Function
+    Public Shared Function FechaMin() As DateTime
+        Dim cConexion As New Conexion
+        Dim sqlConexion As New SqlConnection
+        Dim rs As SqlDataReader
+        Dim FechaMinActual As DateTime = Now.Date
+        Try
+            rs = cConexion.GetRecorset(cConexion.Conectar("Contabilidad"), "SELECT Mes, Anno FROM Periodo WHERE Estado=0 AND Cerrado = 0")
+            While rs.Read
+                Dim FechaMinimaPeriodo As DateTime
+                Dim Mes As Integer = rs("Mes")
+                Dim AÃ±o As Integer = rs("Anno")
+                FechaMinimaPeriodo = "1/" & Mes & "/" & AÃ±o
+                If FechaValida(FechaMinimaPeriodo) Then
+                    If FechaMinimaPeriodo < FechaMinActual Then
+                        FechaMinActual = FechaMinimaPeriodo
+                    End If
+                End If
+            End While
+            rs.Close()
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Information, "Comunique el siguiente error a su Empresa Proveedora de Software")
+        Finally
+            cConexion.DesConectar(sqlConexion)
+        End Try
+        Return FechaMinActual
+    End Function
+
+    Public Shared Function FechaMax() As DateTime
+        Dim cConexion As New Conexion
+        Dim sqlConexion As New SqlConnection
+        Dim rs As SqlDataReader
+        Dim FechaMaxActual As DateTime = "01/01/2000"
+        Try
+            rs = cConexion.GetRecorset(cConexion.Conectar("Contabilidad"), "SELECT Mes, Anno FROM Periodo WHERE Estado=0 AND Cerrado = 0")
+            While rs.Read
+                Dim FechaMaxPeriodo As DateTime
+                Dim Mes As Integer = rs("Mes")
+                Dim AÃ±o As Integer = rs("Anno")
+                FechaMaxPeriodo = "1/" & Mes & "/" & AÃ±o '01/10/2020
+                FechaMaxPeriodo = FechaMaxPeriodo.AddMonths(1) '01/11/2020
+                FechaMaxPeriodo = FechaMaxPeriodo.AddDays(-1) '31/10/2020
+                If FechaValida(FechaMaxPeriodo) Then
+                    If FechaMaxPeriodo > FechaMaxActual Then
+                        FechaMaxActual = FechaMaxPeriodo
+                    End If
+                End If
+            End While
+            rs.Close()
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Information, "Comunique el siguiente error a su Empresa Proveedora de Software")
+        Finally
+            cConexion.DesConectar(sqlConexion)
+        End Try
+        Return FechaMaxActual
+    End Function
+
+
     Public Function DamePeriodoFiscal(ByVal Fecha As DateTime) As Integer
         Dim cConexion As New Conexion                   'VALIDA SI ESTA EN EL MISMO PERIODO FISCAL
         Dim sqlConexion As New SqlConnection
@@ -39,12 +170,12 @@ Public Class cFunciones
         Dim Ceros, Length As Integer
 
         Try
-            'BUSCA LOS NUMEROS DE ASIENTOS EXISTENTES PARA EL AÑO Y MES ESTABLECIDOS
+            'BUSCA LOS NUMEROS DE ASIENTOS EXISTENTES PARA EL AÃ‘O Y MES ESTABLECIDOS
             rs = cConexion.GetRecorset(cConexion.Conectar("Contabilidad"), "SELECT NumAsiento from AsientosContables Where NumAsiento Like '" & InicioAsiento & "%'")
 
             While rs.Read
 
-                Numero = rs("NumAsiento").Substring(9)  'SELECCIONA SOLO EL NUMERO DE CONSECUTIVO DEL ASIENTO SIN EL AÑO Y MES
+                Numero = rs("NumAsiento").Substring(9)  'SELECCIONA SOLO EL NUMERO DE CONSECUTIVO DEL ASIENTO SIN EL AÃ‘O Y MES
                 If CInt(Max) < CInt(Numero) Then        'VERIFICA SI EL NUMERO QUE ESTA LEYENDO ES EL MAYOR
                     Max = (Numero)                       'DE SER MAYOR SE LO ASIGNA AL NUMERO MAX
                 End If
@@ -97,7 +228,7 @@ Public Class cFunciones
             MsgBox(ex.Message, MsgBoxStyle.Critical, "Alerta..") ' Si hay error, devolvemos un valor nulo.
             Exit Sub
         Finally
-            If Not ConexionX Is Nothing Then ' Por si se produce un error comprobamos si en realidad el objeto Connection está iniciado de ser así, lo cerramos.
+            If Not ConexionX Is Nothing Then ' Por si se produce un error comprobamos si en realidad el objeto Connection estÃ¡ iniciado de ser asÃ­, lo cerramos.
                 ConexionX.Close()
             End If
         End Try
@@ -150,7 +281,7 @@ Public Class cFunciones
     End Function
 
     Public Function Buscar_X_Descripcion_Fecha5C(ByVal SQLString As String, ByVal CampoFiltro As String, ByVal CampoFechaFiltro As String, Optional ByVal NombreBuscador As String = "Buscar...") As String
-        'BUSCADOR DISEÑADO PARA CINCO COLUMNAS
+        'BUSCADOR DISEÃ‘ADO PARA CINCO COLUMNAS
         Dim frmBuscar As New FrmBuscador5C
         Dim codigo As String
         frmBuscar.SQLString = SQLString
@@ -166,7 +297,7 @@ Public Class cFunciones
     End Function
 
 
-    'Esta Función Calcula el saldo de la factura
+    'Esta FunciÃ³n Calcula el saldo de la factura
     Public Function Saldo_de_Factura(ByVal FacturaNo As Double, ByVal MontoFactura As Double, ByVal TipoCambFact As Double, ByVal TipoCambRecibo As Double) As Double
         Dim cConexion As New Conexion
         Dim sqlConexion As New SqlConnection
@@ -246,7 +377,7 @@ Public Class cFunciones
         Dim dt As New DataTable
         ' Dentro de un Try/Catch por si se produce un error
         Try
-            ' Obtenemos la cadena de conexión adecuada
+            ' Obtenemos la cadena de conexiÃ³n adecuada
             Dim sConn As String = Configuracion.Claves.Conexion("SeePos")
             cnn = New SqlConnection(sConn)
             cnn.Open()
@@ -259,10 +390,10 @@ Public Class cFunciones
             cmd.Connection = cnn
             cmd.CommandType = CommandType.Text
             cmd.CommandTimeout = 90
-            ' Los parámetros usados en la cadena de la consulta 
+            ' Los parÃ¡metros usados en la cadena de la consulta 
             cmd.Parameters.Add(New SqlParameter("@Codigo", SqlDbType.Int))
             cmd.Parameters("@Codigo").Value = CodigoCliente
-            ' Creamos el dataAdapter y asignamos el comando de selección
+            ' Creamos el dataAdapter y asignamos el comando de selecciÃ³n
             Dim da As New SqlDataAdapter
             da.SelectCommand = cmd
             ' Llenamos la tabla
@@ -275,8 +406,8 @@ Public Class cFunciones
             Return Nothing
         Finally
             ' Por si se produce un error,
-            ' comprobamos si en realidad el objeto Connection está iniciado,
-            ' de ser así, lo cerramos.
+            ' comprobamos si en realidad el objeto Connection estÃ¡ iniciado,
+            ' de ser asÃ­, lo cerramos.
             If Not cnn Is Nothing Then
                 cnn.Close()
             End If
@@ -290,7 +421,7 @@ Public Class cFunciones
         Dim dt As New DataTable
         ' Dentro de un Try/Catch por si se produce un error
         Try
-            ' Obtenemos la cadena de conexión adecuada
+            ' Obtenemos la cadena de conexiÃ³n adecuada
             Dim sConn As String = Configuracion.Claves.Conexion("Contabilidad")
 
             cnn = New SqlConnection(sConn)
@@ -303,13 +434,13 @@ Public Class cFunciones
             cmd.Connection = cnn
             cmd.CommandType = CommandType.Text
             cmd.CommandTimeout = 90
-            ' Los parámetros usados en la cadena de la consulta 
+            ' Los parÃ¡metros usados en la cadena de la consulta 
             cmd.Parameters.Add(New SqlParameter("@CUENTA_CONTABLE", SqlDbType.VarChar))
             cmd.Parameters("@CUENTA_CONTABLE").Value = CuentaContable
 
             cmd.Parameters.Add(New SqlParameter("@txtId_PeridoFiscal", SqlDbType.Int))
             cmd.Parameters("@txtId_PeridoFiscal").Value = DttxtId_PeridoFiscal
-            ' Creamos el dataAdapter y asignamos el comando de selección
+            ' Creamos el dataAdapter y asignamos el comando de selecciÃ³n
             Dim da As New SqlDataAdapter
             da.SelectCommand = cmd
             ' Llenamos la tabla
@@ -322,8 +453,8 @@ Public Class cFunciones
             Return Nothing
         Finally
             ' Por si se produce un error,
-            ' comprobamos si en realidad el objeto Connection está iniciado,
-            ' de ser así, lo cerramos.
+            ' comprobamos si en realidad el objeto Connection estÃ¡ iniciado,
+            ' de ser asÃ­, lo cerramos.
             If Not cnn Is Nothing Then
                 cnn.Close()
             End If
@@ -338,7 +469,7 @@ Public Class cFunciones
         Dim DescripcionCuentaContable As String
         ' Dentro de un Try/Catch por si se produce un error
         Try
-            ' Obtenemos la cadena de conexión adecuada
+            ' Obtenemos la cadena de conexiÃ³n adecuada
             Dim sConn As String = Configuracion.Claves.Conexion("Contabilidad")
 
             cnn = New SqlConnection(sConn)
@@ -352,13 +483,13 @@ Public Class cFunciones
             cmd.Connection = cnn
             cmd.CommandType = CommandType.Text
             cmd.CommandTimeout = 90
-            ' Los parámetros usados en la cadena de la consulta 
+            ' Los parÃ¡metros usados en la cadena de la consulta 
             'cmd.Parameters.Add(New SqlParameter("@CUENTA_CONTABLE", SqlDbType.VarChar))
             'cmd.Parameters("@CUENTA_CONTABLE").Value = CuentaContable
 
             'cmd.Parameters.Add(New SqlParameter("@txtId_PeridoFiscal", SqlDbType.Int))
             'cmd.Parameters("@txtId_PeridoFiscal").Value = DttxtId_PeridoFiscal
-            ' Creamos el dataAdapter y asignamos el comando de selección
+            ' Creamos el dataAdapter y asignamos el comando de selecciÃ³n
             Dim da As New SqlDataAdapter
             da.SelectCommand = cmd
             ' Llenamos la tabla
@@ -376,8 +507,8 @@ Public Class cFunciones
             Return Nothing
         Finally
             ' Por si se produce un error,
-            ' comprobamos si en realidad el objeto Connection está iniciado,
-            ' de ser así, lo cerramos.
+            ' comprobamos si en realidad el objeto Connection estÃ¡ iniciado,
+            ' de ser asÃ­, lo cerramos.
             If Not cnn Is Nothing Then
                 cnn.Close()
             End If
@@ -393,7 +524,7 @@ Public Class cFunciones
         Dim DescripcionCuentaContable As String
         ' Dentro de un Try/Catch por si se produce un error
         Try
-            ' Obtenemos la cadena de conexión adecuada
+            ' Obtenemos la cadena de conexiÃ³n adecuada
             Dim sConn As String = Configuracion.Claves.Conexion("Contabilidad")
 
             cnn = New SqlConnection(sConn)
@@ -406,13 +537,13 @@ Public Class cFunciones
             cmd.Connection = cnn
             cmd.CommandType = CommandType.Text
             cmd.CommandTimeout = 90
-            ' Los parámetros usados en la cadena de la consulta 
+            ' Los parÃ¡metros usados en la cadena de la consulta 
             'cmd.Parameters.Add(New SqlParameter("@CUENTA_CONTABLE", SqlDbType.VarChar))
             'cmd.Parameters("@CUENTA_CONTABLE").Value = CuentaContable
 
             'cmd.Parameters.Add(New SqlParameter("@txtId_PeridoFiscal", SqlDbType.Int))
             'cmd.Parameters("@txtId_PeridoFiscal").Value = DttxtId_PeridoFiscal
-            ' Creamos el dataAdapter y asignamos el comando de selección
+            ' Creamos el dataAdapter y asignamos el comando de selecciÃ³n
             Dim da As New SqlDataAdapter
             da.SelectCommand = cmd
             ' Llenamos la tabla
@@ -430,8 +561,8 @@ Public Class cFunciones
             Return Nothing
         Finally
             ' Por si se produce un error,
-            ' comprobamos si en realidad el objeto Connection está iniciado,
-            ' de ser así, lo cerramos.
+            ' comprobamos si en realidad el objeto Connection estÃ¡ iniciado,
+            ' de ser asÃ­, lo cerramos.
             If Not cnn Is Nothing Then
                 cnn.Close()
             End If
@@ -452,7 +583,7 @@ Public Class cFunciones
         Dim MontoMes As Double = 0
         ' Dentro de un Try/Catch por si se produce un error
         Try
-            ' Obtenemos la cadena de conexión adecuada
+            ' Obtenemos la cadena de conexiÃ³n adecuada
             Dim sConn As String = Configuracion.Claves.Conexion("Contabilidad")
 
             cnn = New SqlConnection(sConn)
@@ -487,8 +618,8 @@ Public Class cFunciones
             Return Nothing
         Finally
             ' Por si se produce un error,
-            ' comprobamos si en realidad el objeto Connection está iniciado,
-            ' de ser así, lo cerramos.
+            ' comprobamos si en realidad el objeto Connection estÃ¡ iniciado,
+            ' de ser asÃ­, lo cerramos.
             If Not cnn Is Nothing Then
                 cnn.Close()
             End If
@@ -509,7 +640,7 @@ Public Class cFunciones
         Dim Estado As String = ""
         ' Dentro de un Try/Catch por si se produce un error
         Try
-            ' Obtenemos la cadena de conexión adecuada
+            ' Obtenemos la cadena de conexiÃ³n adecuada
             Dim sConn As String = Configuracion.Claves.Conexion("Contabilidad")
 
             cnn = New SqlConnection(sConn)
@@ -540,8 +671,8 @@ Public Class cFunciones
             Return Nothing
         Finally
             ' Por si se produce un error,
-            ' comprobamos si en realidad el objeto Connection está iniciado,
-            ' de ser así, lo cerramos.
+            ' comprobamos si en realidad el objeto Connection estÃ¡ iniciado,
+            ' de ser asÃ­, lo cerramos.
             If Not cnn Is Nothing Then
                 cnn.Close()
             End If
@@ -557,7 +688,7 @@ Public Class cFunciones
         Dim dt As New DataTable
         ' Dentro de un Try/Catch por si se produce un error
         Try
-            ' Obtenemos la cadena de conexión adecuada
+            ' Obtenemos la cadena de conexiÃ³n adecuada
             Dim sConn As String = Configuracion.Claves.Conexion("SeePos")
             cnn = New SqlConnection(sConn)
             cnn.Open()
@@ -569,10 +700,10 @@ Public Class cFunciones
             cmd.Connection = cnn
             cmd.CommandType = CommandType.Text
             cmd.CommandTimeout = 90
-            ' Los parámetros usados en la cadena de la consulta 
+            ' Los parÃ¡metros usados en la cadena de la consulta 
             cmd.Parameters.Add(New SqlParameter("@Codigo", SqlDbType.Int))
             cmd.Parameters("@Codigo").Value = CodigoProv
-            ' Creamos el dataAdapter y asignamos el comando de selección
+            ' Creamos el dataAdapter y asignamos el comando de selecciÃ³n
             Dim da As New SqlDataAdapter
             da.SelectCommand = cmd
             ' Llenamos la tabla
@@ -585,8 +716,8 @@ Public Class cFunciones
             Return Nothing
         Finally
             ' Por si se produce un error,
-            ' comprobamos si en realidad el objeto Connection está iniciado,
-            ' de ser así, lo cerramos.
+            ' comprobamos si en realidad el objeto Connection estÃ¡ iniciado,
+            ' de ser asÃ­, lo cerramos.
             If Not cnn Is Nothing Then
                 cnn.Close()
             End If
@@ -614,7 +745,7 @@ Public Class cFunciones
             MsgBox(ex.ToString) ' Si hay error, devolvemos un valor nulo.
             Return Nothing
         Finally
-            If Not ConexionX Is Nothing Then ' Por si se produce un error comprobamos si en realidad el objeto Connection está iniciado de ser así, lo cerramos.
+            If Not ConexionX Is Nothing Then ' Por si se produce un error comprobamos si en realidad el objeto Connection estÃ¡ iniciado de ser asÃ­, lo cerramos.
                 ConexionX.Close()
             End If
         End Try
@@ -642,7 +773,7 @@ Public Class cFunciones
             MsgBox(ex.Message, MsgBoxStyle.Critical, "Alerta..") ' Si hay error, devolvemos un valor nulo.
             Exit Sub
         Finally
-            If Not ConexionX Is Nothing Then ' Por si se produce un error comprobamos si en realidad el objeto Connection está iniciado de ser así, lo cerramos.
+            If Not ConexionX Is Nothing Then ' Por si se produce un error comprobamos si en realidad el objeto Connection estÃ¡ iniciado de ser asÃ­, lo cerramos.
                 ConexionX.Close()
             End If
         End Try
@@ -669,7 +800,7 @@ Public Class cFunciones
             'MsgBox(ex.Message, MsgBoxStyle.Critical, "Alerta..") ' Si hay error, devolvemos un valor nulo.
             Exit Sub
         Finally
-            If Not ConexionX Is Nothing Then ' Por si se produce un error comprobamos si en realidad el objeto Connection está iniciado de ser así, lo cerramos.
+            If Not ConexionX Is Nothing Then ' Por si se produce un error comprobamos si en realidad el objeto Connection estÃ¡ iniciado de ser asÃ­, lo cerramos.
                 ConexionX.Close()
             End If
         End Try
@@ -694,7 +825,7 @@ Public Class cFunciones
             MsgBox(ex.Message, MsgBoxStyle.Critical, "Alerta..") ' Si hay error, devolvemos un valor nulo.
             Exit Sub
         Finally
-            If Not ConexionX Is Nothing Then ' Por si se produce un error comprobamos si en realidad el objeto Connection está iniciado de ser así, lo cerramos.
+            If Not ConexionX Is Nothing Then ' Por si se produce un error comprobamos si en realidad el objeto Connection estÃ¡ iniciado de ser asÃ­, lo cerramos.
                 ConexionX.Close()
             End If
         End Try
@@ -708,12 +839,12 @@ Public Class cFunciones
         Dim Ceros, Length As Integer
 
         Try
-            'BUSCA LOS NUMEROS DE ASIENTOS EXISTENTES PARA EL AÑO Y MES ESTABLECIDOS
+            'BUSCA LOS NUMEROS DE ASIENTOS EXISTENTES PARA EL AÃ‘O Y MES ESTABLECIDOS
             rs = cConexion.GetRecorset(cConexion.Conectar("Contabilidad"), "SELECT NumAsiento from AsientosContables Where NumAsiento Like '" & InicioAsiento & "%'")
 
             While rs.Read
 
-                Numero = rs("NumAsiento").Substring(9)  'SELECCIONA SOLO EL NUMERO DE CONSECUTIVO DEL ASIENTO SIN EL AÑO Y MES
+                Numero = rs("NumAsiento").Substring(9)  'SELECCIONA SOLO EL NUMERO DE CONSECUTIVO DEL ASIENTO SIN EL AÃ‘O Y MES
                 If CInt(Max) < CInt(Numero) Then        'VERIFICA SI EL NUMERO QUE ESTA LEYENDO ES EL MAYOR
                     Max = Numero                        'DE SER MAYOR SE LO ASIGNA AL NUMERO MAX
                 End If
@@ -754,11 +885,11 @@ Public Class cFunciones
 
         Try
             ValidarPeriodo = False
-            'BUSCA EL MES Y EL AÑO DEL PERIODO QUE SE ENCUENTRA ACTIVO
+            'BUSCA EL MES Y EL AÃ‘O DEL PERIODO QUE SE ENCUENTRA ACTIVO
             rs = cConexion.GetRecorset(cConexion.Conectar("Contabilidad"), "SELECT Mes, Anno, Estado FROM Periodo where Estado = 0 and Cerrado=0")
 
             While rs.Read
-                If Fecha.Year = rs("Anno") Then     'VERIFICA SI ESTA EN EL MISMO AÑO
+                If Fecha.Year = rs("Anno") Then     'VERIFICA SI ESTA EN EL MISMO AÃ‘O
                     If Fecha.Month = rs("Mes") Then 'VERIFICA SI ESTA EN EL MISMO MES
                         ValidarPeriodo = True       'EN CASO DE QUE SEA EL MISMO PERIODO
                     End If
@@ -780,7 +911,7 @@ Public Class cFunciones
         Dim rs As SqlDataReader
 
         Try
-            'BUSCA EL MES Y EL AÑO DEL PERIODO QUE SE ENCUENTRA ACTIVO
+            'BUSCA EL MES Y EL AÃ‘O DEL PERIODO QUE SE ENCUENTRA ACTIVO
             rs = cConexion.GetRecorset(cConexion.Conectar("Contabilidad"), "SELECT Periodo FROM Periodo WHERE Activo = 1")
 
             While rs.Read
@@ -866,7 +997,7 @@ Public Class cFunciones
 
 
     Public Function BuscaPeriodo(ByVal Fecha As DateTime) As String
-        Dim cConexion As New Conexion                   'BUSCA EL PERIODO DE LA TRANSACCIÓN DE ACUERDO AL PERIODO FISCAL
+        Dim cConexion As New Conexion                   'BUSCA EL PERIODO DE LA TRANSACCIÃ“N DE ACUERDO AL PERIODO FISCAL
         Dim sqlConexion As New SqlConnection
         Dim rs As SqlDataReader
         Dim Inicio, Final As DateTime
@@ -910,11 +1041,11 @@ Public Class cFunciones
 
         Try
             ValidarPeriodoAsientoValuacion = False
-            'BUSCA EL MES Y EL AÑO DEL PERIODO QUE SE ENCUENTRA ACTIVO
+            'BUSCA EL MES Y EL AÃ‘O DEL PERIODO QUE SE ENCUENTRA ACTIVO
             rs = cConexion.GetRecorset(cConexion.Conectar("Contabilidad"), "SELECT Mes, Anno, Estado FROM Periodo where Activo = 1 and Cerrado=0")
 
             While rs.Read
-                If Fecha.Year = rs("Anno") Then     'VERIFICA SI ESTA EN EL MISMO AÑO
+                If Fecha.Year = rs("Anno") Then     'VERIFICA SI ESTA EN EL MISMO AÃ‘O
                     If Fecha.Month = rs("Mes") Then 'VERIFICA SI ESTA EN EL MISMO MES
                         ValidarPeriodoAsientoValuacion = True       'EN CASO DE QUE SEA EL MISMO PERIODO
                     End If
