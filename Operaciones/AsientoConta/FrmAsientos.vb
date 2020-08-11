@@ -20,17 +20,18 @@ Public Class FrmAsientos
     Friend WithEvents txtNoDocumentoDetalle As TextBox
     Friend WithEvents Label25 As Label
     Public NumAsiento As String = ""
+    Dim Class_cFunciones As New cFunciones
 #End Region
 
-#Region " Código generado por el Diseñador de Windows Forms "
+#Region " Cï¿½digo generado por el Diseï¿½ador de Windows Forms "
 
     Public Sub New(ByVal Usuario_Parametro As Object)
         MyBase.New()
 
-        'El Diseñador de Windows Forms requiere esta llamada.
+        'El Diseï¿½ador de Windows Forms requiere esta llamada.
         InitializeComponent()
         usua = Usuario_Parametro
-        'Agregar cualquier inicialización después de la llamada a InitializeComponent()
+        'Agregar cualquier inicializaciï¿½n despuï¿½s de la llamada a InitializeComponent()
 
     End Sub
 
@@ -44,12 +45,12 @@ Public Class FrmAsientos
         MyBase.Dispose(disposing)
     End Sub
 
-    'Requerido por el Diseñador de Windows Forms
+    'Requerido por el Diseï¿½ador de Windows Forms
     Private components As System.ComponentModel.IContainer
 
-    'NOTA: el Diseñador de Windows Forms requiere el siguiente procedimiento
-    'Puede modificarse utilizando el Diseñador de Windows Forms. 
-    'No lo modifique con el editor de código.
+    'NOTA: el Diseï¿½ador de Windows Forms requiere el siguiente procedimiento
+    'Puede modificarse utilizando el Diseï¿½ador de Windows Forms. 
+    'No lo modifique con el editor de cï¿½digo.
     Friend WithEvents LblPeriodo As System.Windows.Forms.Label
     Friend WithEvents TxtObservaciones As System.Windows.Forms.TextBox
     Friend WithEvents Label20 As System.Windows.Forms.Label
@@ -156,7 +157,7 @@ Public Class FrmAsientos
     Friend WithEvents gcNombreCuenta As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents gcMonto As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents Label24 As System.Windows.Forms.Label
-    Friend WithEvents txtDescripción As System.Windows.Forms.TextBox
+    Friend WithEvents txtDescripciï¿½n As System.Windows.Forms.TextBox
     Friend WithEvents btnVerCentroC As System.Windows.Forms.Button
     Friend WithEvents btnQuitar As System.Windows.Forms.Button
     Friend WithEvents btnCerrar As System.Windows.Forms.Button
@@ -288,7 +289,7 @@ Public Class FrmAsientos
         Me.Label12 = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.btnCerrar = New System.Windows.Forms.Button()
-        Me.txtDescripción = New System.Windows.Forms.TextBox()
+        Me.txtDescripciï¿½n = New System.Windows.Forms.TextBox()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.grControl = New DevExpress.XtraGrid.GridControl()
         Me.grdVCCosto = New DevExpress.XtraGrid.Views.Grid.GridView()
@@ -469,7 +470,7 @@ Public Class FrmAsientos
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(122, 14)
         Me.Label19.TabIndex = 21
-        Me.Label19.Text = "Mayorización #"
+        Me.Label19.Text = "Mayorizaciï¿½n #"
         Me.Label19.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
         'TxtDocumento
@@ -548,7 +549,7 @@ Public Class FrmAsientos
         Me.Label20.Name = "Label20"
         Me.Label20.Size = New System.Drawing.Size(85, 14)
         Me.Label20.TabIndex = 11
-        Me.Label20.Text = "Período"
+        Me.Label20.Text = "Perï¿½odo"
         Me.Label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label21
@@ -925,7 +926,7 @@ Public Class FrmAsientos
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(452, 14)
         Me.Label17.TabIndex = 4
-        Me.Label17.Text = "Descripción del Asiento"
+        Me.Label17.Text = "Descripciï¿½n del Asiento"
         Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label18
@@ -1187,7 +1188,7 @@ Public Class FrmAsientos
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(256, 14)
         Me.Label5.TabIndex = 85
-        Me.Label5.Text = "Total Debe¢                Total Haber¢"
+        Me.Label5.Text = "Total Debeï¿½                Total Haberï¿½"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'GridControl2
@@ -1238,7 +1239,7 @@ Public Class FrmAsientos
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(80, 14)
         Me.Label3.TabIndex = 90
-        Me.Label3.Text = "Dif ¢"
+        Me.Label3.Text = "Dif ï¿½"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'TxtEstado
@@ -1467,7 +1468,7 @@ Public Class FrmAsientos
         'GroupBox1
         '
         Me.GroupBox1.Controls.Add(Me.btnCerrar)
-        Me.GroupBox1.Controls.Add(Me.txtDescripción)
+        Me.GroupBox1.Controls.Add(Me.txtDescripciï¿½n)
         Me.GroupBox1.Controls.Add(Me.Label24)
         Me.GroupBox1.Controls.Add(Me.grControl)
         Me.GroupBox1.Controls.Add(Me.btnQuitar)
@@ -1494,14 +1495,14 @@ Public Class FrmAsientos
         Me.btnCerrar.Text = "Terminar"
         Me.btnCerrar.UseVisualStyleBackColor = False
         '
-        'txtDescripción
+        'txtDescripciï¿½n
         '
-        Me.txtDescripción.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.txtDescripciï¿½n.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtDescripción.Location = New System.Drawing.Point(128, 40)
-        Me.txtDescripción.Name = "txtDescripción"
-        Me.txtDescripción.Size = New System.Drawing.Size(184, 20)
-        Me.txtDescripción.TabIndex = 6
+        Me.txtDescripciï¿½n.Location = New System.Drawing.Point(128, 40)
+        Me.txtDescripciï¿½n.Name = "txtDescripciï¿½n"
+        Me.txtDescripciï¿½n.Size = New System.Drawing.Size(184, 20)
+        Me.txtDescripciï¿½n.TabIndex = 6
         '
         'Label24
         '
@@ -1509,7 +1510,7 @@ Public Class FrmAsientos
         Me.Label24.Name = "Label24"
         Me.Label24.Size = New System.Drawing.Size(104, 24)
         Me.Label24.TabIndex = 5
-        Me.Label24.Text = "Descripción"
+        Me.Label24.Text = "Descripciï¿½n"
         '
         'grControl
         '
@@ -1538,7 +1539,7 @@ Public Class FrmAsientos
         '
         'gcCodigo
         '
-        Me.gcCodigo.Caption = "Código"
+        Me.gcCodigo.Caption = "Cï¿½digo"
         Me.gcCodigo.FieldName = "Codigo"
         Me.gcCodigo.FilterInfo = ColumnFilterInfo6
         Me.gcCodigo.Name = "gcCodigo"
@@ -1577,7 +1578,7 @@ Public Class FrmAsientos
         '
         'gcNombreCuenta
         '
-        Me.gcNombreCuenta.Caption = "Descripción"
+        Me.gcNombreCuenta.Caption = "Descripciï¿½n"
         Me.gcNombreCuenta.FieldName = "NombreC"
         Me.gcNombreCuenta.FilterInfo = ColumnFilterInfo9
         Me.gcNombreCuenta.Name = "gcNombreCuenta"
@@ -1704,7 +1705,7 @@ Public Class FrmAsientos
         Me.MinimumSize = New System.Drawing.Size(917, 612)
         Me.Name = "FrmAsientos"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Módulo Asientos Contables..."
+        Me.Text = "Mï¿½dulo Asientos Contables..."
         Me.FrameEncabezado.ResumeLayout(False)
         Me.FrameEncabezado.PerformLayout()
         CType(Me.DataSetAsientos1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1780,7 +1781,11 @@ Public Class FrmAsientos
                     TextBox1.Text = usua.Nombre
                     TxtUsuario.Enabled = False
                     TextBox1.Enabled = False
-                    ToolBar1.Buttons(0).Enabled = True
+                    If cFunciones.ExistenPeriodos Then
+                        If cFunciones.PeriodoAbiertoMenuPrincipal Then
+                            ToolBar1.Buttons(0).Enabled = True
+                        End If
+                    End If
                     ToolBar1.Buttons(1).Enabled = True
                 Else
                     TxtUsuario.Focus()
@@ -1943,7 +1948,7 @@ Public Class FrmAsientos
         Me.CrearColumnas("Haber", "Haber", 100, 4, "Haber", True, False, False)
         Me.TablaAsiento.Columns.Add(New DataColumn("Haber", GetType(Double)))
 
-        Me.CrearColumnas("Descripcion", "Descripción", 270, 5, "Descripcion", False, False, False)
+        Me.CrearColumnas("Descripcion", "Descripciï¿½n", 270, 5, "Descripcion", False, False, False)
         Me.TablaAsiento.Columns.Add(New DataColumn("Descripcion", GetType(String)))
 
         Me.CrearColumnas("NoDocumentoDetalle", "Documento", 100, 6, "NoDocumentoDetalle", False, False, False)
@@ -1952,11 +1957,11 @@ Public Class FrmAsientos
         Me.CrearColumnas("Tipocambio", "Tipo Cambio", 80, 7, "Tipocambio", True, False, False)
         Me.TablaAsiento.Columns.Add(New DataColumn("Tipocambio", GetType(Double)))
         If CBMoneda.SelectedValue = 3 Then
-            Me.CrearColumnas("Debe€", "Debe€", 100, 8, "Debe€", True, False, False)
+            Me.CrearColumnas("Debeï¿½", "Debeï¿½", 100, 8, "Debeï¿½", True, False, False)
             Me.TablaAsiento.Columns.Add(New DataColumn("Debe$", GetType(Double)))
 
-            Me.CrearColumnas("Haber€", "Haber$", 100, 9, "Haber€", True, False, False)
-            Me.TablaAsiento.Columns.Add(New DataColumn("Haber€", GetType(Double)))
+            Me.CrearColumnas("Haberï¿½", "Haber$", 100, 9, "Haberï¿½", True, False, False)
+            Me.TablaAsiento.Columns.Add(New DataColumn("Haberï¿½", GetType(Double)))
 
         Else
             Me.CrearColumnas("Debe$", "Debe$", 100, 8, "Debe$", True, False, False)
@@ -2006,7 +2011,7 @@ Public Class FrmAsientos
             If TxtUsuario.Text <> "" Then
                 rs = cConexion.GetRecorset(Conectando, "SELECT  Nombre from Usuarios where Clave_Interna ='" & TxtUsuario.Text & "'")
                 If rs.HasRows = False Then
-                    MsgBox("Clave Incorrecta....", MsgBoxStyle.Information, "Atención...")
+                    MsgBox("Clave Incorrecta....", MsgBoxStyle.Information, "Atenciï¿½n...")
                     TxtUsuario.Focus()
                     TxtUsuario.Text = ""
                     Return False
@@ -2169,7 +2174,7 @@ Public Class FrmAsientos
         Dim Ruta As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments & "\ConfiguracionesSeesoft\"
 
         If System.IO.File.Exists(Ruta & "tempAsiento.xml") Then
-            Dim r = MsgBox("Hay un archivo de autorecuperación de datos, ¿Desea cargarlo?", MsgBoxStyle.Exclamation + MsgBoxStyle.YesNo)
+            Dim r = MsgBox("Hay un archivo de autorecuperaciï¿½n de datos, ï¿½Desea cargarlo?", MsgBoxStyle.Exclamation + MsgBoxStyle.YesNo)
             If r = MsgBoxResult.Yes Then
                 cargarTemporal()
             Else
@@ -2197,7 +2202,7 @@ Public Class FrmAsientos
                 Me.TextBoxTipoCambio.Focus()
                 'TxtMonto.Text = Format(variable, "#,#0.0000000000000000000000")
             Catch ex As Exception
-                MessageBox.Show("Verifique el formato del monto del asiento", "Atención...", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
+                MessageBox.Show("Verifique el formato del monto del asiento", "Atenciï¿½n...", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
             End Try
         End If
     End Sub
@@ -2215,11 +2220,11 @@ Public Class FrmAsientos
                         Me.LblDescCuenta.Text = Me.BindingContext(Me.DataSetAsientos1, "CuentaContable").Current("Descripcion")
                         Me.TxtDescAsiento.Focus()
                     Else
-                        MsgBox("El Número de Cuenta Ingresado no Puede ser Utilizado Para Esta Operación...Por Favor Verifique", MsgBoxStyle.Exclamation, "Error de Verificación")
+                        MsgBox("El Nï¿½mero de Cuenta Ingresado no Puede ser Utilizado Para Esta Operaciï¿½n...Por Favor Verifique", MsgBoxStyle.Exclamation, "Error de Verificaciï¿½n")
                         Me.TxtNumCuenta.SelectAll()
                     End If
                 Else
-                    MsgBox("Número de Cuenta no Existe...Por Favor Verifique", MsgBoxStyle.Exclamation, "Error de Verificación")
+                    MsgBox("Nï¿½mero de Cuenta no Existe...Por Favor Verifique", MsgBoxStyle.Exclamation, "Error de Verificaciï¿½n")
                     Me.TxtNumCuenta.SelectAll()
                 End If
             End If
@@ -2437,7 +2442,7 @@ Public Class FrmAsientos
                 Credito += CDbl(dt.Rows(i).Item("Credito"))
             Next
 
-            'Buscar Información de Ingresos de Ventas Gravadas
+            'Buscar Informaciï¿½n de Ingresos de Ventas Gravadas
             Dim cIngGra As String = ""
             Dim cDIngGra As String = ""
 
@@ -2448,7 +2453,7 @@ Public Class FrmAsientos
                 cIngGra = dt.Rows(0).Item("CuentaGra")
                 cDIngGra = dt.Rows(0).Item("DescripcionGra")
             End If
-            'Buscar Información de Ingresos de Ventas Excentas
+            'Buscar Informaciï¿½n de Ingresos de Ventas Excentas
             Dim cIngExe As String = ""
             Dim cDIngExe As String = ""
 
@@ -2460,7 +2465,7 @@ Public Class FrmAsientos
                 cDIngExe = dt.Rows(0).Item("DescripcionExe")
             End If
 
-            'Buscar Información de Impuesto de Ventas
+            'Buscar Informaciï¿½n de Impuesto de Ventas
             Dim cIv As String = ""
             Dim cDIv As String = ""
 
@@ -2472,7 +2477,7 @@ Public Class FrmAsientos
                 cDIv = dt.Rows(0).Item("Descripcion")
             End If
 
-            'Buscar Información de Cuentas x Cobrar
+            'Buscar Informaciï¿½n de Cuentas x Cobrar
             Dim cCxC As String = ""
             Dim cDCxC As String = ""
 
@@ -2801,13 +2806,13 @@ Public Class FrmAsientos
                 Else
                     PeriodoValido = False
                 End If
-            Case 1 : If PMU.Find Then Buscar() Else MsgBox("No tiene permiso para Buscar información...", MsgBoxStyle.Information, "Atención...") : Exit Sub
+            Case 1 : If PMU.Find Then Buscar() Else MsgBox("No tiene permiso para Buscar informaciï¿½n...", MsgBoxStyle.Information, "Atenciï¿½n...") : Exit Sub
 
-            Case 2 : If PMU.Update Then Registrar() Else MsgBox("No tiene permiso para agregar o actualizar datos...", MsgBoxStyle.Information, "Atención...") : Exit Sub
+            Case 2 : If PMU.Update Then Registrar() Else MsgBox("No tiene permiso para agregar o actualizar datos...", MsgBoxStyle.Information, "Atenciï¿½n...") : Exit Sub
 
-            Case 3 : If PMU.Delete Then Eliminar() Else MsgBox("No tiene permiso para eliminar o anular datos...", MsgBoxStyle.Information, "Atención...") : Exit Sub
+            Case 3 : If PMU.Delete Then Eliminar() Else MsgBox("No tiene permiso para eliminar o anular datos...", MsgBoxStyle.Information, "Atenciï¿½n...") : Exit Sub
 
-            Case 4 : If PMU.Print Then Imprimir() Else MsgBox("No tiene permiso para imprimir los datos...", MsgBoxStyle.Information, "Atención...") : Exit Sub
+            Case 4 : If PMU.Print Then Imprimir() Else MsgBox("No tiene permiso para imprimir los datos...", MsgBoxStyle.Information, "Atenciï¿½n...") : Exit Sub
 
             Case 7 : cargarTemporal()
 
@@ -2835,7 +2840,7 @@ Public Class FrmAsientos
             Dim Asient As New Asientos
             Dim AsientTB As New AsientosTB
             Dim visor As New frmVisorReportes()
-            If MsgBox("Desea Los Asientos Colón y Dolar", MsgBoxStyle.OkCancel) = MsgBoxResult.Ok Then
+            If MsgBox("Desea Los Asientos Colï¿½n y Dolar", MsgBoxStyle.OkCancel) = MsgBoxResult.Ok Then
                 AsientTB.SetParameterValue(0, LblConsecutivo.Text)
                 CrystalReportsConexion2.LoadReportViewer2(visor.rptViewer, AsientTB, False, Configuracion.Claves.Conexion("Contabilidad"))
             Else
@@ -2845,7 +2850,7 @@ Public Class FrmAsientos
 
             visor.Show()
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "Atención...")
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "Atenciï¿½n...")
         End Try
     End Function
 
@@ -2931,11 +2936,11 @@ Public Class FrmAsientos
 
                 Case Else
 
-                    MsgBox("La opción de ver el detalle es exclusivo para asientos automáticos")
+                    MsgBox("La opciï¿½n de ver el detalle es exclusivo para asientos automï¿½ticos")
 
             End Select
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "Atención...")
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "Atenciï¿½n...")
         End Try
     End Sub
 #End Region
@@ -3036,7 +3041,7 @@ Public Class FrmAsientos
             Case "Ajuste Entrada Inventario"
                 consulta = " UPDATE Proveeduria.dbo.AjusteInventario SET  ContaEntrada = 0 ,AsientoEntrada  = '0' WHERE AsientoEntrada  = '" & nAs & "' "
                 modulo = "SeePOS"
-            Case "Ajuste Inventario de proveeduría" 'ASIENTO BAJADO EN FORMA AGRUPADA
+            Case "Ajuste Inventario de proveedurï¿½a" 'ASIENTO BAJADO EN FORMA AGRUPADA
                 consulta = " UPDATE Proveeduria.dbo.AjusteInventario SET  ContaEntrada = 0 ,AsientoEntrada  = '0' WHERE AsientoEntrada  = '" & nAs & "' "
                 modulo = "SeePOS"
 
@@ -3071,11 +3076,11 @@ Public Class FrmAsientos
         If Me.LblConsecutivo.Text <> "" Then
             If CheckBox2.CheckState = CheckState.Unchecked Then
 
-                If MessageBox.Show(" ¿ Desea Anular Este Asiento ? ", "Atención...", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) = DialogResult.No Then Exit Function
+                If MessageBox.Show(" ï¿½ Desea Anular Este Asiento ? ", "Atenciï¿½n...", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) = DialogResult.No Then Exit Function
                 Resultado = Cconexion.SlqExecute(Cconexion.Conectar, "Update AsientosContables set Anulado = 1  where NumAsiento ='" & Me.LblConsecutivo.Text & "'")
                 sp_desbloquearDocumento()
                 If Resultado = vbNullString Then
-                    MessageBox.Show("El Asiento Fue Anulado", "Atención...", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    MessageBox.Show("El Asiento Fue Anulado", "Atenciï¿½n...", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     Me.DataSetAsientos1.CentroCosto_Movimientos.Clear()
                     Me.DataSetAsientos1.DetallesAsientosContable.Clear()
                     Me.DataSetAsientos1.AsientosContables.Clear()
@@ -3104,7 +3109,7 @@ Public Class FrmAsientos
                 MsgBox("No es Posible anular el asiento  porque ya que esta Mayorizado", MsgBoxStyle.Information)
             End If
         Else
-            MessageBox.Show("No hay Cuenta Que Eliminar ", "Atención...", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBox.Show("No hay Cuenta Que Eliminar ", "Atenciï¿½n...", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
     End Function
 #End Region
@@ -3148,7 +3153,7 @@ Public Class FrmAsientos
                     If cFunciones.FechaValida(DPTrans.Value) Then
                         PeriodoValido = True
                     Else
-                        MsgBox("No es posible realizar cambios en el asiento porque el periodo de trabajo ya está cerrado.", MsgBoxStyle.Exclamation, "¡Atención!")
+                        MsgBox("No es posible realizar cambios en el asiento porque el periodo de trabajo ya estï¿½ cerrado.", MsgBoxStyle.Exclamation, "ï¿½Atenciï¿½n!")
                     End If
                 End If
             End If
@@ -3259,7 +3264,7 @@ Public Class FrmAsientos
         'Dentro de un Try/Catch por si se produce un error
         Try
             '''''''''LLENAR ASIENTO''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-            'Obtenemos la cadena de conexión adecuada
+            'Obtenemos la cadena de conexiï¿½n adecuada
             Dim sConn As String = Configuracion.Claves.Conexion("Contabilidad")
             cnnv = New SqlConnection(sConn)
             cnnv.Open()
@@ -3270,10 +3275,10 @@ Public Class FrmAsientos
             cmdv.Connection = cnnv
             cmdv.CommandType = CommandType.Text
             cmdv.CommandTimeout = 90
-            'Los parámetros usados en la cadena de la consulta 
+            'Los parï¿½metros usados en la cadena de la consulta 
             cmdv.Parameters.Add(New SqlParameter("@Id", SqlDbType.VarChar))
             cmdv.Parameters("@Id").Value = Id
-            'Creamos el dataAdapter y asignamos el comando de selección
+            'Creamos el dataAdapter y asignamos el comando de selecciï¿½n
             Dim dv As New SqlDataAdapter
             dv.SelectCommand = cmdv
             ' Llenamos la tabla
@@ -3289,8 +3294,8 @@ Public Class FrmAsientos
             MsgBox(ex.ToString)
         Finally
             ' Por si se produce un error,
-            ' comprobamos si en realidad el objeto Connection está iniciado,
-            ' de ser así, lo cerramos.
+            ' comprobamos si en realidad el objeto Connection estï¿½ iniciado,
+            ' de ser asï¿½, lo cerramos.
             If Not cnnv Is Nothing Then
                 cnnv.Close()
             End If
@@ -3303,7 +3308,7 @@ Public Class FrmAsientos
         'Dentro de un Try/Catch por si se produce un error
         Try
             '''''''''LLENAR ASIENTO DETALLE''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-            'Obtenemos la cadena de conexión adecuada
+            'Obtenemos la cadena de conexiï¿½n adecuada
             Dim sConn As String = Configuracion.Claves.Conexion("Contabilidad")
             cnnv = New SqlConnection(sConn)
             cnnv.Open()
@@ -3314,10 +3319,10 @@ Public Class FrmAsientos
             cmdv.Connection = cnnv
             cmdv.CommandType = CommandType.Text
             cmdv.CommandTimeout = 90
-            'Los parámetros usados en la cadena de la consulta 
+            'Los parï¿½metros usados en la cadena de la consulta 
             cmdv.Parameters.Add(New SqlParameter("@Id", SqlDbType.VarChar))
             cmdv.Parameters("@Id").Value = Id
-            'Creamos el dataAdapter y asignamos el comando de selección
+            'Creamos el dataAdapter y asignamos el comando de selecciï¿½n
             Dim dv As New SqlDataAdapter
             dv.SelectCommand = cmdv
             ' Llenamos la tabla
@@ -3329,8 +3334,8 @@ Public Class FrmAsientos
             MsgBox(ex.ToString)
         Finally
             ' Por si se produce un error,
-            ' comprobamos si en realidad el objeto Connection está iniciado,
-            ' de ser así, lo cerramos.
+            ' comprobamos si en realidad el objeto Connection estï¿½ iniciado,
+            ' de ser asï¿½, lo cerramos.
             If Not cnnv Is Nothing Then
                 cnnv.Close()
             End If
@@ -3342,7 +3347,7 @@ Public Class FrmAsientos
         'Dentro de un Try/Catch por si se produce un error
         Try
             '''''''''LLENAR ASIENTO DETALLE''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-            'Obtenemos la cadena de conexión adecuada
+            'Obtenemos la cadena de conexiï¿½n adecuada
             Dim sConn As String = Configuracion.Claves.Conexion("Contabilidad")
             cnnv = New SqlConnection(sConn)
             cnnv.Open()
@@ -3355,10 +3360,10 @@ Public Class FrmAsientos
             cmdv.Connection = cnnv
             cmdv.CommandType = CommandType.Text
             cmdv.CommandTimeout = 90
-            'Los parámetros usados en la cadena de la consulta 
+            'Los parï¿½metros usados en la cadena de la consulta 
             cmdv.Parameters.Add(New SqlParameter("@Id", SqlDbType.VarChar))
             cmdv.Parameters("@Id").Value = Id
-            'Creamos el dataAdapter y asignamos el comando de selección
+            'Creamos el dataAdapter y asignamos el comando de selecciï¿½n
             Dim dv As New SqlDataAdapter
             dv.SelectCommand = cmdv
             ' Llenamos la tabla
@@ -3370,8 +3375,8 @@ Public Class FrmAsientos
             MsgBox(ex.ToString)
         Finally
             ' Por si se produce un error,
-            ' comprobamos si en realidad el objeto Connection está iniciado,
-            ' de ser así, lo cerramos.
+            ' comprobamos si en realidad el objeto Connection estï¿½ iniciado,
+            ' de ser asï¿½, lo cerramos.
             If Not cnnv Is Nothing Then
                 cnnv.Close()
             End If
@@ -3484,7 +3489,7 @@ Public Class FrmAsientos
             '-------------------------------------------------------------------------------
             'VALIDA EL PERIODO DE TRABAJO
             If Not cFunciones.FechaValida(DPTrans.Value) Then
-                MsgBox("No es posible registrar el cambio en el asiento, porque la fecha seleccionada se encuentra en un periodo de trabajo cerrado. Seleccione una fecha válida.", MsgBoxStyle.Exclamation, "¡Atención!")
+                MsgBox("No es posible registrar el cambio en el asiento, porque la fecha seleccionada se encuentra en un periodo de trabajo cerrado. Seleccione una fecha vï¿½lida.", MsgBoxStyle.Exclamation, "ï¿½Atenciï¿½n!")
                 Exit Sub
             End If
             '-------------------------------------------------------------------------------
@@ -3556,12 +3561,12 @@ Public Class FrmAsientos
 
                 ToolBar1.Buttons(2).Text = "Registrar"
                 If Me.ToolBar1.Buttons(5).Text = "Mayorizar" Then
-                    If MsgBox("¿Desea mayorizar el asiento?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                    If MsgBox("ï¿½Desea mayorizar el asiento?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
                         Mayorizacion()
                     End If
 
                 End If
-                If MsgBox("¿Desea imprmir el asiento?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                If MsgBox("ï¿½Desea imprmir el asiento?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
                     Me.Imprimir()
 
                 End If
@@ -3612,12 +3617,12 @@ Public Class FrmAsientos
                 Me.ToolBarNuevo.ImageIndex = 0
                 Me.ToolBarNuevo.Text = "Nuevo"
                 If Me.ToolBar1.Buttons(5).Text = "Mayorizar" Then
-                    If MsgBox("¿Desea mayorizar el asiento?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                    If MsgBox("ï¿½Desea mayorizar el asiento?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
                         Mayorizacion()
                     End If
 
                 End If
-                If MsgBox("¿Desea imprmir el asiento?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                If MsgBox("ï¿½Desea imprmir el asiento?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
                     Me.Imprimir()
 
                 End If
@@ -3821,11 +3826,11 @@ Public Class FrmAsientos
         If e.KeyCode = Keys.Enter Then
             If fnValidarNoDocumentoDetalle() Then
                 If txtNoDocumentoDetalle.Text.Replace(" ", "").Length = 0 Then
-                    MessageBox.Show("Por favor, ingrese un número de documento.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    MessageBox.Show("Por favor, ingrese un nï¿½mero de documento.", "Atenciï¿½n", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     txtNoDocumentoDetalle.Focus()
                 Else
                     If fnValidarNoDocumentoDetalleDeposito() Then
-                        MessageBox.Show("El número de documento ya esta registrado.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        MessageBox.Show("El nï¿½mero de documento ya esta registrado.", "Atenciï¿½n", MessageBoxButtons.OK, MessageBoxIcon.Information)
                         txtNoDocumentoDetalle.Focus()
                     Else
                         TxtMonto.Focus()
@@ -3874,12 +3879,12 @@ Public Class FrmAsientos
     Private Sub ButAgregarDetalle_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButAgregarDetalle.Click
         If fnValidarNoDocumentoDetalle() Then
             If txtNoDocumentoDetalle.Text.Replace(" ", "").Length = 0 Then
-                MessageBox.Show("Por Favor, ingrese un número de documento.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                MessageBox.Show("Por Favor, ingrese un nï¿½mero de documento.", "Atenciï¿½n", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 txtNoDocumentoDetalle.Focus()
                 Exit Sub
             Else
                 If fnValidarNoDocumentoDetalleDeposito() Then
-                    MessageBox.Show("El número de documento ya esta registrado.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    MessageBox.Show("El nï¿½mero de documento ya esta registrado.", "Atenciï¿½n", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     txtNoDocumentoDetalle.Focus()
                     Exit Sub
                 End If
@@ -3899,10 +3904,10 @@ Public Class FrmAsientos
 
                 salvarTemporal()
             Else
-                MsgBox("El Monto del Asiento No Puede ser Cero. Por Favor Verifique...", 16, "Error de Validación de Datos...")
+                MsgBox("El Monto del Asiento No Puede ser Cero. Por Favor Verifique...", 16, "Error de Validaciï¿½n de Datos...")
             End If
         Else
-            MsgBox("Captura de Datos Incompleta. Por Favor Verifique...", 16, "Error de Validación de Datos...")
+            MsgBox("Captura de Datos Incompleta. Por Favor Verifique...", 16, "Error de Validaciï¿½n de Datos...")
         End If
     End Sub
 
@@ -4184,7 +4189,7 @@ Public Class FrmAsientos
             MsgBox("No se puede modificar el asiento contable!" & vbCrLf & "Porque fue creado automaticamente por el sistema", MsgBoxStyle.Information, "Sistema SeeSoft")
             Exit Sub
         End If
-        If MessageBox.Show(" ¿ Eliminar la cuenta ? ", "Atención...", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) = DialogResult.No Then Exit Sub
+        If MessageBox.Show(" ï¿½ Eliminar la cuenta ? ", "Atenciï¿½n...", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) = DialogResult.No Then Exit Sub
 
         Try
             If CheckBox2.CheckState = CheckState.Unchecked Then
@@ -4269,7 +4274,7 @@ Public Class FrmAsientos
                 Me.ButAgregarDetalle.Focus()
                 '  TxtMonto.Text = Format(variable, "#,#0.00")
             Catch ex As Exception
-                MessageBox.Show("Verifique el formato del monto del asiento", "Atención...", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
+                MessageBox.Show("Verifique el formato del monto del asiento", "Atenciï¿½n...", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
             End Try
         End If
     End Sub
@@ -4307,7 +4312,7 @@ Public Class FrmAsientos
     Private Sub btnVerCentroC_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnVerCentroC.Click
 
         Me.GroupBox1.Visible = Not Me.GroupBox1.Visible
-        Me.txtDescripción.Text = Me.TxtDescAsiento.Text
+        Me.txtDescripciï¿½n.Text = Me.TxtDescAsiento.Text
         Me.txtMontoCentro.Text = Me.TxtMonto.Text
 
         Me.DataSetAsientos1.Centro.Clear()

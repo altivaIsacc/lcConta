@@ -29,6 +29,7 @@ Public Class MainForm
     Friend WithEvents StatusBarPanel5 As StatusBarPanel
     Friend WithEvents MenuItem12 As MenuItem
     Dim conexionConta As String
+
 #End Region
 
 #Region " Código generado por el Diseñador de Windows Forms "
@@ -927,10 +928,13 @@ Public Class MainForm
             MenuItem46.Enabled = VerificandoAcceso_a_Modulos("frmHotelAjusteCuentaCobrarGeneracionAutomatica", "Asiento Ajuste Cuenta por Cobrar", Usuario.Cedula, "Contabilidad")
             MenuItem52.Enabled = VerificandoAcceso_a_Modulos("frmHotelAjusteCuentaPagarGeneracionAutomatica", "Asiento Ajuste Cuenta por Pagar", Usuario.Cedula, "Contabilidad")
             '---------FIN PROVEDURIA---------------
+            If cFunciones.ExistenPeriodos Then
+                cFunciones.PeriodoAbiertoMenuPrincipal()
+            End If
         End If
 
-        '3-101-374928-30
-        Me.MenuItemAsientoPrepago.Visible = False
+            '3-101-374928-30
+            Me.MenuItemAsientoPrepago.Visible = False
         Dim dt As New DataTable
         cFunciones.Llenar_Tabla_Generico("Select Cedula From configuraciones", dt, Configuracion.Claves.Conexion("Contabilidad"))
         If dt.Rows.Count > 0 Then

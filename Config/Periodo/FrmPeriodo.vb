@@ -11,15 +11,15 @@ Public Class FrmPeriodo
     Friend WithEvents btReversarCierre As System.Windows.Forms.Button
     Dim clave As String = ""
 
-#Region " Código generado por el Diseñador de Windows Forms "
+#Region " Cï¿½digo generado por el Diseï¿½ador de Windows Forms "
 
     Public Sub New(ByVal Usuario_Parametro As Object, Optional ByVal Conexion As String = "")
         MyBase.New()
 
-        'El Diseñador de Windows Forms requiere esta llamada.
+        'El Diseï¿½ador de Windows Forms requiere esta llamada.
         InitializeComponent()
 
-        'Agregar cualquier inicialización después de la llamada a InitializeComponent()
+        'Agregar cualquier inicializaciï¿½n despuï¿½s de la llamada a InitializeComponent()
         usua = Usuario_Parametro
 
     End Sub
@@ -34,12 +34,12 @@ Public Class FrmPeriodo
         MyBase.Dispose(disposing)
     End Sub
 
-    'Requerido por el Diseñador de Windows Forms
+    'Requerido por el Diseï¿½ador de Windows Forms
     Private components As System.ComponentModel.IContainer
 
-    'NOTA: el Diseñador de Windows Forms requiere el siguiente procedimiento
-    'Puede modificarse utilizando el Diseñador de Windows Forms. 
-    'No lo modifique con el editor de código.
+    'NOTA: el Diseï¿½ador de Windows Forms requiere el siguiente procedimiento
+    'Puede modificarse utilizando el Diseï¿½ador de Windows Forms. 
+    'No lo modifique con el editor de cï¿½digo.
     Friend WithEvents GridView1 As DevExpress.XtraGrid.Views.Grid.GridView
     Friend WithEvents colCodigo As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents colDescripcion As DevExpress.XtraGrid.Columns.GridColumn
@@ -211,7 +211,7 @@ Public Class FrmPeriodo
         Me.LAnoo.Name = "LAnoo"
         Me.LAnoo.Size = New System.Drawing.Size(60, 16)
         Me.LAnoo.TabIndex = 168
-        Me.LAnoo.Text = "Año"
+        Me.LAnoo.Text = "Aï¿½o"
         Me.LAnoo.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'LMes
@@ -560,7 +560,7 @@ Public Class FrmPeriodo
                         Buscar()
 
                     Else
-                        MsgBox("No tiene permiso para Buscar información...", MsgBoxStyle.Information, "Atención...")
+                        MsgBox("No tiene permiso para Buscar informaciï¿½n...", MsgBoxStyle.Information, "Atenciï¿½n...")
                         Exit Sub
 
                     End If
@@ -568,11 +568,11 @@ Public Class FrmPeriodo
 
                 Case 2
                     If PMU.Update Then
-                        If MessageBox.Show("¿Desea guardar el periodo de Trabajo?", "Contabilidad", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                        If MessageBox.Show("ï¿½Desea guardar el periodo de Trabajo?", "Contabilidad", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                             Guardar()
                         End If
                     Else
-                        MsgBox("No tiene permiso para agregar o actualizar datos...", MsgBoxStyle.Information, "Atención...") : Exit Sub
+                        MsgBox("No tiene permiso para agregar o actualizar datos...", MsgBoxStyle.Information, "Atenciï¿½n...") : Exit Sub
                     End If
 
                 Case 5
@@ -588,7 +588,7 @@ Public Class FrmPeriodo
     End Sub
 #End Region
 
-#Region "Validación Usuario"
+#Region "Validaciï¿½n Usuario"
     Private Sub TextUsuario_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles TextUsuario.KeyDown
         If e.KeyCode = Keys.Enter Then
             Try
@@ -632,7 +632,7 @@ Public Class FrmPeriodo
         Dim Funcion As New cFunciones
         Try
             If Funcion.ValidarPeriodoFiscal(CDate("02" & "/" & CBMes.SelectedValue & "/" & NUDAnno.Value)) <> True Then
-                MsgBox("No puede guardar el Periodo!" & vbCrLf & "!Porque no esta dentro de ningún periodo fiscal abierto!", MsgBoxStyle.Exclamation, "Contabilidad")
+                MsgBox("No puede guardar el Periodo!" & vbCrLf & "!Porque no esta dentro de ningï¿½n periodo fiscal abierto!", MsgBoxStyle.Exclamation, "Contabilidad")
                 Exit Sub
             End If
 
@@ -655,7 +655,7 @@ Public Class FrmPeriodo
             End If
 
             If CheckCerrado.Checked = True Then
-                If MessageBox.Show("¿Desea hacer Cierre de Periodo?", "Contabilidad", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.No Then
+                If MessageBox.Show("ï¿½Desea hacer Cierre de Periodo?", "Contabilidad", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.No Then
                     CheckCerrado.Checked = False
                     Exit Sub
                 End If
@@ -672,14 +672,14 @@ Public Class FrmPeriodo
                 End If
 
                 If Me.Cedula <> "3-101-1486-2900" And Me.Cedula <> "3-102-622891" Then 'si es ecole travel o ksa plastica no entra aqui
-                    If VerificaMayorización() Then
+                    If VerificaMayorizaciï¿½n() Then
                         MsgBox("No puede Cerrar el Periodo porque hay Asientos Contables del periodo que No estan Mayorizados!!", MsgBoxStyle.Exclamation, "Contabilidad")
                         CheckCerrado.Checked = False
                         Exit Sub
                     End If
 
                     If VerificaTomaFisica() Then
-                        Dim resp As Integer = MsgBox("No puede Cerrar el Periodo porque hay Tomas Fisicas que no se les ha aplicado el asiento!!¿Desea continuar?", MsgBoxStyle.YesNoCancel, "Contabilidad")
+                        Dim resp As Integer = MsgBox("No puede Cerrar el Periodo porque hay Tomas Fisicas que no se les ha aplicado el asiento!!ï¿½Desea continuar?", MsgBoxStyle.YesNoCancel, "Contabilidad")
                         If resp = MsgBoxResult.No Then
                             CheckCerrado.Checked = False
 
@@ -723,7 +723,7 @@ Public Class FrmPeriodo
             AdapterPeriodo.InsertCommand.Transaction = Trans
 
             '-----------------------------------------------------------------------------------
-            'Inicia Transacción....
+            'Inicia Transacciï¿½n....
 
             'chbCerradoFinal            
             AdapterPeriodo.Update(DsPeriodo2.Periodo)
@@ -761,7 +761,7 @@ Public Class FrmPeriodo
                         Exit Sub
                     End If
                 Next
-                MsgBox("No se encontró el periodo", MsgBoxStyle.OkOnly)
+                MsgBox("No se encontrï¿½ el periodo", MsgBoxStyle.OkOnly)
 
             End If
 
@@ -827,19 +827,19 @@ Public Class FrmPeriodo
     End Sub
 
 
-    Function VerificaMayorización() As Boolean
+    Function VerificaMayorizaciï¿½n() As Boolean
         Dim cConexion As New Conexion       'VERIFICA QUE NO HAYAN ASIENTOS SIN MAYORIZAR DEL PERIODO
         Dim sqlConexion As New SqlConnection
         Dim rs As SqlDataReader
 
         Try
-            VerificaMayorización = False
+            VerificaMayorizaciï¿½n = False
             'BUSCA LOS ASIENTOS DEL PERIODO QUE NO ESTEN MAYORIZADOS
             rs = cConexion.GetRecorset(cConexion.Conectar("", "Contabilidad"), "SELECT COUNT(*) AS Cantidad FROM AsientosContables WHERE NumAsiento IN(Select NumAsiento From DetallesAsientosContable) and Anulado = 0 AND Mayorizado = 0 AND Periodo = '" & BindingContext(DsPeriodo2, "Periodo").Current("Periodo") & "'")
 
             If rs.Read Then
                 If rs("Cantidad") > 0 Then
-                    VerificaMayorización = True
+                    VerificaMayorizaciï¿½n = True
                 End If
             End If
             rs.Close()
@@ -1018,7 +1018,7 @@ Public Class FrmPeriodo
                 CheckActivo.Enabled = False
                 CheckCerrado.Enabled = False
                 btReversarCierre.Enabled = False
-                MsgBox("Contraseña de acceso incorrecta", MsgBoxStyle.Exclamation, "Acceso incorrecto")
+                MsgBox("Contraseï¿½a de acceso incorrecta", MsgBoxStyle.Exclamation, "Acceso incorrecto")
             End If
         Else
             Editar()
