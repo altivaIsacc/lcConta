@@ -672,7 +672,7 @@ Public Class FrmPeriodo
                 End If
 
                 If Me.Cedula <> "3-101-1486-2900" And Me.Cedula <> "3-102-622891" Then 'si es ecole travel o ksa plastica no entra aqui
-                    If VerificaMayorizaci�n() Then
+                    If VerificaMayorizacion() Then
                         MsgBox("No puede Cerrar el Periodo porque hay Asientos Contables del periodo que No estan Mayorizados!!", MsgBoxStyle.Exclamation, "Contabilidad")
                         CheckCerrado.Checked = False
                         Exit Sub
@@ -827,19 +827,19 @@ Public Class FrmPeriodo
     End Sub
 
 
-    Function VerificaMayorizaci�n() As Boolean
+    Function VerificaMayorizacion() As Boolean
         Dim cConexion As New Conexion       'VERIFICA QUE NO HAYAN ASIENTOS SIN MAYORIZAR DEL PERIODO
         Dim sqlConexion As New SqlConnection
         Dim rs As SqlDataReader
 
         Try
-            VerificaMayorizaci�n = False
+            VerificaMayorizacion = False
             'BUSCA LOS ASIENTOS DEL PERIODO QUE NO ESTEN MAYORIZADOS
             rs = cConexion.GetRecorset(cConexion.Conectar("", "Contabilidad"), "SELECT COUNT(*) AS Cantidad FROM AsientosContables WHERE NumAsiento IN(Select NumAsiento From DetallesAsientosContable) and Anulado = 0 AND Mayorizado = 0 AND Periodo = '" & BindingContext(DsPeriodo2, "Periodo").Current("Periodo") & "'")
 
             If rs.Read Then
                 If rs("Cantidad") > 0 Then
-                    VerificaMayorizaci�n = True
+                    VerificaMayorizacion = True
                 End If
             End If
             rs.Close()

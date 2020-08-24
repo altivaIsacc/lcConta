@@ -1,6 +1,8 @@
 Imports Utilidades
 Imports System.Data.SqlClient
 Imports DevExpress.XtraGrid.Views.Base
+Imports System.ComponentModel
+Imports DevExpress.XtraEditors.Controls
 
 Public Class fmrMayorizacionAsiento
     Inherits System.Windows.Forms.Form
@@ -10,6 +12,8 @@ Public Class fmrMayorizacionAsiento
     Dim dr As DataRow
     Dim NombreUsuario As String
     Dim clave As String = ""
+    Dim valido As Boolean = True
+    Dim puedeDesmayorizar As Boolean = True
 #Region " Código generado por el Diseñador de Windows Forms "
 
     Public Sub New(ByVal Usuario_Parametro As Object)
@@ -85,54 +89,61 @@ Public Class fmrMayorizacionAsiento
     Friend WithEvents B_Marca As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents B_Desmarcar As DevExpress.XtraEditors.SimpleButton
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
-        Dim resources As System.Resources.ResourceManager = New System.Resources.ResourceManager(GetType(fmrMayorizacionAsiento))
-        Me.TituloModulo = New System.Windows.Forms.Label
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.txtFecha = New System.Windows.Forms.TextBox
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.txtNumero = New System.Windows.Forms.TextBox
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.btnEjecutar = New System.Windows.Forms.Button
-        Me.dtpFechaFinal = New System.Windows.Forms.DateTimePicker
-        Me.dtpFechaInicio = New System.Windows.Forms.DateTimePicker
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox
-        Me.txtNombreUsuario = New System.Windows.Forms.TextBox
-        Me.sqlDataAdapter = New System.Data.SqlClient.SqlDataAdapter
-        Me.SqlDeleteCommand1 = New System.Data.SqlClient.SqlCommand
-        Me.SqlConnection = New System.Data.SqlClient.SqlConnection
-        Me.SqlInsertCommand1 = New System.Data.SqlClient.SqlCommand
-        Me.SqlSelectCommand1 = New System.Data.SqlClient.SqlCommand
-        Me.SqlUpdateCommand1 = New System.Data.SqlClient.SqlCommand
-        Me.griDetalle = New DevExpress.XtraGrid.GridControl
-        Me.dtsMayorizacionAsiento = New Contabilidad.DatasetMayorizacionAsiento
-        Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView
-        Me.GridColumn1 = New DevExpress.XtraGrid.Columns.GridColumn
-        Me.RepositoryItemCheckEdit1 = New DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit
-        Me.GridColumn2 = New DevExpress.XtraGrid.Columns.GridColumn
-        Me.GridColumn3 = New DevExpress.XtraGrid.Columns.GridColumn
-        Me.GridColumn4 = New DevExpress.XtraGrid.Columns.GridColumn
-        Me.GridColumn5 = New DevExpress.XtraGrid.Columns.GridColumn
-        Me.GridColumn6 = New DevExpress.XtraGrid.Columns.GridColumn
-        Me.GridColumn7 = New DevExpress.XtraGrid.Columns.GridColumn
-        Me.chkPeriodo = New System.Windows.Forms.CheckBox
+        Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(fmrMayorizacionAsiento))
+        Dim ColumnFilterInfo1 As DevExpress.XtraGrid.Columns.ColumnFilterInfo = New DevExpress.XtraGrid.Columns.ColumnFilterInfo()
+        Dim ColumnFilterInfo2 As DevExpress.XtraGrid.Columns.ColumnFilterInfo = New DevExpress.XtraGrid.Columns.ColumnFilterInfo()
+        Dim ColumnFilterInfo3 As DevExpress.XtraGrid.Columns.ColumnFilterInfo = New DevExpress.XtraGrid.Columns.ColumnFilterInfo()
+        Dim ColumnFilterInfo4 As DevExpress.XtraGrid.Columns.ColumnFilterInfo = New DevExpress.XtraGrid.Columns.ColumnFilterInfo()
+        Dim ColumnFilterInfo5 As DevExpress.XtraGrid.Columns.ColumnFilterInfo = New DevExpress.XtraGrid.Columns.ColumnFilterInfo()
+        Dim ColumnFilterInfo6 As DevExpress.XtraGrid.Columns.ColumnFilterInfo = New DevExpress.XtraGrid.Columns.ColumnFilterInfo()
+        Dim ColumnFilterInfo7 As DevExpress.XtraGrid.Columns.ColumnFilterInfo = New DevExpress.XtraGrid.Columns.ColumnFilterInfo()
+        Me.TituloModulo = New System.Windows.Forms.Label()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.txtFecha = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.txtNumero = New System.Windows.Forms.TextBox()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.btnEjecutar = New System.Windows.Forms.Button()
+        Me.dtpFechaFinal = New System.Windows.Forms.DateTimePicker()
+        Me.dtpFechaInicio = New System.Windows.Forms.DateTimePicker()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.txtNombreUsuario = New System.Windows.Forms.TextBox()
+        Me.sqlDataAdapter = New System.Data.SqlClient.SqlDataAdapter()
+        Me.SqlDeleteCommand1 = New System.Data.SqlClient.SqlCommand()
+        Me.SqlConnection = New System.Data.SqlClient.SqlConnection()
+        Me.SqlInsertCommand1 = New System.Data.SqlClient.SqlCommand()
+        Me.SqlSelectCommand1 = New System.Data.SqlClient.SqlCommand()
+        Me.SqlUpdateCommand1 = New System.Data.SqlClient.SqlCommand()
+        Me.griDetalle = New DevExpress.XtraGrid.GridControl()
+        Me.dtsMayorizacionAsiento = New Contabilidad.DatasetMayorizacionAsiento()
+        Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.GridColumn1 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.RepositoryItemCheckEdit1 = New DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit()
+        Me.GridColumn2 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumn3 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumn4 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumn5 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumn6 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumn7 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.chkPeriodo = New System.Windows.Forms.CheckBox()
         Me.ImageList = New System.Windows.Forms.ImageList(Me.components)
-        Me.ToolBar1 = New System.Windows.Forms.ToolBar
-        Me.ToolBarNuevo = New System.Windows.Forms.ToolBarButton
-        Me.ToolBarBuscar = New System.Windows.Forms.ToolBarButton
-        Me.ToolBarRegistrar = New System.Windows.Forms.ToolBarButton
-        Me.ToolBarImprimir = New System.Windows.Forms.ToolBarButton
-        Me.ToolBarExcel = New System.Windows.Forms.ToolBarButton
-        Me.ToolBarCerrar = New System.Windows.Forms.ToolBarButton
-        Me.Label9 = New System.Windows.Forms.Label
-        Me.txtUsuario = New System.Windows.Forms.TextBox
-        Me.TxtClave = New System.Windows.Forms.TextBox
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.B_Marca = New DevExpress.XtraEditors.SimpleButton
-        Me.B_Desmarcar = New DevExpress.XtraEditors.SimpleButton
+        Me.ToolBar1 = New System.Windows.Forms.ToolBar()
+        Me.ToolBarNuevo = New System.Windows.Forms.ToolBarButton()
+        Me.ToolBarBuscar = New System.Windows.Forms.ToolBarButton()
+        Me.ToolBarRegistrar = New System.Windows.Forms.ToolBarButton()
+        Me.ToolBarImprimir = New System.Windows.Forms.ToolBarButton()
+        Me.ToolBarExcel = New System.Windows.Forms.ToolBarButton()
+        Me.ToolBarCerrar = New System.Windows.Forms.ToolBarButton()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.txtUsuario = New System.Windows.Forms.TextBox()
+        Me.TxtClave = New System.Windows.Forms.TextBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.B_Marca = New DevExpress.XtraEditors.SimpleButton()
+        Me.B_Desmarcar = New DevExpress.XtraEditors.SimpleButton()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -144,8 +155,7 @@ Public Class fmrMayorizacionAsiento
         '
         'TituloModulo
         '
-        Me.TituloModulo.BackColor = System.Drawing.SystemColors.ControlLight
-        Me.TituloModulo.Dock = System.Windows.Forms.DockStyle.Top
+        Me.TituloModulo.BackColor = System.Drawing.SystemColors.HotTrack
         Me.TituloModulo.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!)
         Me.TituloModulo.ForeColor = System.Drawing.Color.White
         Me.TituloModulo.Image = CType(resources.GetObject("TituloModulo.Image"), System.Drawing.Image)
@@ -159,6 +169,8 @@ Public Class fmrMayorizacionAsiento
         '
         'GroupBox1
         '
+        Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.txtFecha)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.Label1)
@@ -172,21 +184,19 @@ Public Class fmrMayorizacionAsiento
         '
         'txtFecha
         '
-        Me.txtFecha.AutoSize = False
         Me.txtFecha.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.txtFecha.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtFecha.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtFecha.ForeColor = System.Drawing.Color.FromArgb(CType(64, Byte), CType(64, Byte), CType(64, Byte))
+        Me.txtFecha.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.txtFecha.Location = New System.Drawing.Point(136, 32)
         Me.txtFecha.Name = "txtFecha"
         Me.txtFecha.ReadOnly = True
-        Me.txtFecha.Size = New System.Drawing.Size(120, 14)
+        Me.txtFecha.Size = New System.Drawing.Size(120, 20)
         Me.txtFecha.TabIndex = 2
-        Me.txtFecha.Text = ""
         '
         'Label2
         '
-        Me.Label2.BackColor = System.Drawing.Color.FromArgb(CType(128, Byte), CType(128, Byte), CType(255, Byte))
+        Me.Label2.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.Label2.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.SystemColors.ControlLightLight
         Me.Label2.Location = New System.Drawing.Point(136, 16)
@@ -198,7 +208,7 @@ Public Class fmrMayorizacionAsiento
         '
         'Label1
         '
-        Me.Label1.BackColor = System.Drawing.Color.FromArgb(CType(128, Byte), CType(128, Byte), CType(255, Byte))
+        Me.Label1.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.Label1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.SystemColors.ControlLightLight
         Me.Label1.Location = New System.Drawing.Point(16, 16)
@@ -210,17 +220,15 @@ Public Class fmrMayorizacionAsiento
         '
         'txtNumero
         '
-        Me.txtNumero.AutoSize = False
         Me.txtNumero.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.txtNumero.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtNumero.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtNumero.ForeColor = System.Drawing.Color.FromArgb(CType(64, Byte), CType(64, Byte), CType(64, Byte))
+        Me.txtNumero.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.txtNumero.Location = New System.Drawing.Point(16, 32)
         Me.txtNumero.Name = "txtNumero"
         Me.txtNumero.ReadOnly = True
-        Me.txtNumero.Size = New System.Drawing.Size(112, 14)
+        Me.txtNumero.Size = New System.Drawing.Size(112, 20)
         Me.txtNumero.TabIndex = 1
-        Me.txtNumero.Text = ""
         '
         'GroupBox2
         '
@@ -247,7 +255,7 @@ Public Class fmrMayorizacionAsiento
         'dtpFechaFinal
         '
         Me.dtpFechaFinal.Enabled = False
-        Me.dtpFechaFinal.Format = System.Windows.Forms.DateTimePickerFormat.Short
+        Me.dtpFechaFinal.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtpFechaFinal.Location = New System.Drawing.Point(160, 32)
         Me.dtpFechaFinal.Name = "dtpFechaFinal"
         Me.dtpFechaFinal.Size = New System.Drawing.Size(136, 20)
@@ -256,7 +264,7 @@ Public Class fmrMayorizacionAsiento
         'dtpFechaInicio
         '
         Me.dtpFechaInicio.Enabled = False
-        Me.dtpFechaInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short
+        Me.dtpFechaInicio.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtpFechaInicio.Location = New System.Drawing.Point(16, 32)
         Me.dtpFechaInicio.Name = "dtpFechaInicio"
         Me.dtpFechaInicio.Size = New System.Drawing.Size(136, 20)
@@ -264,7 +272,7 @@ Public Class fmrMayorizacionAsiento
         '
         'Label3
         '
-        Me.Label3.BackColor = System.Drawing.Color.FromArgb(CType(128, Byte), CType(128, Byte), CType(255, Byte))
+        Me.Label3.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.Label3.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.SystemColors.ControlLightLight
         Me.Label3.Location = New System.Drawing.Point(160, 16)
@@ -276,7 +284,7 @@ Public Class fmrMayorizacionAsiento
         '
         'Label4
         '
-        Me.Label4.BackColor = System.Drawing.Color.FromArgb(CType(128, Byte), CType(128, Byte), CType(255, Byte))
+        Me.Label4.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.Label4.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.SystemColors.ControlLightLight
         Me.Label4.Location = New System.Drawing.Point(16, 16)
@@ -298,17 +306,15 @@ Public Class fmrMayorizacionAsiento
         '
         'txtNombreUsuario
         '
-        Me.txtNombreUsuario.AutoSize = False
         Me.txtNombreUsuario.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.txtNombreUsuario.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtNombreUsuario.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtNombreUsuario.ForeColor = System.Drawing.Color.FromArgb(CType(64, Byte), CType(64, Byte), CType(64, Byte))
+        Me.txtNombreUsuario.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.txtNombreUsuario.Location = New System.Drawing.Point(16, 16)
         Me.txtNombreUsuario.Name = "txtNombreUsuario"
         Me.txtNombreUsuario.ReadOnly = True
-        Me.txtNombreUsuario.Size = New System.Drawing.Size(152, 14)
+        Me.txtNombreUsuario.Size = New System.Drawing.Size(152, 20)
         Me.txtNombreUsuario.TabIndex = 67
-        Me.txtNombreUsuario.Text = ""
         '
         'sqlDataAdapter
         '
@@ -321,131 +327,41 @@ Public Class fmrMayorizacionAsiento
         '
         'SqlDeleteCommand1
         '
-        Me.SqlDeleteCommand1.CommandText = "DELETE FROM AsientosContables WHERE (NumAsiento = @Original_NumAsiento) AND (Acci" & _
-        "on = @Original_Accion) AND (Anulado = @Original_Anulado) AND (Beneficiario = @Or" & _
-        "iginal_Beneficiario) AND (Fecha = @Original_Fecha) AND (FechaEntrada = @Original" & _
-        "_FechaEntrada) AND (Mayorizado = @Original_Mayorizado) AND (Modulo = @Original_M" & _
-        "odulo) AND (NombreUsuario = @Original_NombreUsuario) AND (NumDoc = @Original_Num" & _
-        "Doc) AND (NumMayorizado = @Original_NumMayorizado) AND (Observaciones = @Origina" & _
-        "l_Observaciones) AND (Periodo = @Original_Periodo) AND (TipoDoc = @Original_Tipo" & _
-        "Doc) AND (TotalDebe = @Original_TotalDebe) AND (TotalHaber = @Original_TotalHabe" & _
-        "r)"
+        Me.SqlDeleteCommand1.CommandText = resources.GetString("SqlDeleteCommand1.CommandText")
         Me.SqlDeleteCommand1.Connection = Me.SqlConnection
-        Me.SqlDeleteCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_NumAsiento", System.Data.SqlDbType.VarChar, 15, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "NumAsiento", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlDeleteCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_Accion", System.Data.SqlDbType.VarChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Accion", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlDeleteCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_Anulado", System.Data.SqlDbType.Bit, 1, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Anulado", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlDeleteCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_Beneficiario", System.Data.SqlDbType.VarChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Beneficiario", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlDeleteCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_Fecha", System.Data.SqlDbType.DateTime, 4, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Fecha", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlDeleteCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_FechaEntrada", System.Data.SqlDbType.DateTime, 4, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "FechaEntrada", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlDeleteCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_Mayorizado", System.Data.SqlDbType.Bit, 1, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Mayorizado", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlDeleteCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_Modulo", System.Data.SqlDbType.VarChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Modulo", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlDeleteCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_NombreUsuario", System.Data.SqlDbType.VarChar, 255, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "NombreUsuario", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlDeleteCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_NumDoc", System.Data.SqlDbType.VarChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "NumDoc", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlDeleteCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_NumMayorizado", System.Data.SqlDbType.Decimal, 9, System.Data.ParameterDirection.Input, False, CType(18, Byte), CType(0, Byte), "NumMayorizado", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlDeleteCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_Observaciones", System.Data.SqlDbType.VarChar, 255, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Observaciones", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlDeleteCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_Periodo", System.Data.SqlDbType.VarChar, 8, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Periodo", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlDeleteCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_TipoDoc", System.Data.SqlDbType.Int, 4, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "TipoDoc", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlDeleteCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_TotalDebe", System.Data.SqlDbType.Float, 8, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "TotalDebe", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlDeleteCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_TotalHaber", System.Data.SqlDbType.Float, 8, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "TotalHaber", System.Data.DataRowVersion.Original, Nothing))
+        Me.SqlDeleteCommand1.Parameters.AddRange(New System.Data.SqlClient.SqlParameter() {New System.Data.SqlClient.SqlParameter("@Original_NumAsiento", System.Data.SqlDbType.VarChar, 15, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "NumAsiento", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_Accion", System.Data.SqlDbType.VarChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Accion", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_Anulado", System.Data.SqlDbType.Bit, 1, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Anulado", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_Beneficiario", System.Data.SqlDbType.VarChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Beneficiario", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_Fecha", System.Data.SqlDbType.DateTime, 4, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Fecha", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_FechaEntrada", System.Data.SqlDbType.DateTime, 4, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "FechaEntrada", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_Mayorizado", System.Data.SqlDbType.Bit, 1, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Mayorizado", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_Modulo", System.Data.SqlDbType.VarChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Modulo", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_NombreUsuario", System.Data.SqlDbType.VarChar, 255, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "NombreUsuario", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_NumDoc", System.Data.SqlDbType.VarChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "NumDoc", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_NumMayorizado", System.Data.SqlDbType.[Decimal], 9, System.Data.ParameterDirection.Input, False, CType(18, Byte), CType(0, Byte), "NumMayorizado", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_Observaciones", System.Data.SqlDbType.VarChar, 255, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Observaciones", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_Periodo", System.Data.SqlDbType.VarChar, 8, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Periodo", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_TipoDoc", System.Data.SqlDbType.Int, 4, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "TipoDoc", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_TotalDebe", System.Data.SqlDbType.Float, 8, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "TotalDebe", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_TotalHaber", System.Data.SqlDbType.Float, 8, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "TotalHaber", System.Data.DataRowVersion.Original, Nothing)})
         '
         'SqlConnection
         '
-        Me.SqlConnection.ConnectionString = "workstation id=DIEGO;packet size=4096;integrated security=SSPI;data source=""."";pe" & _
-        "rsist security info=False;initial catalog=Contabilidad"
+        Me.SqlConnection.ConnectionString = "workstation id=DIEGO;packet size=4096;integrated security=SSPI;data source=""."";pe" &
+    "rsist security info=False;initial catalog=Contabilidad"
+        Me.SqlConnection.FireInfoMessageEventOnUserErrors = False
         '
         'SqlInsertCommand1
         '
-        Me.SqlInsertCommand1.CommandText = "INSERT INTO AsientosContables(NumAsiento, Fecha, NumDoc, Beneficiario, TipoDoc, A" & _
-        "ccion, Anulado, FechaEntrada, Mayorizado, Periodo, NumMayorizado, Modulo, Observ" & _
-        "aciones, NombreUsuario, TotalDebe, TotalHaber) VALUES (@NumAsiento, @Fecha, @Num" & _
-        "Doc, @Beneficiario, @TipoDoc, @Accion, @Anulado, @FechaEntrada, @Mayorizado, @Pe" & _
-        "riodo, @NumMayorizado, @Modulo, @Observaciones, @NombreUsuario, @TotalDebe, @Tot" & _
-        "alHaber); SELECT NumAsiento, Fecha, NumDoc, Beneficiario, TipoDoc, Accion, Anula" & _
-        "do, FechaEntrada, Mayorizado, Periodo, NumMayorizado, Modulo, Observaciones, Nom" & _
-        "breUsuario, TotalDebe, TotalHaber FROM AsientosContables WHERE (NumAsiento = @Nu" & _
-        "mAsiento)"
+        Me.SqlInsertCommand1.CommandText = resources.GetString("SqlInsertCommand1.CommandText")
         Me.SqlInsertCommand1.Connection = Me.SqlConnection
-        Me.SqlInsertCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@NumAsiento", System.Data.SqlDbType.VarChar, 15, "NumAsiento"))
-        Me.SqlInsertCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Fecha", System.Data.SqlDbType.DateTime, 4, "Fecha"))
-        Me.SqlInsertCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@NumDoc", System.Data.SqlDbType.VarChar, 50, "NumDoc"))
-        Me.SqlInsertCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Beneficiario", System.Data.SqlDbType.VarChar, 50, "Beneficiario"))
-        Me.SqlInsertCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@TipoDoc", System.Data.SqlDbType.Int, 4, "TipoDoc"))
-        Me.SqlInsertCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Accion", System.Data.SqlDbType.VarChar, 50, "Accion"))
-        Me.SqlInsertCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Anulado", System.Data.SqlDbType.Bit, 1, "Anulado"))
-        Me.SqlInsertCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@FechaEntrada", System.Data.SqlDbType.DateTime, 4, "FechaEntrada"))
-        Me.SqlInsertCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Mayorizado", System.Data.SqlDbType.Bit, 1, "Mayorizado"))
-        Me.SqlInsertCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Periodo", System.Data.SqlDbType.VarChar, 8, "Periodo"))
-        Me.SqlInsertCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@NumMayorizado", System.Data.SqlDbType.Decimal, 9, System.Data.ParameterDirection.Input, False, CType(18, Byte), CType(0, Byte), "NumMayorizado", System.Data.DataRowVersion.Current, Nothing))
-        Me.SqlInsertCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Modulo", System.Data.SqlDbType.VarChar, 50, "Modulo"))
-        Me.SqlInsertCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Observaciones", System.Data.SqlDbType.VarChar, 255, "Observaciones"))
-        Me.SqlInsertCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@NombreUsuario", System.Data.SqlDbType.VarChar, 255, "NombreUsuario"))
-        Me.SqlInsertCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@TotalDebe", System.Data.SqlDbType.Float, 8, "TotalDebe"))
-        Me.SqlInsertCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@TotalHaber", System.Data.SqlDbType.Float, 8, "TotalHaber"))
+        Me.SqlInsertCommand1.Parameters.AddRange(New System.Data.SqlClient.SqlParameter() {New System.Data.SqlClient.SqlParameter("@NumAsiento", System.Data.SqlDbType.VarChar, 15, "NumAsiento"), New System.Data.SqlClient.SqlParameter("@Fecha", System.Data.SqlDbType.DateTime, 4, "Fecha"), New System.Data.SqlClient.SqlParameter("@NumDoc", System.Data.SqlDbType.VarChar, 50, "NumDoc"), New System.Data.SqlClient.SqlParameter("@Beneficiario", System.Data.SqlDbType.VarChar, 50, "Beneficiario"), New System.Data.SqlClient.SqlParameter("@TipoDoc", System.Data.SqlDbType.Int, 4, "TipoDoc"), New System.Data.SqlClient.SqlParameter("@Accion", System.Data.SqlDbType.VarChar, 50, "Accion"), New System.Data.SqlClient.SqlParameter("@Anulado", System.Data.SqlDbType.Bit, 1, "Anulado"), New System.Data.SqlClient.SqlParameter("@FechaEntrada", System.Data.SqlDbType.DateTime, 4, "FechaEntrada"), New System.Data.SqlClient.SqlParameter("@Mayorizado", System.Data.SqlDbType.Bit, 1, "Mayorizado"), New System.Data.SqlClient.SqlParameter("@Periodo", System.Data.SqlDbType.VarChar, 8, "Periodo"), New System.Data.SqlClient.SqlParameter("@NumMayorizado", System.Data.SqlDbType.[Decimal], 9, System.Data.ParameterDirection.Input, False, CType(18, Byte), CType(0, Byte), "NumMayorizado", System.Data.DataRowVersion.Current, Nothing), New System.Data.SqlClient.SqlParameter("@Modulo", System.Data.SqlDbType.VarChar, 50, "Modulo"), New System.Data.SqlClient.SqlParameter("@Observaciones", System.Data.SqlDbType.VarChar, 255, "Observaciones"), New System.Data.SqlClient.SqlParameter("@NombreUsuario", System.Data.SqlDbType.VarChar, 255, "NombreUsuario"), New System.Data.SqlClient.SqlParameter("@TotalDebe", System.Data.SqlDbType.Float, 8, "TotalDebe"), New System.Data.SqlClient.SqlParameter("@TotalHaber", System.Data.SqlDbType.Float, 8, "TotalHaber")})
         '
         'SqlSelectCommand1
         '
-        Me.SqlSelectCommand1.CommandText = "SELECT NumAsiento, Fecha, NumDoc, Beneficiario, TipoDoc, Accion, Anulado, FechaEn" & _
-        "trada, Mayorizado, Periodo, NumMayorizado, Modulo, Observaciones, NombreUsuario," & _
-        " TotalDebe, TotalHaber FROM AsientosContables"
+        Me.SqlSelectCommand1.CommandText = resources.GetString("SqlSelectCommand1.CommandText")
         Me.SqlSelectCommand1.Connection = Me.SqlConnection
         '
         'SqlUpdateCommand1
         '
-        Me.SqlUpdateCommand1.CommandText = "UPDATE AsientosContables SET NumAsiento = @NumAsiento, Fecha = @Fecha, NumDoc = @" & _
-        "NumDoc, Beneficiario = @Beneficiario, TipoDoc = @TipoDoc, Accion = @Accion, Anul" & _
-        "ado = @Anulado, FechaEntrada = @FechaEntrada, Mayorizado = @Mayorizado, Periodo " & _
-        "= @Periodo, NumMayorizado = @NumMayorizado, Modulo = @Modulo, Observaciones = @O" & _
-        "bservaciones, NombreUsuario = @NombreUsuario, TotalDebe = @TotalDebe, TotalHaber" & _
-        " = @TotalHaber WHERE (NumAsiento = @Original_NumAsiento) AND (Accion = @Original" & _
-        "_Accion) AND (Anulado = @Original_Anulado) AND (Beneficiario = @Original_Benefic" & _
-        "iario) AND (Fecha = @Original_Fecha) AND (FechaEntrada = @Original_FechaEntrada)" & _
-        " AND (Mayorizado = @Original_Mayorizado) AND (Modulo = @Original_Modulo) AND (No" & _
-        "mbreUsuario = @Original_NombreUsuario) AND (NumDoc = @Original_NumDoc) AND (NumM" & _
-        "ayorizado = @Original_NumMayorizado) AND (Observaciones = @Original_Observacione" & _
-        "s) AND (Periodo = @Original_Periodo) AND (TipoDoc = @Original_TipoDoc) AND (Tota" & _
-        "lDebe = @Original_TotalDebe) AND (TotalHaber = @Original_TotalHaber); SELECT Num" & _
-        "Asiento, Fecha, NumDoc, Beneficiario, TipoDoc, Accion, Anulado, FechaEntrada, Ma" & _
-        "yorizado, Periodo, NumMayorizado, Modulo, Observaciones, NombreUsuario, TotalDeb" & _
-        "e, TotalHaber FROM AsientosContables WHERE (NumAsiento = @NumAsiento)"
+        Me.SqlUpdateCommand1.CommandText = resources.GetString("SqlUpdateCommand1.CommandText")
         Me.SqlUpdateCommand1.Connection = Me.SqlConnection
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@NumAsiento", System.Data.SqlDbType.VarChar, 15, "NumAsiento"))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Fecha", System.Data.SqlDbType.DateTime, 4, "Fecha"))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@NumDoc", System.Data.SqlDbType.VarChar, 50, "NumDoc"))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Beneficiario", System.Data.SqlDbType.VarChar, 50, "Beneficiario"))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@TipoDoc", System.Data.SqlDbType.Int, 4, "TipoDoc"))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Accion", System.Data.SqlDbType.VarChar, 50, "Accion"))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Anulado", System.Data.SqlDbType.Bit, 1, "Anulado"))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@FechaEntrada", System.Data.SqlDbType.DateTime, 4, "FechaEntrada"))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Mayorizado", System.Data.SqlDbType.Bit, 1, "Mayorizado"))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Periodo", System.Data.SqlDbType.VarChar, 8, "Periodo"))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@NumMayorizado", System.Data.SqlDbType.Decimal, 9, System.Data.ParameterDirection.Input, False, CType(18, Byte), CType(0, Byte), "NumMayorizado", System.Data.DataRowVersion.Current, Nothing))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Modulo", System.Data.SqlDbType.VarChar, 50, "Modulo"))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Observaciones", System.Data.SqlDbType.VarChar, 255, "Observaciones"))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@NombreUsuario", System.Data.SqlDbType.VarChar, 255, "NombreUsuario"))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@TotalDebe", System.Data.SqlDbType.Float, 8, "TotalDebe"))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@TotalHaber", System.Data.SqlDbType.Float, 8, "TotalHaber"))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_NumAsiento", System.Data.SqlDbType.VarChar, 15, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "NumAsiento", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_Accion", System.Data.SqlDbType.VarChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Accion", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_Anulado", System.Data.SqlDbType.Bit, 1, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Anulado", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_Beneficiario", System.Data.SqlDbType.VarChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Beneficiario", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_Fecha", System.Data.SqlDbType.DateTime, 4, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Fecha", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_FechaEntrada", System.Data.SqlDbType.DateTime, 4, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "FechaEntrada", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_Mayorizado", System.Data.SqlDbType.Bit, 1, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Mayorizado", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_Modulo", System.Data.SqlDbType.VarChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Modulo", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_NombreUsuario", System.Data.SqlDbType.VarChar, 255, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "NombreUsuario", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_NumDoc", System.Data.SqlDbType.VarChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "NumDoc", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_NumMayorizado", System.Data.SqlDbType.Decimal, 9, System.Data.ParameterDirection.Input, False, CType(18, Byte), CType(0, Byte), "NumMayorizado", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_Observaciones", System.Data.SqlDbType.VarChar, 255, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Observaciones", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_Periodo", System.Data.SqlDbType.VarChar, 8, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Periodo", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_TipoDoc", System.Data.SqlDbType.Int, 4, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "TipoDoc", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_TotalDebe", System.Data.SqlDbType.Float, 8, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "TotalDebe", System.Data.DataRowVersion.Original, Nothing))
-        Me.SqlUpdateCommand1.Parameters.Add(New System.Data.SqlClient.SqlParameter("@Original_TotalHaber", System.Data.SqlDbType.Float, 8, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "TotalHaber", System.Data.DataRowVersion.Original, Nothing))
+        Me.SqlUpdateCommand1.Parameters.AddRange(New System.Data.SqlClient.SqlParameter() {New System.Data.SqlClient.SqlParameter("@NumAsiento", System.Data.SqlDbType.VarChar, 15, "NumAsiento"), New System.Data.SqlClient.SqlParameter("@Fecha", System.Data.SqlDbType.DateTime, 4, "Fecha"), New System.Data.SqlClient.SqlParameter("@NumDoc", System.Data.SqlDbType.VarChar, 50, "NumDoc"), New System.Data.SqlClient.SqlParameter("@Beneficiario", System.Data.SqlDbType.VarChar, 50, "Beneficiario"), New System.Data.SqlClient.SqlParameter("@TipoDoc", System.Data.SqlDbType.Int, 4, "TipoDoc"), New System.Data.SqlClient.SqlParameter("@Accion", System.Data.SqlDbType.VarChar, 50, "Accion"), New System.Data.SqlClient.SqlParameter("@Anulado", System.Data.SqlDbType.Bit, 1, "Anulado"), New System.Data.SqlClient.SqlParameter("@FechaEntrada", System.Data.SqlDbType.DateTime, 4, "FechaEntrada"), New System.Data.SqlClient.SqlParameter("@Mayorizado", System.Data.SqlDbType.Bit, 1, "Mayorizado"), New System.Data.SqlClient.SqlParameter("@Periodo", System.Data.SqlDbType.VarChar, 8, "Periodo"), New System.Data.SqlClient.SqlParameter("@NumMayorizado", System.Data.SqlDbType.[Decimal], 9, System.Data.ParameterDirection.Input, False, CType(18, Byte), CType(0, Byte), "NumMayorizado", System.Data.DataRowVersion.Current, Nothing), New System.Data.SqlClient.SqlParameter("@Modulo", System.Data.SqlDbType.VarChar, 50, "Modulo"), New System.Data.SqlClient.SqlParameter("@Observaciones", System.Data.SqlDbType.VarChar, 255, "Observaciones"), New System.Data.SqlClient.SqlParameter("@NombreUsuario", System.Data.SqlDbType.VarChar, 255, "NombreUsuario"), New System.Data.SqlClient.SqlParameter("@TotalDebe", System.Data.SqlDbType.Float, 8, "TotalDebe"), New System.Data.SqlClient.SqlParameter("@TotalHaber", System.Data.SqlDbType.Float, 8, "TotalHaber"), New System.Data.SqlClient.SqlParameter("@Original_NumAsiento", System.Data.SqlDbType.VarChar, 15, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "NumAsiento", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_Accion", System.Data.SqlDbType.VarChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Accion", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_Anulado", System.Data.SqlDbType.Bit, 1, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Anulado", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_Beneficiario", System.Data.SqlDbType.VarChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Beneficiario", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_Fecha", System.Data.SqlDbType.DateTime, 4, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Fecha", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_FechaEntrada", System.Data.SqlDbType.DateTime, 4, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "FechaEntrada", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_Mayorizado", System.Data.SqlDbType.Bit, 1, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Mayorizado", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_Modulo", System.Data.SqlDbType.VarChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Modulo", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_NombreUsuario", System.Data.SqlDbType.VarChar, 255, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "NombreUsuario", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_NumDoc", System.Data.SqlDbType.VarChar, 50, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "NumDoc", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_NumMayorizado", System.Data.SqlDbType.[Decimal], 9, System.Data.ParameterDirection.Input, False, CType(18, Byte), CType(0, Byte), "NumMayorizado", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_Observaciones", System.Data.SqlDbType.VarChar, 255, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Observaciones", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_Periodo", System.Data.SqlDbType.VarChar, 8, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "Periodo", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_TipoDoc", System.Data.SqlDbType.Int, 4, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "TipoDoc", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_TotalDebe", System.Data.SqlDbType.Float, 8, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "TotalDebe", System.Data.DataRowVersion.Original, Nothing), New System.Data.SqlClient.SqlParameter("@Original_TotalHaber", System.Data.SqlDbType.Float, 8, System.Data.ParameterDirection.Input, False, CType(0, Byte), CType(0, Byte), "TotalHaber", System.Data.DataRowVersion.Original, Nothing)})
         '
         'griDetalle
         '
+        Me.griDetalle.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.griDetalle.DataSource = Me.dtsMayorizacionAsiento.AsientosContables
         '
-        'griDetalle.EmbeddedNavigator
+        '
         '
         Me.griDetalle.EmbeddedNavigator.Name = ""
         Me.griDetalle.Location = New System.Drawing.Point(8, 160)
@@ -453,7 +369,6 @@ Public Class fmrMayorizacionAsiento
         Me.griDetalle.Name = "griDetalle"
         Me.griDetalle.RepositoryItems.AddRange(New DevExpress.XtraEditors.Repository.RepositoryItem() {Me.RepositoryItemCheckEdit1})
         Me.griDetalle.Size = New System.Drawing.Size(688, 200)
-        Me.griDetalle.Styles.AddReplace("ColumnFilterButtonActive", New DevExpress.Utils.ViewStyleEx("ColumnFilterButtonActive", "Grid", System.Drawing.SystemColors.Control, System.Drawing.Color.Blue, System.Drawing.SystemColors.ControlLightLight, System.Drawing.Drawing2D.LinearGradientMode.Horizontal))
         Me.griDetalle.TabIndex = 66
         Me.griDetalle.Text = "GridControl1"
         '
@@ -461,6 +376,7 @@ Public Class fmrMayorizacionAsiento
         '
         Me.dtsMayorizacionAsiento.DataSetName = "DatasetMayorizacionAsiento"
         Me.dtsMayorizacionAsiento.Locale = New System.Globalization.CultureInfo("en-US")
+        Me.dtsMayorizacionAsiento.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'GridView1
         '
@@ -474,7 +390,9 @@ Public Class fmrMayorizacionAsiento
         Me.GridColumn1.Caption = "Mayorizado"
         Me.GridColumn1.ColumnEdit = Me.RepositoryItemCheckEdit1
         Me.GridColumn1.FieldName = "Mayorizado"
+        Me.GridColumn1.FilterInfo = ColumnFilterInfo1
         Me.GridColumn1.Name = "GridColumn1"
+        Me.GridColumn1.Options = DevExpress.XtraGrid.Columns.ColumnOptions.CanFocused
         Me.GridColumn1.VisibleIndex = 0
         '
         'RepositoryItemCheckEdit1
@@ -487,42 +405,96 @@ Public Class fmrMayorizacionAsiento
         '
         Me.GridColumn2.Caption = "Num. asiento"
         Me.GridColumn2.FieldName = "NumAsiento"
+        Me.GridColumn2.FilterInfo = ColumnFilterInfo2
         Me.GridColumn2.Name = "GridColumn2"
+        Me.GridColumn2.Options = CType(((((((((DevExpress.XtraGrid.Columns.ColumnOptions.CanFiltered Or DevExpress.XtraGrid.Columns.ColumnOptions.CanMoved) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanGrouped) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanResized) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanSorted) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.[ReadOnly]) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanFocused) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.ShowInCustomizationForm) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.NonEditable), DevExpress.XtraGrid.Columns.ColumnOptions)
         Me.GridColumn2.VisibleIndex = 1
         '
         'GridColumn3
         '
         Me.GridColumn3.Caption = "Fecha"
         Me.GridColumn3.FieldName = "Fecha"
+        Me.GridColumn3.FilterInfo = ColumnFilterInfo3
         Me.GridColumn3.Name = "GridColumn3"
+        Me.GridColumn3.Options = CType(((((((((DevExpress.XtraGrid.Columns.ColumnOptions.CanFiltered Or DevExpress.XtraGrid.Columns.ColumnOptions.CanMoved) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanGrouped) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanResized) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanSorted) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.[ReadOnly]) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanFocused) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.ShowInCustomizationForm) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.NonEditable), DevExpress.XtraGrid.Columns.ColumnOptions)
         Me.GridColumn3.VisibleIndex = 2
         '
         'GridColumn4
         '
         Me.GridColumn4.Caption = "Fecha entrada"
         Me.GridColumn4.FieldName = "FechaEntrada"
+        Me.GridColumn4.FilterInfo = ColumnFilterInfo4
         Me.GridColumn4.Name = "GridColumn4"
+        Me.GridColumn4.Options = CType(((((((((DevExpress.XtraGrid.Columns.ColumnOptions.CanFiltered Or DevExpress.XtraGrid.Columns.ColumnOptions.CanMoved) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanGrouped) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanResized) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanSorted) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.[ReadOnly]) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanFocused) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.ShowInCustomizationForm) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.NonEditable), DevExpress.XtraGrid.Columns.ColumnOptions)
         Me.GridColumn4.VisibleIndex = 3
         '
         'GridColumn5
         '
         Me.GridColumn5.Caption = "Descripción"
         Me.GridColumn5.FieldName = "Observaciones"
+        Me.GridColumn5.FilterInfo = ColumnFilterInfo5
         Me.GridColumn5.Name = "GridColumn5"
+        Me.GridColumn5.Options = CType(((((((((DevExpress.XtraGrid.Columns.ColumnOptions.CanFiltered Or DevExpress.XtraGrid.Columns.ColumnOptions.CanMoved) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanGrouped) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanResized) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanSorted) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.[ReadOnly]) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanFocused) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.ShowInCustomizationForm) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.NonEditable), DevExpress.XtraGrid.Columns.ColumnOptions)
         Me.GridColumn5.VisibleIndex = 4
         '
         'GridColumn6
         '
         Me.GridColumn6.Caption = "Total debe"
         Me.GridColumn6.FieldName = "TotalDebe"
+        Me.GridColumn6.FilterInfo = ColumnFilterInfo6
         Me.GridColumn6.Name = "GridColumn6"
+        Me.GridColumn6.Options = CType(((((((((DevExpress.XtraGrid.Columns.ColumnOptions.CanFiltered Or DevExpress.XtraGrid.Columns.ColumnOptions.CanMoved) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanGrouped) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanResized) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanSorted) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.[ReadOnly]) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanFocused) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.ShowInCustomizationForm) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.NonEditable), DevExpress.XtraGrid.Columns.ColumnOptions)
         Me.GridColumn6.VisibleIndex = 5
         '
         'GridColumn7
         '
         Me.GridColumn7.Caption = "Total haber"
         Me.GridColumn7.FieldName = "TotalHaber"
+        Me.GridColumn7.FilterInfo = ColumnFilterInfo7
         Me.GridColumn7.Name = "GridColumn7"
+        Me.GridColumn7.Options = CType(((((((((DevExpress.XtraGrid.Columns.ColumnOptions.CanFiltered Or DevExpress.XtraGrid.Columns.ColumnOptions.CanMoved) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanGrouped) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanResized) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanSorted) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.[ReadOnly]) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.CanFocused) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.ShowInCustomizationForm) _
+            Or DevExpress.XtraGrid.Columns.ColumnOptions.NonEditable), DevExpress.XtraGrid.Columns.ColumnOptions)
         Me.GridColumn7.VisibleIndex = 6
         '
         'chkPeriodo
@@ -535,10 +507,17 @@ Public Class fmrMayorizacionAsiento
         '
         'ImageList
         '
-        Me.ImageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth24Bit
-        Me.ImageList.ImageSize = New System.Drawing.Size(32, 32)
         Me.ImageList.ImageStream = CType(resources.GetObject("ImageList.ImageStream"), System.Windows.Forms.ImageListStreamer)
         Me.ImageList.TransparentColor = System.Drawing.Color.Transparent
+        Me.ImageList.Images.SetKeyName(0, "")
+        Me.ImageList.Images.SetKeyName(1, "")
+        Me.ImageList.Images.SetKeyName(2, "")
+        Me.ImageList.Images.SetKeyName(3, "")
+        Me.ImageList.Images.SetKeyName(4, "")
+        Me.ImageList.Images.SetKeyName(5, "")
+        Me.ImageList.Images.SetKeyName(6, "")
+        Me.ImageList.Images.SetKeyName(7, "")
+        Me.ImageList.Images.SetKeyName(8, "")
         '
         'ToolBar1
         '
@@ -559,37 +538,44 @@ Public Class fmrMayorizacionAsiento
         'ToolBarNuevo
         '
         Me.ToolBarNuevo.ImageIndex = 0
+        Me.ToolBarNuevo.Name = "ToolBarNuevo"
         Me.ToolBarNuevo.Text = "Nuevo"
         '
         'ToolBarBuscar
         '
         Me.ToolBarBuscar.ImageIndex = 1
+        Me.ToolBarBuscar.Name = "ToolBarBuscar"
         Me.ToolBarBuscar.Text = "Buscar"
         '
         'ToolBarRegistrar
         '
         Me.ToolBarRegistrar.ImageIndex = 2
+        Me.ToolBarRegistrar.Name = "ToolBarRegistrar"
         Me.ToolBarRegistrar.Text = "Mayorizar"
         '
         'ToolBarImprimir
         '
         Me.ToolBarImprimir.ImageIndex = 7
+        Me.ToolBarImprimir.Name = "ToolBarImprimir"
         Me.ToolBarImprimir.Text = "Imprimir"
         '
         'ToolBarExcel
         '
         Me.ToolBarExcel.ImageIndex = 5
+        Me.ToolBarExcel.Name = "ToolBarExcel"
         Me.ToolBarExcel.Text = "Exportar"
         Me.ToolBarExcel.Visible = False
         '
         'ToolBarCerrar
         '
         Me.ToolBarCerrar.ImageIndex = 6
+        Me.ToolBarCerrar.Name = "ToolBarCerrar"
         Me.ToolBarCerrar.Text = "Cerrar"
         '
         'Label9
         '
-        Me.Label9.BackColor = System.Drawing.Color.FromArgb(CType(128, Byte), CType(133, Byte), CType(242, Byte))
+        Me.Label9.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label9.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(133, Byte), Integer), CType(CType(242, Byte), Integer))
         Me.Label9.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.ForeColor = System.Drawing.Color.White
         Me.Label9.Location = New System.Drawing.Point(504, 368)
@@ -601,30 +587,29 @@ Public Class fmrMayorizacionAsiento
         '
         'txtUsuario
         '
-        Me.txtUsuario.AutoSize = False
+        Me.txtUsuario.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.txtUsuario.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.txtUsuario.Enabled = False
         Me.txtUsuario.Location = New System.Drawing.Point(504, 384)
         Me.txtUsuario.Name = "txtUsuario"
-        Me.txtUsuario.Size = New System.Drawing.Size(192, 14)
+        Me.txtUsuario.Size = New System.Drawing.Size(192, 13)
         Me.txtUsuario.TabIndex = 100
-        Me.txtUsuario.Text = ""
         '
         'TxtClave
         '
-        Me.TxtClave.AutoSize = False
+        Me.TxtClave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.TxtClave.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.TxtClave.Location = New System.Drawing.Point(424, 384)
         Me.TxtClave.Name = "TxtClave"
-        Me.TxtClave.PasswordChar = Microsoft.VisualBasic.ChrW(42)
-        Me.TxtClave.Size = New System.Drawing.Size(72, 14)
+        Me.TxtClave.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
+        Me.TxtClave.Size = New System.Drawing.Size(72, 13)
         Me.TxtClave.TabIndex = 0
-        Me.TxtClave.Text = ""
         Me.TxtClave.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label5
         '
-        Me.Label5.BackColor = System.Drawing.Color.FromArgb(CType(128, Byte), CType(133, Byte), CType(242, Byte))
+        Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label5.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(133, Byte), Integer), CType(CType(242, Byte), Integer))
         Me.Label5.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.White
         Me.Label5.Location = New System.Drawing.Point(424, 368)
@@ -636,6 +621,7 @@ Public Class fmrMayorizacionAsiento
         '
         'B_Marca
         '
+        Me.B_Marca.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.B_Marca.Enabled = False
         Me.B_Marca.Location = New System.Drawing.Point(8, 368)
         Me.B_Marca.Name = "B_Marca"
@@ -645,6 +631,7 @@ Public Class fmrMayorizacionAsiento
         '
         'B_Desmarcar
         '
+        Me.B_Desmarcar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.B_Desmarcar.Enabled = False
         Me.B_Desmarcar.Location = New System.Drawing.Point(112, 368)
         Me.B_Desmarcar.Name = "B_Desmarcar"
@@ -669,17 +656,19 @@ Public Class fmrMayorizacionAsiento
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.TituloModulo)
         Me.Controls.Add(Me.ToolBar1)
-        Me.MaximizeBox = False
         Me.Name = "fmrMayorizacionAsiento"
         Me.Text = "Mayorización de asientos"
         Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox3.ResumeLayout(False)
+        Me.GroupBox3.PerformLayout()
         CType(Me.griDetalle, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dtsMayorizacionAsiento, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RepositoryItemCheckEdit1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
@@ -713,13 +702,34 @@ Public Class fmrMayorizacionAsiento
     End Sub
 
     Private Sub chkPeriodo_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkPeriodo.CheckedChanged
-        If Me.chkPeriodo.Checked = True Then
-            Me.dtpFechaFinal.Enabled = True
-            Me.dtpFechaInicio.Enabled = True
+
+        If cFunciones.HayPeriodosAbiertos = True Then
+
+            If Me.chkPeriodo.Checked = True Then
+                Me.dtpFechaInicio.MinDate = cFunciones.FechaMin
+                Me.dtpFechaInicio.MaxDate = cFunciones.FechaMax
+                Me.dtpFechaFinal.MinDate = cFunciones.FechaMin
+                Me.dtpFechaFinal.MaxDate = cFunciones.FechaMax
+                Me.dtpFechaFinal.Enabled = True
+                Me.dtpFechaInicio.Enabled = True
+            Else
+                Me.dtpFechaFinal.Enabled = False
+                Me.dtpFechaInicio.Enabled = False
+            End If
         Else
-            Me.dtpFechaFinal.Enabled = False
-            Me.dtpFechaInicio.Enabled = False
+            Me.chkPeriodo.Checked = False
+            If valido Then
+                valido = False
+                Me.dtpFechaFinal.Enabled = False
+                Me.dtpFechaInicio.Enabled = False
+                MsgBox("No existen periodos de trabajo abiertos. Para ingresar un nuevo periodo, se debe dirigir al menú principal de contabilidad y seguir la ruta: Operaciones -> Periodo de Trabajo.", MsgBoxStyle.Exclamation, "¡Atención!")
+            Else
+                valido = True
+            End If
+
         End If
+
+
     End Sub
 
     Private Sub ToolBar1_ButtonClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ToolBarButtonClickEventArgs) Handles ToolBar1.ButtonClick
@@ -727,7 +737,12 @@ Public Class fmrMayorizacionAsiento
         PMU = VSM(usua.Cedula, Me.Name) 'Carga los privilegios del usuario con el modulo
 
         Select Case ToolBar1.Buttons.IndexOf(e.Button)
-            Case 0 : Nuevo()
+            Case 0
+                If cFunciones.ExistenPeriodos Then
+                    If cFunciones.PeriodoAbiertoMenuPrincipal Then
+                        Nuevo()
+                    End If
+                End If
 
             Case 1 : If PMU.Find Then LlamarFmrBuscarMayoriazazionAsiento() Else MsgBox("No tiene permiso para Buscar información...", MsgBoxStyle.Information, "Atención...") : Exit Sub
 
@@ -796,37 +811,38 @@ Public Class fmrMayorizacionAsiento
             Dim sql As String
             Dim funcion As New cFunciones
             Dim Fechaini, FechaFin As String
+            puedeDesmayorizar = True
 
-            sql = "SELECT * FROM dbo.asientoscontables WHERE Anulado = 0 AND Mayorizado = 0" ' ORDER BY NumAsiento"
+            sql = "SELECT * FROM dbo.asientoscontables WHERE Anulado = 0 AND Mayorizado = 0 AND dbo.ValidarFecha(Fecha) = 1" ' ORDER BY Fecha DESC"
 
             If Me.chkPeriodo.Checked = True Then
                 Fechaini = " CONVERT(DATETIME, '" & dtpFechaInicio.Value.Year & "-" & dtpFechaInicio.Value.Month & "-" & dtpFechaInicio.Value.Day & " 00:00:00', 102)"
                 FechaFin = " CONVERT(DATETIME, '" & dtpFechaFinal.Value.Year & "-" & dtpFechaFinal.Value.Month & "-" & dtpFechaFinal.Value.Day & " 23:59:59', 102)"
-                sql = "SELECT     AsientosContables.NumAsiento, AsientosContables.Fecha, AsientosContables.IdNumDoc, AsientosContables.NumDoc, AsientosContables.Beneficiario, " & _
-                      " AsientosContables.TipoDoc, AsientosContables.Accion, AsientosContables.Anulado, AsientosContables.FechaEntrada, AsientosContables.Mayorizado, " & _
-                      " AsientosContables.Periodo, AsientosContables.NumMayorizado, AsientosContables.Modulo, AsientosContables.Observaciones, " & _
-                " AsientosContables.NombreUsuario, AsientosContables.CodMoneda, AsientosContables.TipoCambio, SUM(AsientoDC_DH_MAYO.DebeColon) " & _
-                      " AS TotalDebe, SUM(AsientoDC_DH_MAYO.HaberColon) AS TotalHaber  " & _
-" FROM         AsientosContables INNER JOIN " & _
-                      " AsientoDC_DH_MAYO ON AsientosContables.NumAsiento = AsientoDC_DH_MAYO.NumAsiento " & _
-" GROUP BY AsientosContables.NumAsiento, AsientosContables.Fecha, AsientosContables.IdNumDoc, AsientosContables.NumDoc, " & _
-                      " AsientosContables.Beneficiario, AsientosContables.TipoDoc, AsientosContables.Accion, AsientosContables.FechaEntrada, AsientosContables.Periodo, " & _
-                      " AsientosContables.NumMayorizado, AsientosContables.Modulo, AsientosContables.Observaciones, AsientosContables.NombreUsuario, " & _
+                sql = "SELECT     AsientosContables.NumAsiento, AsientosContables.Fecha, AsientosContables.IdNumDoc, AsientosContables.NumDoc, AsientosContables.Beneficiario, " &
+                      " AsientosContables.TipoDoc, AsientosContables.Accion, AsientosContables.Anulado, AsientosContables.FechaEntrada, AsientosContables.Mayorizado, " &
+                      " AsientosContables.Periodo, AsientosContables.NumMayorizado, AsientosContables.Modulo, AsientosContables.Observaciones, " &
+                " AsientosContables.NombreUsuario, AsientosContables.CodMoneda, AsientosContables.TipoCambio, SUM(AsientoDC_DH_MAYO.DebeColon) " &
+                      " AS TotalDebe, SUM(AsientoDC_DH_MAYO.HaberColon) AS TotalHaber  " &
+" FROM         AsientosContables INNER JOIN " &
+                      " AsientoDC_DH_MAYO ON AsientosContables.NumAsiento = AsientoDC_DH_MAYO.NumAsiento " &
+" GROUP BY AsientosContables.NumAsiento, AsientosContables.Fecha, AsientosContables.IdNumDoc, AsientosContables.NumDoc, " &
+                      " AsientosContables.Beneficiario, AsientosContables.TipoDoc, AsientosContables.Accion, AsientosContables.FechaEntrada, AsientosContables.Periodo, " &
+                      " AsientosContables.NumMayorizado, AsientosContables.Modulo, AsientosContables.Observaciones, AsientosContables.NombreUsuario, " &
                       " AsientosContables.CodMoneda, AsientosContables.TipoCambio, AsientosContables.Anulado, AsientosContables.Mayorizado HaVING AsientosContables.Anulado = 0 AND AsientosContables.Mayorizado = 0 AND AsientosContables.Fecha BETWEEN " & Fechaini & " AND  " & FechaFin & " ORDER BY AsientosContables.NumAsiento"
             End If
 
             If pCodigo <> "" Then
                 ' sql = "SELECT dbo.asientoscontables.Mayorizado, dbo.asientoscontables.NumAsiento, dbo.asientoscontables.Fecha, dbo.asientoscontables.FechaEntrada, dbo.asientoscontables.Observaciones, dbo.AsientosDC.COLON AS TotalDebe,dbo.AsientosDC.COLON AS TotalHaber FROM dbo.asientoscontables, dbo.AsientosDC  WHERE dbo.AsientosDC.NumAsiento = dbo.asientoscontables.NumAsiento AND dbo.asientoscontables.Anulado = 0 AND dbo.asientoscontables.Mayorizado =1 AND NumMayorizado=" & Me.txtNumero.Text & " ORDER BY dbo.asientoscontables.NumAsiento"
-                sql = "SELECT     AsientosContables.NumAsiento, AsientosContables.Fecha, AsientosContables.IdNumDoc, AsientosContables.NumDoc, AsientosContables.Beneficiario, " & _
-                      " AsientosContables.TipoDoc, AsientosContables.Accion, AsientosContables.Anulado, AsientosContables.FechaEntrada, AsientosContables.Mayorizado, " & _
-                      " AsientosContables.Periodo, AsientosContables.NumMayorizado, AsientosContables.Modulo, AsientosContables.Observaciones, " & _
-                " AsientosContables.NombreUsuario, AsientosContables.CodMoneda, AsientosContables.TipoCambio, SUM(AsientoDC_DH_MAYO.DebeColon) " & _
-                      " AS TotalDebe, SUM(AsientoDC_DH_MAYO.HaberColon) AS TotalHaber  " & _
-" FROM         AsientosContables INNER JOIN " & _
-                      " AsientoDC_DH_MAYO ON AsientosContables.NumAsiento = AsientoDC_DH_MAYO.NumAsiento " & _
-" GROUP BY AsientosContables.NumAsiento, AsientosContables.Fecha, AsientosContables.IdNumDoc, AsientosContables.NumDoc, " & _
-                      " AsientosContables.Beneficiario, AsientosContables.TipoDoc, AsientosContables.Accion, AsientosContables.FechaEntrada, AsientosContables.Periodo, " & _
-                      " AsientosContables.NumMayorizado, AsientosContables.Modulo, AsientosContables.Observaciones, AsientosContables.NombreUsuario, " & _
+                sql = "SELECT     AsientosContables.NumAsiento, AsientosContables.Fecha, AsientosContables.IdNumDoc, AsientosContables.NumDoc, AsientosContables.Beneficiario, " &
+                      " AsientosContables.TipoDoc, AsientosContables.Accion, AsientosContables.Anulado, AsientosContables.FechaEntrada, AsientosContables.Mayorizado, " &
+                      " AsientosContables.Periodo, AsientosContables.NumMayorizado, AsientosContables.Modulo, AsientosContables.Observaciones, " &
+                " AsientosContables.NombreUsuario, AsientosContables.CodMoneda, AsientosContables.TipoCambio, SUM(AsientoDC_DH_MAYO.DebeColon) " &
+                      " AS TotalDebe, SUM(AsientoDC_DH_MAYO.HaberColon) AS TotalHaber  " &
+" FROM         AsientosContables INNER JOIN " &
+                      " AsientoDC_DH_MAYO ON AsientosContables.NumAsiento = AsientoDC_DH_MAYO.NumAsiento " &
+" GROUP BY AsientosContables.NumAsiento, AsientosContables.Fecha, AsientosContables.IdNumDoc, AsientosContables.NumDoc, " &
+                      " AsientosContables.Beneficiario, AsientosContables.TipoDoc, AsientosContables.Accion, AsientosContables.FechaEntrada, AsientosContables.Periodo, " &
+                      " AsientosContables.NumMayorizado, AsientosContables.Modulo, AsientosContables.Observaciones, AsientosContables.NombreUsuario, " &
                       " AsientosContables.CodMoneda, AsientosContables.TipoCambio, AsientosContables.Anulado, AsientosContables.Mayorizado HaVING AsientosContables.Anulado = 0 AND AsientosContables.NumMayorizado = " & pCodigo & " AND AsientosContables.Mayorizado =1 ORDER BY AsientosContables.NumAsiento"
             End If
             SqlConnection.ConnectionString = Configuracion.Claves.Conexion("Contabilidad")
@@ -837,12 +853,33 @@ Public Class fmrMayorizacionAsiento
             Me.sqlDataAdapter.Fill(Me.dtsMayorizacionAsiento, "AsientosContables")
 
         Catch ex As Exception
-            MsgBox(ex.ToString, MsgBoxStyle.OKOnly)
+            MsgBox(ex.ToString, MsgBoxStyle.OkOnly)
 
         End Try
         If dtsMayorizacionAsiento.AsientosContables.Count > 0 Then
             B_Marca.Enabled = True
             B_Desmarcar.Enabled = True
+            Dim fecha As DateTime
+
+            If pCodigo = "" Then
+                Me.GridColumn1.ColumnEdit.ReadOnly = False
+                B_Marca.Visible = True
+                B_Desmarcar.Visible = True
+            End If
+
+            'BUSQUEDA 
+            If pCodigo <> "" Then
+                Me.GridColumn1.ColumnEdit.ReadOnly = True
+                B_Marca.Visible = False
+                B_Desmarcar.Visible = False
+                For i As Integer = 0 To dtsMayorizacionAsiento.AsientosContables.Count - 1
+                    fecha = dtsMayorizacionAsiento.AsientosContables(i).Fecha
+                    If Not cFunciones.FechaValida(fecha) Then
+                        puedeDesmayorizar = False
+                    End If
+                Next
+            End If
+
         End If
     End Sub
 #End Region
@@ -910,6 +947,8 @@ Public Class fmrMayorizacionAsiento
         Me.ToolBarNuevo.Enabled = True
         Me.ToolBarBuscar.Enabled = True
         Me.txtNombreUsuario.Text = Me.txtUsuario.Text
+        busqueda = False
+        puedeDesmayorizar = True
     End Sub
 
     Private Function BuscaTabla() As String
@@ -917,16 +956,22 @@ Public Class fmrMayorizacionAsiento
         cFunciones.Llenar_Tabla_Generico("select * from sysobjects where name = 'MAYORIZACIONES' ", dt, Configuracion.Claves.Conexion("Contabilidad"))
         Return IIf(dt.Rows.Count > 0, True, False)
     End Function
-
+    Private Function BuscaTabla2(ByVal name_ As String) As String
+        Dim dt As New DataTable
+        cFunciones.Llenar_Tabla_Generico("select * from sysobjects where name = '" + name_ + "' ", dt, Configuracion.Claves.Conexion("Contabilidad"))
+        Return IIf(dt.Rows.Count > 0, True, False)
+    End Function
+    Dim busqueda As Boolean = False
     Public Sub LlamarFmrBuscarMayoriazazionAsiento()
         Dim busca As New fmrBuscarMayorizacionAsiento
         busca.NuevaConexion = Configuracion.Claves.Conexion("Contabilidad")
         busca.campo = "NumMayorizado"
 
         If BuscaTabla() = True Then
-            busca.sqlstring = "SELECT  NumMayorizado AS [Numero de mayorizacion], Fecha FROM MAYORIZACIONES "
+            busca.sqlstring = "SELECT  NumMayorizado AS [Numero de mayorizacion], Fecha FROM MAYORIZACIONES"
+            'busca.sqlstring = "SELECT * FROM v_MAYORIZACIONESPA"
             busca.buscaMayo = True
-            ' busca.sqlStringAdicional = " GROUP BY NumMayorizado ORDER BY NumMayorizado DESC"
+            busca.sqlStringAdicional = " ORDER BY Fecha DESC"
         Else
             busca.sqlstring = "SELECT NumMayorizado as [Numero de mayorizacion],Max(Fecha) as Fecha FROM ASIENTOSCONTABLES where Mayorizado = 1 AND NumMayorizado <> 0 AND Anulado = 0 "
             busca.sqlStringAdicional = " GROUP BY NumMayorizado ORDER BY NumMayorizado DESC"
@@ -971,6 +1016,7 @@ Public Class fmrMayorizacionAsiento
         '  rstReader.Close()
         '   sqlConexion2.Close()
         LlenarGriDetalle(pcodigo)
+        busqueda = True
         Me.ToolBarRegistrar.Text = "DesMayorizar"
         Me.ToolBarRegistrar.ImageIndex = "8"
     End Sub
@@ -994,14 +1040,24 @@ Public Class fmrMayorizacionAsiento
         For n = 0 To Me.dtsMayorizacionAsiento.AsientosContables.Count - 1
             With dtsMayorizacionAsiento.AsientosContables(n)
                 If .Mayorizado = True Then
-                    sql = "update ASIENTOSCONTABLES SET Mayorizado = 1, NumMayorizado=" & .NumMayorizado & " WHERE NumAsiento = '" & .NumAsiento & "'"
-                    clsConexion.SlqExecute(sqlConexion2, sql)
-                Else
-                    sql = "update ASIENTOSCONTABLES SET Mayorizado = 0, NumMayorizado=" & .NumMayorizado & " WHERE NumAsiento = '" & .NumAsiento & "'"
-                    clsConexion.SlqExecute(sqlConexion2, sql)
+                    If busqueda Then
+                        If puedeDesmayorizar Then
+                            sql = "update ASIENTOSCONTABLES SET Mayorizado = 0, NumMayorizado=" & .NumMayorizado & " WHERE NumAsiento = '" & .NumAsiento & "'"
+                            clsConexion.SlqExecute(sqlConexion2, sql)
+                        End If
+
+                    Else
+                        sql = "update ASIENTOSCONTABLES SET Mayorizado = 1, NumMayorizado=" & .NumMayorizado & " WHERE NumAsiento = '" & .NumAsiento & "'"
+                        clsConexion.SlqExecute(sqlConexion2, sql)
+                    End If
+
                 End If
             End With
         Next
+        If Not puedeDesmayorizar Then
+            MsgBox("No puede desmayorizar porque contiene periodos cerrados", MsgBoxStyle.Exclamation, "Advertencia")
+        End If
+
         If Me.ToolBarNuevo.Text.Equals("Cancelar") Then
             sql = "INSERT INTO Mayorizacion (Usuario, NumMayorizacion) VALUES     ('" & cedula & "', " & txtNumero.Text & ")"
             clsConexion.SlqExecute(sqlConexion2, sql)
@@ -1080,7 +1136,11 @@ Public Class fmrMayorizacionAsiento
 
     Private Sub Marca_Desmarca(ByVal Estado As Boolean)
         For i As Integer = 0 To dtsMayorizacionAsiento.AsientosContables.Count - 1
-            dtsMayorizacionAsiento.AsientosContables(i).Mayorizado = Estado
+            Dim fe As DateTime = dtsMayorizacionAsiento.AsientosContables(i).Fecha.Date
+            If cFunciones.FechaValida(fe) Then
+                dtsMayorizacionAsiento.AsientosContables(i).Mayorizado = Estado
+            End If
+
         Next
     End Sub
 #End Region
@@ -1149,4 +1209,29 @@ Public Class fmrMayorizacionAsiento
     Private Sub TxtClave_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TxtClave.TextChanged
 
     End Sub
+
+    Private Sub griDetalle_Click(sender As Object, e As EventArgs) Handles griDetalle.Click
+
+    End Sub
+
+    Private Sub griDetalle_Validating(sender As Object, e As CancelEventArgs) Handles griDetalle.Validating
+
+    End Sub
+
+    'Private Sub GridView1_CellValueChanged(sender As Object, e As CellValueChangedEventArgs) Handles GridView1.CellValueChanged
+    '    ValidarFila(e.RowHandle)
+    'End Sub
+
+    'Private Sub GridView1_CellValueChanging(sender As Object, e As CellValueChangedEventArgs) Handles GridView1.CellValueChanging
+    '    ValidarFila(e.RowHandle)
+    'End Sub
+    'Private Sub ValidarFila(ByVal i As Integer)
+    '    If busqueda Then
+    '        If Not dtsMayorizacionAsiento.AsientosContables(i).Puede Then
+    '            dtsMayorizacionAsiento.AsientosContables(i).Mayorizado = True
+
+    '        End If
+    '    End If
+
+    'End Sub
 End Class

@@ -157,7 +157,7 @@ Public Class FrmAsientos
     Friend WithEvents gcNombreCuenta As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents gcMonto As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents Label24 As System.Windows.Forms.Label
-    Friend WithEvents txtDescripci�n As System.Windows.Forms.TextBox
+    Friend WithEvents txtDescripcion As System.Windows.Forms.TextBox
     Friend WithEvents btnVerCentroC As System.Windows.Forms.Button
     Friend WithEvents btnQuitar As System.Windows.Forms.Button
     Friend WithEvents btnCerrar As System.Windows.Forms.Button
@@ -289,7 +289,7 @@ Public Class FrmAsientos
         Me.Label12 = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.btnCerrar = New System.Windows.Forms.Button()
-        Me.txtDescripci�n = New System.Windows.Forms.TextBox()
+        Me.txtDescripcion = New System.Windows.Forms.TextBox()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.grControl = New DevExpress.XtraGrid.GridControl()
         Me.grdVCCosto = New DevExpress.XtraGrid.Views.Grid.GridView()
@@ -1468,7 +1468,7 @@ Public Class FrmAsientos
         'GroupBox1
         '
         Me.GroupBox1.Controls.Add(Me.btnCerrar)
-        Me.GroupBox1.Controls.Add(Me.txtDescripci�n)
+        Me.GroupBox1.Controls.Add(Me.txtDescripcion)
         Me.GroupBox1.Controls.Add(Me.Label24)
         Me.GroupBox1.Controls.Add(Me.grControl)
         Me.GroupBox1.Controls.Add(Me.btnQuitar)
@@ -1495,14 +1495,14 @@ Public Class FrmAsientos
         Me.btnCerrar.Text = "Terminar"
         Me.btnCerrar.UseVisualStyleBackColor = False
         '
-        'txtDescripci�n
+        'txtDescripcion
         '
-        Me.txtDescripci�n.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.txtDescripcion.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtDescripci�n.Location = New System.Drawing.Point(128, 40)
-        Me.txtDescripci�n.Name = "txtDescripci�n"
-        Me.txtDescripci�n.Size = New System.Drawing.Size(184, 20)
-        Me.txtDescripci�n.TabIndex = 6
+        Me.txtDescripcion.Location = New System.Drawing.Point(128, 40)
+        Me.txtDescripcion.Name = "txtDescripcion"
+        Me.txtDescripcion.Size = New System.Drawing.Size(184, 20)
+        Me.txtDescripcion.TabIndex = 6
         '
         'Label24
         '
@@ -4312,7 +4312,7 @@ Public Class FrmAsientos
     Private Sub btnVerCentroC_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnVerCentroC.Click
 
         Me.GroupBox1.Visible = Not Me.GroupBox1.Visible
-        Me.txtDescripci�n.Text = Me.TxtDescAsiento.Text
+        Me.txtDescripcion.Text = Me.TxtDescAsiento.Text
         Me.txtMontoCentro.Text = Me.TxtMonto.Text
 
         Me.DataSetAsientos1.Centro.Clear()
